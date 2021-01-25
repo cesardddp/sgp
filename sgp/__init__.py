@@ -46,23 +46,30 @@ def create_app():
         # import ipdb; ipdb.set_trace()
         if form.validate_on_submit():
             # import ipdb; ipdb.set_trace()
-            flash('ahoi')
-            flash(form.errors)
+            flash('Adicionado!')
+            # flash(form.errors)
 
             # import ipdb; ipdb.set_trace()
             projeto = db.Projetos(
                 # id=uuid.uuid4().bytes,
                 cliente_nome=form.cliente_nome.data,
-                telefone=form.telefone.data,
+
+                telefone=str(form.telefone.data.national_number),
                 endereço=form.endereço.data,
                 ambientes=form.ambientes.data,
                 data_entrada=datetime.now()
 
             )
+            db.session.add(projeto)
+            db.session.commit()
 
             # return redirect('index')
-            return str(projeto)
-        flash(form.errors)
+            return redirect("/")
+        # try:
+        if(form.errors):
+            flash(form.errors )
+        # except://
+            # ...
 
         projetos = db.Projetos.query.all()
         print(projetos)
