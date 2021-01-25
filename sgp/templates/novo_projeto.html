@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
+        </script>
+
+    <title>SGP - Diego</title>
+</head>
+
+<body>
+
+
+    <main class="container">
+        <div class="row justify-content-center">
+            <div class="col-auto ">
+
+                <a href="{{url_for('projetos.create_view')}}" type="button" class="btn btn-default btn-sm ">
+                    <i class="bi bi-calendar-plus"></i> </a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-auto ">
+
+                <a href="/" type="button" class="btn btn-default btn-sm">
+                    <i class="bi bi-search"></i> </a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-auto ">
+
+                <a href="/" type="button" class="btn btn-default btn-sm">
+                    <i class="bi bi-calendar-check"></i> </a>
+            </div>
+        </div>
+
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Novp Projeto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="{{url_for('novo_projeto')}}" method="post">
+
+                        {{ form.csrf_token }}
+                        <br>
+                        <div class="form-group">
+                            <!-- NOME -->
+                            {{ form.cliente_nome.label(
+
+                            )
+                            }}
+                            {{ form.cliente_nome(
+                            class="col-sm-2 col-form-label",
+                            class="form-control",
+                            placeholder="Nome do Cliente"
+                            )
+                            }}
+                            <!-- TELEFONE -->
+                            {{ form.telefone.label(
+                            class="form-label", for="typePhone"
+                            )
+                            }}
+                            {{ form.telefone(
+                            type="tel",
+                            class="form-control phone_with_ddd"
+                            )
+                            }}
+                            <!-- ENDEREÇO -->
+                            {{ form.endereço.label(
+
+                            )
+                            }}
+                            {{ form.endereço(
+                            class="col-sm-2 col-form-label",
+                            class="form-control",
+                            placeholder="Endereço"
+                            )
+                            }}
+                            <!-- AMBIENTES -->
+                            {{ form.ambientes.label(
+
+                            )
+                            }}
+                            {{ form.ambientes(
+                            class="col-sm-2 col-form-label",
+                            class="form-control",
+                            placeholder="Ambientes"
+                            )
+                            }}
+                            {{ form.ambientes(
+                            class="col-sm-2 col-form-label",
+                            class="form-control",
+                            placeholder="Ambientes"
+                            )
+                            }}
+                            {{ form.ambientes(
+                            class="col-sm-2 col-form-label",
+                            class="form-control",
+                            placeholder="Ambientes"
+                            )
+                            }}
+
+                            {{ form.submit(
+                            type="submit",
+                            class="btn btn-primary"
+                            ) }}
+                        </div>
+
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            //$('#birth-date').mask('00/00/0000');
+            $('.phone_with_ddd').mask('(00) 00000-0000');
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</main>
+
+
+</body>
+
+</html>

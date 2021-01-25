@@ -1,0 +1,5 @@
+.vscode/
+migrations
+sgp/__pycache__/
+teste/
+Book1.xlsx
