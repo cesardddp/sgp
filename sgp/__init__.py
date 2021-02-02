@@ -1,0 +1,31 @@
+from flask import Flask
+from .models import configure as configure_db
+from flask_migrate import Migrate
+
+# from flask_admin.contrib.sqla import ModelView
+
+
+# from flask.ext.superadmin import Admin, model
+
+__version__ = '0.1.0'
+
+def create_app():
+
+    app = Flask(__name__)
+    app.config.update(
+        SQLALCHEMY_DATABASE_URI = "sqlite:///test.db",
+        SECRET_KEY = "TEMPORARIO",
+        FLASK_ADMIN_SWATCH = 'journal', # http://bootswatch.com/3/,
+        SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    )
+
+    app.db = configure_db(app)
+    migrate = Migrate(app,app.db)
+
+    from .admin import configure as configure_admin
+    configure_admin(app)
+    
+   
+
+    return app

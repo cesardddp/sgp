@@ -1,0 +1,372 @@
+{% extends 'layout.html' %}
+{% block style %}
+
+    .bi {
+        width: 100px;
+        height: 100px;
+        font-size: 100px;
+    }
+{% endblock style %}
+{% block body %}
+<main class="container">
+    <!-- <a href="{{url_for('novo_projeto')}}">NOVO PROJETO</a> -->
+
+    <div class="row justify-content-center">
+        <div class="col-auto ">
+
+            <!-- Button trigger modal -->
+            <a href="#" type="button" class="btn btn-default btn-sm" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                <i class="bi bi-calendar-plus"></i> </a>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-auto ">
+
+            <a href="#" type="button" class="btn btn-default btn-sm" data-bs-toggle="modal"
+                data-bs-target="#busca_modal">
+                <i class="bi bi-search"></i> </a>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-auto ">
+
+            <a href="/" type="button" class="btn btn-default btn-sm">
+                <i class="bi bi-calendar-check"></i> </a>
+        </div>
+    </div>
+
+</main>
+
+
+<!-- Modal 1-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Novp Projeto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form action="{{url_for('index')}}" method="post">
+
+                    {{ form.csrf_token }}
+                    <br>
+                    <div class="form-group">
+                        <!-- NOME -->
+                        {{ form.cliente_nome.label(
+                            class="col-sm-2 col-form-label",
+
+                        )
+                        }}
+                        {{ form.cliente_nome(
+                        class="form-control",
+                        placeholder="Nome do Cliente"
+                        )
+                        }}
+                        <!-- TELEFONE -->
+                        {{ form.telefone.label(
+                        class="form-label", for="typePhone"
+                        )
+                        }}
+                        {{ form.telefone(
+                        type="tel",
+                        class="form-control phone_with_ddd"
+                        )
+                        }}
+                        <!-- ENDEREÇO -->
+                        {{ form.endereço.label(
+                            class="col-sm-2 col-form-label",
+
+                        )
+                        }}
+                        {{ form.endereço(
+                        class="form-control",
+                        placeholder="Endereço"
+                        )
+                        }}
+                        <!-- AMBIENTES -->
+                        
+                        <div hidden>
+                            {{ form.ambientes(
+                                class="form-control",
+                                placeholder="Ambiente 1"
+                                )
+                                }}
+                        </div>
+                        <label for="ambientes">
+                            Ambientes
+                        </label>
+                        <input type="text" name="ambientes" id=""><button onclick="adiciona_campo()">+</button>
+                    </div>
+                        <script>
+                            function adiciona_campo(event){
+                                    $("input[name=ambientes] ").append($("<input type='text' name='ambientes' id=''>"))
+                            }
+                        </script>
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                {{ form.submit( type="submit", class="btn btn-primary" ) }}
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 2-->
+
+<div class="modal fade" id="busca_modal" tabindex="-1" aria-labelledby="busca_modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Lista de Projeto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <input type="search" name="achar_projeto" id="achar_projeto">
+                <script>
+                    $(document).ready(function () {
+                        $("#achar_projeto").on("keyup", function () {
+                            var value = $(this).val().toLowerCase();
+                            $("#accordion .card").filter(function () {
+                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                            });
+                        });
+                    });
+                </script>
+
+                <div id="accordion" class="">
+                    <div class="row">
+                        <div class="col-auto">
+                            <th scope="col">Nome</th>
+                        </div>
+                        <div class="col-auto">
+                            <th scope="col">Medição</th>
+                        </div>
+                        <div class="col-auto">
+                            <th scope="col">Entrega</th>
+                        </div>
+                        <div class="col-auto">
+                            <th scope="col">Arquivos</th>
+                        </div>
+                    </div>
+                    {% for projeto in projetos %}
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+
+                            <div class="row" data-bs-toggle="collapse" data-bs-target="#detalhes{{projeto.id}}">
+                                <div class="col-auto">
+                                    {{projeto.cliente_nome}}
+                                </div>
+                                <div class="col-auto">
+                                    {{projeto.data_medição}}
+                                </div>
+                                <div class="col-auto">
+                                    {{projeto.data_apresentação}}
+                                </div>
+                                <div class="col-auto">
+
+                                    <ul>
+                                        <li>{{projeto.promobe_arquivos}}</li>
+                                        <li>{{projeto.renders_jpg}}</li>
+                                        <li>{{projeto.medidas_pdf}}</li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                            <div id="detalhes{{projeto.id}}" class="collapse" aria-labelledby="headingOne"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            Telefone: {{form.telefone(
+                                                value=projeto.telefone,
+                                                class="form-control"
+                                            )}}
+                                        </div>
+                                        <div class="col-auto">
+                                            Endereço: {{form.endereço(
+                                                value=projeto.endereço,
+                                                class="form-control"
+                                            )}}
+                                        </div>
+                                        <div class="col-auto">
+                                            Data_entrada: {{form.data_entrada(
+                                                value=projeto.data_entrada,
+                                                class="form-control"
+                                            )}}
+                                        </div>
+                                        <div class="col-auto">
+                                            Fotos_medição: {{form.fotos_medição(
+                                                value=projeto.fotos_medição,
+                                                class="form-control"
+                                            )}}
+                                        </div>
+                                        <div class="col-auto">
+                                            Ambientes: {{form.ambientes(
+                                                value=projeto.ambientes,
+                                                class="form-control"
+                                            )}}
+                                        </div>
+                                        <div class="col-auto">
+                                            Data_final: {{form.data_final(
+                                                value=projeto.data_final,
+                                                class="form-control"
+                                            )}}
+                                        </div>
+                                        <div class="col-auto">
+                                            Aprovação: {{form.aprovação(
+                                                value=projeto.aprovação,
+                                            )}}
+                                        </div>
+                                        <div class="col-auto">
+                                            Orçamento: {{form.orçamento(
+                                                value=projeto.orçamento,
+                                                class="form-control"
+                                            )}}
+                                        </div>
+                                        <div class="col-auto">
+                                            Pagamento: {{form.pagamento(
+                                                value=projeto.pagamento,
+                                                class="form-control"
+                                            )}}
+                                        </div>
+                                        {{ form.submit( type="submit", class="btn btn-primary" ) }}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#
+    <!-- Modal 2.2
+
+    <div class="modal fade" id="busca_modal" tabindex="-1" aria-labelledby="busca_modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Lista de Projeto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <input type="search" name="achar_projeto_detalhe" id="achar_projeto_detalhe">
+                <script>
+                    $(document).ready(function(){
+                        $("#achar_projeto_detalhe").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("#myTable2 tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                        });
+                    });
+                    </script>
+                <table class="table">
+                    <tbody id="myTable2">
+                        <tr>
+                            <th scope="col">cliente_nome</th>
+                            <th>{{projeto.cliente_nome}}</th>
+
+                        </tr>
+                        <tr>
+                            
+                            <tr>
+                                <th scope="col">telefone</th>
+                                <th>{{projeto.telefone}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">endereço</th>
+                                <th>{{projeto.endereço}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">data_entrada</th>
+                                <th>{{projeto.data_entrada}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">data_medição</th>
+                                <th>{{projeto.data_medição}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">fotos_medição</th>
+                                <th>{{projeto.fotos_medição}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">ambientes</th>
+                                <th>{{projeto.ambientes}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">data_final</th>
+                                <th>{{projeto.data_final}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">promobe_arquivos</th>
+                                <th>{{projeto.promobe_arquivos}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">renders_jpg</th>
+                                <th>{{projeto.renders_jpg}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">medidas_pdf</th>
+                                <th>{{projeto.medidas_pdf}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">data_apresentação</th>
+                                <th>{{projeto.data_apresentação}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">aprovação</th>
+                                <th>{{projeto.aprovação}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">orçamento</th>
+                                <th>{{projeto.orçamento}}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">pagamento</th>
+                                <th>{{projeto.pagamento}}</th>
+                            </tr>
+                            
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div> -->#}
+
+    <script>
+        $(document).ready(function () {
+            //$('#birth-date').mask('00/00/0000');
+            $('.phone_with_ddd').mask('(00) 00000-0000');
+        });
+    </script>
+
+
+{% endblock body %}
