@@ -16,15 +16,17 @@ def create_app():
         SQLALCHEMY_DATABASE_URI = "sqlite:///test.db",
         SECRET_KEY = "TEMPORARIO",
         FLASK_ADMIN_SWATCH = 'journal', # http://bootswatch.com/3/,
-        SQLALCHEMY_TRACK_MODIFICATIONS = False
+        SQLALCHEMY_TRACK_MODIFICATIONS = False,
+        TESTE=True,
+        UPLOAD_FOLDER="tmp"
 
     )
 
     app.db = configure_db(app)
     migrate = Migrate(app,app.db)
 
-    from .admin import configure as configure_admin
-    configure_admin(app)
+    # from .admin import configure as configure_admin
+    # configure_admin(app)
     
    
 

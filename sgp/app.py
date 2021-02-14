@@ -1,116 +1,125 @@
-from datetime import datetime
-from flask import (
-    render_template,
-    flash,
-    redirect,
-    url_for,
-    request,
-    jsonify
-    )
-import uuid
-
+from flask.globals import current_app
 from . import create_app
-from .forms import Projetos_form
-from .admin import ProjetoModelView
-from flask_marshmallow import Marshmallow
-from flask_sqlalchemy import SQLAlchemy
-# from sqlalchemy import
-from .models import configure as configure_db, Projetos
+from .models import cria,all,get,atulaliza
+from flask import json, request, render_template,escape
+from werkzeug.utils import redirect, secure_filename
 
+import ipdb
+import os
 app = create_app()
-db = configure_db(app)
-ma = Marshmallow(app)
 
-############################################
-class Projetos_Schema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Projetos
-        # include_fk = True
-projeto_esquema = Projetos_Schema()
-############################################
-# @logged
-@app.route("/",methods=["GET","POST"])
+@app.route('/')
 def index():
-    form = Projetos_form(request.form)
-    
-    if form.validate_on_submit():
-        
-        flash('Adicionado!')
-        # flash(form.errors)
+    return render_template("index copy 2.html",projetos=all("projetos"))
+    # return str(all())
 
-        
-        projeto = app.db.Projetos(
-            # id=uuid.uuid4().bytes,
-            cliente_nome=form.cliente_nome.data,
-
-            telefone=str(form.telefone.data.national_number),
-            endereço=form.endereço.data,
-            ambientes=form.ambientes.data,
-            data_entrada=datetime.now()
-
-        )
-        app.db.session.add(projeto)
-        app.db.session.commit()
-
-        # return redirect('index')
-        return redirect("/")
-    # try:
-    if(form.errors):
-        flash(form.errors )
-    # except://
-        # ...
-
-    projetos = app.db.Projetos.query.all()
-    print(projetos)
-    return render_template(
-        "index.html",
-        form=form,
-        projetos=projetos)
-
-@app.route("/novo_projeto",methods=["GET","POST"])
-def novo_projeto():
-    form = Projetos_form(request.form)
-    
-    if form.validate_on_submit():
-        
-        flash('ahoi')
-        flash(form.errors)
-
-        
-        projeto = app.db.Projetos(
-            # id=uuid.uuid4().bytes,
-            cliente_nome=form.cliente_nome.data,
-            telefone=form.telefone.data,
-            endereço=form.endereço.data,
-            ambientes=form.ambientes.data,
-            data_entrada=datetime.now()
-
+@app.route('/cria',methods=["POST"])
+def cria_():
+    # import ipdb; ipdb.set_trace()
+    cria(
+        request.form.get("cliente_nome"),
+        request.form.get("telefone"),
+        request.form.get("endereço"),
+        request.form.get("data_entrada"),
+        request.form.getlist("ambientes")
         )
 
-        # return redirect('index')
-        return str(projeto)
-    flash(form.errors)
+    return redirect("/novo")
 
-    return render_template('novo_projeto.html', form=form)
-
-@app.route("/novo",methods=["GET","POST"])
+@app.route('/novo',methods=["GET"])
 def novo():
+    return render_template("novo.html")
 
-    if request.method == "POST":
-        print(
-            ".:",request.headers,
-            ".:",request.is_json,
-            ".:",request.data,
-            ".:",request.form,
-        )       
-          
-        db.session.add(
-            db.Projetos(
-                data_entrada=datetime.now(),
-                **request.get_json())
-        )
-        db.session.commit()
-    
-    a = db.Projetos.query.all()
-    # import ipdb;ipdb.set_trace()
-    return jsonify([projeto_esquema.dumps(tmp) for tmp in a])
+@app.route("/adm/",methods=["GET","POST"])
+@app.route("/adm/<id>",methods=["GET","POST"])
+def adm(id=''):
+    if request.method == "GET":
+        projeto = get(id)
+        print(projeto)
+        return render_template("adm.html",projeto=projeto)
+
+
+@app.route('/entrega')
+def entrega():
+    # ipdb.set_trace()
+    return render_template("entrega.html",ambientes=all("ambientes"))
+
+@app.route('/procura')
+def procura():
+
+    projetos_lista=[
+        {
+            "label":str("Cliente: "+ amb.comodo +" Comodo: " + amb.projetos.cliente_nome ),
+            "value":{
+                "id":str(amb.projetos.id),
+                "cliente_nome":str(amb.projetos.cliente_nome),
+                "telefone":str(amb.projetos.telefone),
+                "endereço":str(amb.projetos.endereço),
+                "data_entrada":str(amb.projetos.data_entrada),
+                "data_medicao":str(amb.projetos.data_medição),
+                "fotos_medicao":str(amb.projetos.fotos_medição),
+                "data_final":str(amb.projetos.data_final),
+                "promobe_arquivos":str(amb.projetos.promobe_arquivos),
+                "renders_jpg":str(amb.projetos.renders_jpg),
+                "medidas_pdf":str(amb.projetos.medidas_pdf),
+                "data_apresentacao":str(amb.projetos.data_apresentação),
+                "aprovacao":str(amb.projetos.aprovação),
+                "orcamento":str(amb.projetos.orçamento),
+                "pagamento":str(amb.projetos.pagamento),
+                "ambientes":[
+                    amb.comodo
+                    for amb in amb.projetos.ambientes],
+            }
+        }
+        for amb in all("ambientes")]
+
+    return render_template(
+        "procura.html",
+        projetos_lista=json.dumps( projetos_lista,app )
+    )
+
+@app.route('/resultado')
+def resultado():
+    return render_template("resultado.html",ambientes=all("ambientes"))
+
+@app.route('/atualiza')
+def atualiza():
+    form = request.form
+    for chave in request.files.keys:
+        if chave in ["fotos_medição","promobe_arquivos","renders_jpg","medidas_pdf"]:
+            form[chave] = cria_link(
+                request.files.get(chave),
+                request.form.get("clinete_nome")
+            )
+
+    atulaliza(
+        ambientes = form.poplist("ambientes"), #  ;del(form.["ambientes"])
+        **form
+    )
+    return 'sucess'
+            
+
+def cria_link(arquivo,cliente):
+    # if not allowed_file(arquivo.filename):
+    #     raise ControlerError(
+    #         "file_not_allowed",
+    #         "Formato de arquivo invalido!\n {}".format(arquivo.filename))
+
+    filename = secure_filename(arquivo.filename)
+    filename2 = filename.replace(
+        filename.split(".")[0], filename.split(".")[0] + "-" + str(hash(filename))
+    )
+    if not os.path.exists(current_app.config["UPLOAD_FOLDER"] + str(cliente)):
+        os.mkdir(current_app.config["UPLOAD_FOLDER"] + str(cliente))
+    arquivo.save(
+        os.path.join(current_app.config["UPLOAD_FOLDER"] + str(cliente), filename2)
+    )
+    link = app.linkpadrao + str(cliente) + "/" + filename2
+
+    return link
+
+# [
+#     { 'comodo': 'teste', 'promobe_arquivos': None, 'renders_jpg': None, 'medidas_pdf': None, 'fotos_medição': None },
+#     { 'comodo': 'teste', 'promobe_arquivos': None, 'renders_jpg': None, 'medidas_pdf': None, 'fotos_medição': None },
+#     { 'comodo': 'teste', 'promobe_arquivos': None, 'renders_jpg': None, 'medidas_pdf': None, 'fotos_medição': None }
+#     ]

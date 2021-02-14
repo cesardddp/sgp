@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+
+
+<div class="table-responsive">
+
+  <table id="tabela_projetos" class="table table-striped" id="showresults">
+    <thead>
+      <tr>
+        <th style="width:5%; text-align: center;" scope="col">Nome</th>
+        <th style="width:10%; text-align:center" scope="col">Comodo</th>
+        <th style="width:60%" scope="col">PROMOB</th>
+        <th style="width:60%" scope="col">IMAGENS</th>
+        <th style="width:60%" scope="col">MEDIDAS</th>
+      </tr>
+    </thead>
+
+
+
+    <tbody>
+      {% for ambiente in ambientes %}
+
+      <tr class="">
+
+        <td style="text-align:center" scope="row">
+          <input type="text" value={{ambiente.projetos.cliente_nome}}>
+        </td>
+
+        <td style="text-align:center">
+          <input type="text" value={{ambiente.comodo}}>
+        </td>
+
+        <td class="descricao" style=" white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px;">
+          {% if ambiente.promobe_arquivos %}
+            <input type="text" value={{ambiente.promobe_arquivos}}></td>
+          {% else %}
+            <input class="form-control-file" type="file" ></td>
+          {% endif %}
+
+
+        <td class="descricao" style=" white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px;">
+          {% if ambiente.promobe_arquivos %}
+            <input type="text" value={{ambiente.medidas_pdf}}></td>
+          {% else %}
+            <input class="form-control-file" type="file" ></td>
+          {% endif %}
+        
+        <td class="descricao" style=" white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px;">
+          {% if ambiente.promobe_arquivos %}
+            <input type="text" value={{ambiente.fotos_medição}}></td>
+          {% else %}
+            <input class="form-control-file" type="file" ></td>
+          {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock body %}

@@ -16,6 +16,7 @@ WTForms-Alchemy = "^0.17.0"
 phonenumbers = "^8.12.16"
 flask-marshmallow = "^0.14.0"
 marshmallow-sqlalchemy = "^0.24.1"
+pytest-flask = "^1.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

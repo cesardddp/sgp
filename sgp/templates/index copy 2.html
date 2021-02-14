@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% block style %}
+
+.bi {
+width: 100px;
+height: 100px;
+font-size: 100px;
+}
+{% endblock style %}
+{% block body %}
+
+<!-- <a href="">NOVO PROJETO</a> -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-auto ">
+
+            <!-- Button trigger modal -->
+            <a href="/novo" type="button" class="btn btn-default btn-sm" data-bs-target="#exampleModal">
+                <img src="/static/imgs/pessoa_fundo_verde.jpeg" alt="" width="100px" height="100px" title="Bootstrap">
+            </a>
+        </div>
+
+
+        <div class="col-auto ">
+
+            <a href="/procura" type="button" class="btn btn-default btn-sm">
+                <img src="/static/imgs/lupa.jpeg" alt="" width="100px" height="100px" title="Bootstrap"> </a>
+        </div>
+
+        <div class="col-auto ">
+
+            <a href="/entrega" type="button" class="btn btn-default btn-sm">
+                <img src="/static/imgs/quadro.jpeg" alt="" width="100px" height="100px" title="Bootstrap"> </a>
+        </div>
+            <div class="col-auto ">
+
+                <a href="/resultado" type="button" class="btn btn-default btn-sm">
+                    <img src="/static/imgs/dinheiro.jpeg" alt="" width="100px" height="100px" title="Bootstrap"> </a>
+            </div>
+        </div>
+
+    </div>
+    {% endblock body %}

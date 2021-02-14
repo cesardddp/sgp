@@ -35,13 +35,13 @@
         {% if messages != [{}]%}
         <ul class=flashes>
             {% for message in messages %}
-            <li>{{ message }}</li>
+            <li>{#{ message }#}</li>
             {% endfor %}
         </ul>
         {% endif %}
         {% endwith %}
 
-        <!-- <a href="{{url_for('novo_projeto')}}">NOVO PROJETO</a> -->
+        <!-- <a href="{#{url_for('novo_projeto')}#}">NOVO PROJETO</a> -->
 
         <div class="row justify-content-center">
             <div class="col-auto ">
@@ -83,66 +83,66 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{url_for('index')}}" method="post">
+                    <form action="{#{url_for('index')}#}" method="post">
 
-                        {{ form.csrf_token }}
+                        {#{form.csrf_token }#}
                         <br>
                         <div class="form-group">
                             <!-- NOME -->
-                            {{ form.cliente_nome.label(
+                            {#{form.cliente_nome.label(
 
                             )
-                            }}
-                            {{ form.cliente_nome(
+                            }#}
+                            {#{form.cliente_nome(
                             class="col-sm-2 col-form-label",
                             class="form-control",
                             placeholder="Nome do Cliente"
                             )
-                            }}
+                            }#}
                             <!-- TELEFONE -->
-                            {{ form.telefone.label(
+                            {#{form.telefone.label(
                             class="form-label", for="typePhone"
                             )
-                            }}
-                            {{ form.telefone(
+                            }#}
+                            {#{form.telefone(
                             type="tel",
                             class="form-control phone_with_ddd"
                             )
-                            }}
+                            }#}
                             <!-- ENDEREÇO -->
-                            {{ form.endereço.label(
+                            {#{form.endereço.label(
 
                             )
-                            }}
-                            {{ form.endereço(
+                            }#}
+                            {#{form.endereço(
                             class="col-sm-2 col-form-label",
                             class="form-control",
                             placeholder="Endereço"
                             )
-                            }}
+                            }#}
                             <!-- AMBIENTES -->
-                            {{ form.ambientes.label(
+                            {#{form.ambientes.label(
 
                             )
-                            }}
-                            {{ form.ambientes(
+                            }#}
+                            {#{form.ambientes(
                             class="col-sm-2 col-form-label",
                             class="form-control",
                             placeholder="Ambiente 1"
                             )
-                            }}
-                            {{ form.ambientes(
+                            }#}
+                            {#{form.ambientes(
                             class="col-sm-2 col-form-label",
                             class="form-control",
                             placeholder="Ambiente 2"
                             )
-                            }}
-                            {{ form.ambientes(
+                            }#}
+                            {#{form.ambientes(
                             class="col-sm-2 col-form-label",
                             class="form-control",
                             placeholder="Ambiente 3"
                             )
-                            }}
+                            }#}
 
 
                         </div>
@@ -152,7 +152,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        {{ form.submit( type="submit", class="btn btn-primary" ) }}
+                        {#{form.submit( type="submit", class="btn btn-primary" ) }#}
                     </div>
                 </form>
             </div>
@@ -193,32 +193,32 @@
                         </thead>
                         <tbody id="myTable">
                             {% for projeto in projetos %}
-                            <tr data-bs-toggle="collapse" data-bs-target="#detalhes{{projeto.id}}" >
-                                    <th>{{projeto.cliente_nome}}</th>
-                                    <th>{{projeto.data_medição}}</th>
-                                    <th>{{projeto.data_apresentação}}</th>
+                            <tr data-bs-toggle="collapse" data-bs-target="#detalhes{#{projeto.id}#}" >
+                                    <th>{#{projeto.cliente_nome}#}</th>
+                                    <th>{#{projeto.data_medição}#}</th>
+                                    <th>{#{projeto.data_apresentação}#}</th>
                                     <th>
                                         <ul>
-                                            <li>{{projeto.promobe_arquivos}}</li>
-                                            <li>{{projeto.renders_jpg}}</li>
-                                            <li>{{projeto.medidas_pdf}}</li>
+                                            <li>{#{projeto.promobe_arquivos}#}</li>
+                                            <li>{#{projeto.renders_jpg}#}</li>
+                                            <li>{#{projeto.medidas_pdf}#}</li>
                                         </ul>
 
                                    </th>
                                 </tr>
-                            <tr class="collapse" id="detalhes{{projeto.id}}">
-                                <th>telefone: {{projeto.telefone}}</th>
-                                <th>endereço: {{projeto.endereço}}</th>
-                                <th>data_entrada: {{projeto.data_entrada}}</th>
-                                <th>fotos_medição: {{projeto.fotos_medição}}</th>
+                            <tr class="collapse" id="detalhes{#{projeto.id}#}">
+                                <th>telefone: {#{projeto.telefone}#}</th>
+                                <th>endereço: {#{projeto.endereço}#}</th>
+                                <th>data_entrada: {#{projeto.data_entrada}#}</th>
+                                <th>fotos_medição: {#{projeto.fotos_medição}#}</th>
                                 
                             </tr>
-                            <tr class="collapse" id="detalhes{{projeto.id}}">
-                                <th>ambientes: {{projeto.ambientes}}</th>
-                                <th>data_final: {{projeto.data_final}}</th>
-                                <th>aprovação: {{projeto.aprovação}}</th>
-                                <th>orçamento: {{projeto.orçamento}}</th>
-                                <th>pagamento: {{projeto.pagamento}}</th>
+                            <tr class="collapse" id="detalhes{#{projeto.id}#}">
+                                <th>ambientes: {#{projeto.ambientes}#}</th>
+                                <th>data_final: {#{projeto.data_final}#}</th>
+                                <th>aprovação: {#{projeto.aprovação}#}</th>
+                                <th>orçamento: {#{projeto.orçamento}#}</th>
+                                <th>pagamento: {#{projeto.pagamento}#}</th>
 
                             </tr>
                             
@@ -266,66 +266,66 @@
                         <tbody id="myTable2">
                             <tr>
                                 <th scope="col">cliente_nome</th>
-                                <th>{{projeto.cliente_nome}}</th>
+                                <th>{#{projeto.cliente_nome}#}</th>
 
                             </tr>
                             <tr>
                                 
                                 <tr>
                                     <th scope="col">telefone</th>
-                                    <th>{{projeto.telefone}}</th>
+                                    <th>{#{projeto.telefone}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">endereço</th>
-                                    <th>{{projeto.endereço}}</th>
+                                    <th>{#{projeto.endereço}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">data_entrada</th>
-                                    <th>{{projeto.data_entrada}}</th>
+                                    <th>{#{projeto.data_entrada}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">data_medição</th>
-                                    <th>{{projeto.data_medição}}</th>
+                                    <th>{#{projeto.data_medição}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">fotos_medição</th>
-                                    <th>{{projeto.fotos_medição}}</th>
+                                    <th>{#{projeto.fotos_medição}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">ambientes</th>
-                                    <th>{{projeto.ambientes}}</th>
+                                    <th>{#{projeto.ambientes}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">data_final</th>
-                                    <th>{{projeto.data_final}}</th>
+                                    <th>{#{projeto.data_final}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">promobe_arquivos</th>
-                                    <th>{{projeto.promobe_arquivos}}</th>
+                                    <th>{#{projeto.promobe_arquivos}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">renders_jpg</th>
-                                    <th>{{projeto.renders_jpg}}</th>
+                                    <th>{#{projeto.renders_jpg}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">medidas_pdf</th>
-                                    <th>{{projeto.medidas_pdf}}</th>
+                                    <th>{#{projeto.medidas_pdf}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">data_apresentação</th>
-                                    <th>{{projeto.data_apresentação}}</th>
+                                    <th>{#{projeto.data_apresentação}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">aprovação</th>
-                                    <th>{{projeto.aprovação}}</th>
+                                    <th>{#{projeto.aprovação}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">orçamento</th>
-                                    <th>{{projeto.orçamento}}</th>
+                                    <th>{#{projeto.orçamento}#}</th>
                                 </tr>
                                 <tr>
                                     <th scope="col">pagamento</th>
-                                    <th>{{projeto.pagamento}}</th>
+                                    <th>{#{projeto.pagamento}#}</th>
                                 </tr>
                                 
                             </tr>

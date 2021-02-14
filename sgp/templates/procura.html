@@ -1,0 +1,202 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<main class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            Busca:
+        </div>
+        <div class="col-md-auto">
+            <input type="search" name="busca" id="busca">
+        </div>
+    </div>
+    <br>
+    <form action="" method="post" style="display: none;" id="form">
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="cliente_nome">Nome:
+
+                <input name="cliente_nome" type="text" placeholder="cliente_nome" value=""> <br>
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="telefone">Tel:
+
+                <input name="telefone" type="tel" placeholder="telefone" value=""> <br>
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="endereço">Endereço:
+
+                <input name="endereço" type="text" placeholder="endereço" value=""> <br>
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="data_entrada">Entrada:
+
+                <input name="data_entrada" class="date" type="date" placeholder="data_entrada" value=""> <br>
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="ambientes">Ambientes:
+                <ul id="ambientes_ul">
+                    <li>
+                        <input name="ambientes" id="ambientes" type="text" placeholder="ambientes" value="">
+                    </li>
+                </ul>
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="data_medição">Medição:
+                <input name="data_medição" type="date" class="date" placeholder="data_medição" value=""> <br>
+
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="data_apresentação">Aresentação:
+
+                <input name="data_apresentação" type="date" class="date" placeholder="data_apresentação" value="">
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="aprovação">Aprovação:
+
+                <input name="aprovação" type="checkbox" placeholder="aprovação" value="">
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="orçamento">Orçamento:
+
+                <input name="orçamento" type="number" placeholder="orçamento" value=""> <br>
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="pagamento">Pagamento:
+
+                <input name="pagamento" type="number" placeholder="pagamento" value="">
+            </label>
+        </div>
+
+        <div class="form-group d-flex justify-content-center col-md-auto">
+            <label for="data_final">Final:
+                <input name="data_final" type="" placeholder="data_final" value="">
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="promobe_arquivos">Arquivos Promobe:
+                <ul>
+                    <li>
+                        <input name="promobe_arquivos" type="file" placeholder="promobe_arquivos" value="">
+                    </li>
+                </ul>
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="renders_jpg">Renders:
+                <ul>
+                    <li>
+                        <input name="renders_jpg" type="file" placeholder="renders_jpg" value="">
+                    </li>
+                </ul>
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="fotos_medição">Fotos:
+                <ul>
+                    <li>
+                        <input name="fotos_medição" type="file" placeholder="fotos_medição" value="">
+                    </li>
+                </ul>
+            </label>
+        </div>
+        <div class="form-group d-flex justify-content-center col-md-auto">
+
+            <label for="medidas_pdf">Medidas:
+                <ul>
+                    <li>
+                        <input name="medidas_pdf" type="file" placeholder="medidas_pdf" value="">
+                    </li>
+                </ul>
+            </label>
+        </div>
+
+
+    </form>
+</main>
+
+
+<script>
+    var projetos_lista = JSON.parse('{{ projetos_lista | safe}}');
+    $("#busca").autocomplete({
+        source: projetos_lista,
+        minLength: 1,
+        autoFocus: true,
+
+        select: function (event, ui) {
+            event.preventDefault();
+            $("#form").show();
+
+            $('#busca').val(ui.item.label);
+            //$("input[name='id']").val(ui.item.id);
+            $("input[name='cliente_nome']").val(ui.item.value.cliente_nome);
+            $("input[name='telefone']").val(ui.item.value.telefone);
+            $("input[name='endereço']").val(ui.item.value.endereço);
+            $("input[name='data_entrada']").val(ui.item.value.data_entrada);
+            //$("input[name='data_medição']").val(ui.item.value.data_medição);
+            //$("input[name='data_final']").val(ui.item.value.data_final);
+            //$("input[name='fotos_medição']").val(ui.item.value.fotos_medição);
+            //$("input[name='promobe_arquivos']").val(ui.item.value.promobe_arquivos);
+            //$("input[name='renders_jpg']").val(ui.item.value.renders_jpg);
+            //$("input[name='medidas_pdf']").val(ui.item.value.medidas_pdf);
+            //$("input[name='data_apresentação']").val(ui.item.value.data_apresentação);
+            //$("input[name='aprovação']").val(ui.item.value.aprovação);
+            $("input[name='orçamento']").val(ui.item.value.orçamento);
+            $("input[name='pagamento']").val(ui.item.value.pagamento);
+            $("#ambientes").val(ui.item.value.ambientes[0])
+            for (var i = 1; i < ui.item.value.ambientes.length; i++) {
+                console.log(ui.item.value.ambientes[i]);
+                $("#ambientes_ul").append(
+                    $('<li></li>').append(
+                        $('<input name="ambientes" type="text" placeholder="ambientes" value="">')
+                            .val(ui.item.value.ambientes[i])
+                    )
+                );
+            };
+            //$("input[name='ambientes']").val(ui.item.value.ambientes[0].comodo);
+
+
+        },
+        focus: function (event, ui) {
+            event.preventDefault();
+
+        },
+        change: function (event, ui) {
+            event.preventDefault();
+        },
+    }).autocomplete("instance")._renderItem = function (ul, item) {
+        return $("<li class=\"list-group-item\" >")
+            .append(item.label)
+            .appendTo(ul);
+    };
+
+
+
+
+
+
+
+</script>
+{% endblock body %}

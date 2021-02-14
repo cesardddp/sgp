@@ -9,7 +9,7 @@
 {% endblock style %}
 {% block body %}
 <main class="container">
-    <!-- <a href="{{url_for('novo_projeto')}}">NOVO PROJETO</a> -->
+    <!-- <a href="">NOVO PROJETO</a> -->
 
     <div class="row justify-content-center">
         <div class="col-auto ">
@@ -51,51 +51,51 @@
             </div>
             <div class="modal-body">
 
-                <form action="{{url_for('index')}}" method="post">
+                <form action="{{url_for('index')}}#}" method="post">
 
-                    {{ form.csrf_token }}
+                    {#{{ form.csrf_token }}#}
                     <br>
                     <div class="form-group">
                         <!-- NOME -->
-                        {{ form.cliente_nome.label(
+                        {#{{ form.cliente_nome.label(
                             class="col-sm-2 col-form-label",
 
                         )
-                        }}
-                        {{ form.cliente_nome(
+                        }}#}
+                        {#{{ form.cliente_nome(
                         class="form-control",
                         placeholder="Nome do Cliente"
                         )
-                        }}
+                        }}#}
                         <!-- TELEFONE -->
-                        {{ form.telefone.label(
+                        {#{{ form.telefone.label(
                         class="form-label", for="typePhone"
                         )
-                        }}
-                        {{ form.telefone(
+                        }}#}
+                        {#{{ form.telefone(
                         type="tel",
                         class="form-control phone_with_ddd"
                         )
-                        }}
+                        }}#}
                         <!-- ENDEREÇO -->
-                        {{ form.endereço.label(
+                        {#{{ form.endereço.label(
                             class="col-sm-2 col-form-label",
 
                         )
-                        }}
-                        {{ form.endereço(
+                        }}#}
+                        {#{{ form.endereço(
                         class="form-control",
                         placeholder="Endereço"
                         )
-                        }}
+                        }}#}
                         <!-- AMBIENTES -->
                         
                         <div hidden>
-                            {{ form.ambientes(
+                            {#{{ form.ambientes(
                                 class="form-control",
                                 placeholder="Ambiente 1"
                                 )
-                                }}
+                                }}#}
                         </div>
                         <label for="ambientes">
                             Ambientes
@@ -114,7 +114,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                {{ form.submit( type="submit", class="btn btn-primary" ) }}
+                {#{{ form.submit( type="submit", class="btn btn-primary" ) }}#}
             </div>
             </form>
         </div>
@@ -163,84 +163,84 @@
                     <div class="card">
                         <div class="card-header" id="headingOne">
 
-                            <div class="row" data-bs-toggle="collapse" data-bs-target="#detalhes{{projeto.id}}">
+                            <div class="row" data-bs-toggle="collapse" data-bs-target="#detalhes{#{{projeto.id}}#}">
                                 <div class="col-auto">
-                                    {{projeto.cliente_nome}}
+                                    {#{{projeto.cliente_nome}}#}
                                 </div>
                                 <div class="col-auto">
-                                    {{projeto.data_medição}}
+                                    {#{{projeto.data_medição}}#}
                                 </div>
                                 <div class="col-auto">
-                                    {{projeto.data_apresentação}}
+                                    {#{{projeto.data_apresentação}}#}
                                 </div>
                                 <div class="col-auto">
 
                                     <ul>
-                                        <li>{{projeto.promobe_arquivos}}</li>
-                                        <li>{{projeto.renders_jpg}}</li>
-                                        <li>{{projeto.medidas_pdf}}</li>
+                                        <li>{#{{projeto.promobe_arquivos}}#}</li>
+                                        <li>{#{{projeto.renders_jpg}}#}</li>
+                                        <li>{#{{projeto.medidas_pdf}}#}</li>
                                     </ul>
 
                                 </div>
                             </div>
-                            <div id="detalhes{{projeto.id}}" class="collapse" aria-labelledby="headingOne"
+                            <div id="detalhes{#{{projeto.id}}#}" class="collapse" aria-labelledby="headingOne"
                                 data-parent="#accordion">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-auto">
-                                            Telefone: {{form.telefone(
+                                            Telefone: {#{{form.telefone(
                                                 value=projeto.telefone,
                                                 class="form-control"
-                                            )}}
+                                            )}}#}
                                         </div>
                                         <div class="col-auto">
-                                            Endereço: {{form.endereço(
+                                            Endereço: {#{{form.endereço(
                                                 value=projeto.endereço,
                                                 class="form-control"
-                                            )}}
+                                            )}}#}
                                         </div>
                                         <div class="col-auto">
-                                            Data_entrada: {{form.data_entrada(
+                                            Data_entrada: {#{{form.data_entrada(
                                                 value=projeto.data_entrada,
                                                 class="form-control"
-                                            )}}
+                                            )}}#}
                                         </div>
                                         <div class="col-auto">
-                                            Fotos_medição: {{form.fotos_medição(
+                                            Fotos_medição: {#{{form.fotos_medição(
                                                 value=projeto.fotos_medição,
                                                 class="form-control"
-                                            )}}
+                                            )}}#}
                                         </div>
                                         <div class="col-auto">
-                                            Ambientes: {{form.ambientes(
+                                            Ambientes: {#{{form.ambientes(
                                                 value=projeto.ambientes,
                                                 class="form-control"
-                                            )}}
+                                            )}}#}
                                         </div>
                                         <div class="col-auto">
-                                            Data_final: {{form.data_final(
+                                            Data_final: {#{{form.data_final(
                                                 value=projeto.data_final,
                                                 class="form-control"
-                                            )}}
+                                            )}}#}
                                         </div>
                                         <div class="col-auto">
-                                            Aprovação: {{form.aprovação(
+                                            Aprovação: {#{{form.aprovação(
                                                 value=projeto.aprovação,
-                                            )}}
+                                            )}}#}
                                         </div>
                                         <div class="col-auto">
-                                            Orçamento: {{form.orçamento(
+                                            Orçamento: {#{{form.orçamento(
                                                 value=projeto.orçamento,
                                                 class="form-control"
-                                            )}}
+                                            )}}#}
                                         </div>
                                         <div class="col-auto">
-                                            Pagamento: {{form.pagamento(
+                                            Pagamento: {#{{form.pagamento(
                                                 value=projeto.pagamento,
                                                 class="form-control"
-                                            )}}
+                                            )}}#}
                                         </div>
-                                        {{ form.submit( type="submit", class="btn btn-primary" ) }}
+                                        {#{{ form.submit( type="submit", class="btn btn-primary" ) }}#}
 
                                     </div>
                                 </div>
@@ -286,66 +286,66 @@
                     <tbody id="myTable2">
                         <tr>
                             <th scope="col">cliente_nome</th>
-                            <th>{{projeto.cliente_nome}}</th>
+                            <th>{#{{projeto.cliente_nome}}#}</th>
 
                         </tr>
                         <tr>
                             
                             <tr>
                                 <th scope="col">telefone</th>
-                                <th>{{projeto.telefone}}</th>
+                                <th>{#{{projeto.telefone}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">endereço</th>
-                                <th>{{projeto.endereço}}</th>
+                                <th>{#{{projeto.endereço}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">data_entrada</th>
-                                <th>{{projeto.data_entrada}}</th>
+                                <th>{#{{projeto.data_entrada}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">data_medição</th>
-                                <th>{{projeto.data_medição}}</th>
+                                <th>{#{{projeto.data_medição}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">fotos_medição</th>
-                                <th>{{projeto.fotos_medição}}</th>
+                                <th>{#{{projeto.fotos_medição}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">ambientes</th>
-                                <th>{{projeto.ambientes}}</th>
+                                <th>{#{{projeto.ambientes}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">data_final</th>
-                                <th>{{projeto.data_final}}</th>
+                                <th>{#{{projeto.data_final}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">promobe_arquivos</th>
-                                <th>{{projeto.promobe_arquivos}}</th>
+                                <th>{#{{projeto.promobe_arquivos}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">renders_jpg</th>
-                                <th>{{projeto.renders_jpg}}</th>
+                                <th>{#{{projeto.renders_jpg}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">medidas_pdf</th>
-                                <th>{{projeto.medidas_pdf}}</th>
+                                <th>{#{{projeto.medidas_pdf}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">data_apresentação</th>
-                                <th>{{projeto.data_apresentação}}</th>
+                                <th>{#{{projeto.data_apresentação}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">aprovação</th>
-                                <th>{{projeto.aprovação}}</th>
+                                <th>{#{{projeto.aprovação}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">orçamento</th>
-                                <th>{{projeto.orçamento}}</th>
+                                <th>{#{{projeto.orçamento}}#}</th>
                             </tr>
                             <tr>
                                 <th scope="col">pagamento</th>
-                                <th>{{projeto.pagamento}}</th>
+                                <th>{#{{projeto.pagamento}}#}</th>
                             </tr>
                             
                         </tr>
@@ -359,7 +359,7 @@
             </div>
         </div>
     </div>
-</div> -->#}
+</div> 
 
     <script>
         $(document).ready(function () {
