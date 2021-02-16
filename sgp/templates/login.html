@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<main>
+    <div class="container">
+        <form action="/login" method="post">
+            <div class="form-group d-flex justify-content-center col-md-auto">
+
+                <label for="cliente_nome">Nome:
+                    <input name="user" type="text" placeholder="Usuário" value="">
+                </label>
+                <label for="cliente_nome">Senha:
+                    <input name="pass" type="password" placeholder="Senha" value="">
+                </label>
+                <input name="" type="submit" value="Login">
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

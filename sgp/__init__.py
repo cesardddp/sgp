@@ -1,6 +1,9 @@
 from flask import Flask
 from .models import configure as configure_db
 from flask_migrate import Migrate
+from flask_uploads import  UploadSet,IMAGES,DOCUMENTS
+from flask_login import LoginManager 
+
 
 # from flask_admin.contrib.sqla import ModelView
 
@@ -18,9 +21,17 @@ def create_app():
         FLASK_ADMIN_SWATCH = 'journal', # http://bootswatch.com/3/,
         SQLALCHEMY_TRACK_MODIFICATIONS = False,
         TESTE=True,
-        UPLOAD_FOLDER="tmp"
+        UPLOAD_FOLDER="./tmp",
+        ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
 
     )
+
+    app.login_manager = LoginManager(app)
+    
+    app.promob = UploadSet("promob", DOCUMENTS)
+    app.pdf = UploadSet("pdf", DOCUMENTS)
+    app.jpg = UploadSet("jpg", IMAGES)
 
     app.db = configure_db(app)
     migrate = Migrate(app,app.db)

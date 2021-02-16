@@ -180,6 +180,17 @@ aws = ["boto"]
 azure = ["azure-storage-blob"]
 
 [[package]]
+name = "flask-login"
+version = "0.5.0"
+description = "User session management for Flask"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Flask = "*"
+
+[[package]]
 name = "flask-marshmallow"
 version = "0.14.0"
 description = "Flask + marshmallow for beautiful APIs"
@@ -211,6 +222,20 @@ python-versions = "*"
 alembic = ">=0.7"
 Flask = ">=0.9"
 Flask-SQLAlchemy = ">=1.0"
+
+[[package]]
+name = "flask-reuploaded"
+version = "0.5.0"
+description = "Flexible and efficient upload handling for Flask"
+category = "main"
+optional = false
+python-versions = ">= 3.6"
+
+[package.dependencies]
+Flask = ">=1.0.4"
+
+[package.extras]
+test = ["pytest", "pytest-cov"]
 
 [[package]]
 name = "flask-shell-ipython"
@@ -904,7 +929,7 @@ timezone = ["python-dateutil"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "9ca5ff2bffc9cf0707eb116bcf015976bbeada27dee46baa0be75fde9dd41b91"
+content-hash = "a48951014872e8ca24ca7b6923025e163cf8cbe525dd8061ffb250ec69c71d2f"
 
 [metadata.files]
 alembic = [
@@ -965,6 +990,10 @@ flask = [
 flask-admin = [
     {file = "Flask-Admin-1.5.7.tar.gz", hash = "sha256:145f59407d78319925e20f7c3021f60c71f0cacc98e916e52000845dc4c63621"},
 ]
+flask-login = [
+    {file = "Flask-Login-0.5.0.tar.gz", hash = "sha256:6d33aef15b5bcead780acc339464aae8a6e28f13c90d8b1cf9de8b549d1c0b4b"},
+    {file = "Flask_Login-0.5.0-py2.py3-none-any.whl", hash = "sha256:7451b5001e17837ba58945aead261ba425fdf7b4f0448777e597ddab39f4fba0"},
+]
 flask-marshmallow = [
     {file = "flask-marshmallow-0.14.0.tar.gz", hash = "sha256:bd01a6372cbe50e36f205cfff0fc5dab0b7b662c4c8b2c4fc06a3151b2950950"},
     {file = "flask_marshmallow-0.14.0-py2.py3-none-any.whl", hash = "sha256:2adcd782b5a4a6c5ae3c96701f320d8ca6997995a52b2661093c56cc3ed24754"},
@@ -972,6 +1001,10 @@ flask-marshmallow = [
 flask-migrate = [
     {file = "Flask-Migrate-2.5.3.tar.gz", hash = "sha256:a69d508c2e09d289f6e55a417b3b8c7bfe70e640f53d2d9deb0d056a384f37ee"},
     {file = "Flask_Migrate-2.5.3-py2.py3-none-any.whl", hash = "sha256:4dc4a5cce8cbbb06b8dc963fd86cf8136bd7d875aabe2d840302ea739b243732"},
+]
+flask-reuploaded = [
+    {file = "Flask-Reuploaded-0.5.0.tar.gz", hash = "sha256:b630d8068025d21acdee5b3a9392e88d0c4d11b85d3ea163aa77d710de7fbefd"},
+    {file = "Flask_Reuploaded-0.5.0-py3-none-any.whl", hash = "sha256:f0fde2f158542135fb7292b55a86f714d4da320a977ebc9c5d0a4ac827fbe215"},
 ]
 flask-shell-ipython = [
     {file = "flask-shell-ipython-0.4.1.tar.gz", hash = "sha256:fb3b390f4dc03d7a960c62c5b51ce4deca19ceff77e4db3d4670012adc529ebd"},
