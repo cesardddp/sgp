@@ -42,25 +42,25 @@
 </head>
 
 <body>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul class=flashes>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-
+    
     <!-- Image and text -->
-
+    
     <header class="nav container justify-content-center">
         <a class="" href="/">
             <img src="/static/imgs/logo.jpeg" width="200" height="150" class="" alt="">
         </a>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
     </header>
     <a href="/" class="badge badge-dark">Voltar</a>
-
+    
     {% block body %}
     {% endblock body %}
 

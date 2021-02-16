@@ -43,7 +43,6 @@ def login():
     # return str(all())
 
 @app.route("/logout")
-@login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
@@ -52,6 +51,7 @@ def logout():
 @login_required
 @app.route("/cria", methods=["POST"])
 def cria_():
+
     # import ipdb; ipdb.set_trace()
     cria(
         request.form.get("cliente_nome"),
@@ -60,7 +60,7 @@ def cria_():
         request.form.get("data_entrada"),
         request.form.getlist("ambientes"),
     )
-
+    flash("criado")
     return redirect("/novo")
 
 
