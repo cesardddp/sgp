@@ -1,19 +1,22 @@
 {% extends 'layout.html' %}
 
+{% block head %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+{% endblock head %} 
+
 {% block body %}
-
-
 
 <div class="table-responsive">
 
   <table id="tabela_projetos" class="table table-striped" id="showresults">
     <thead>
       <tr>
-        <th style="width:5%; text-align: center;" scope="col">Nome</th>
-        <th style="width:10%; text-align:center" scope="col">Comodo</th>
-        <th style="width:60%" scope="col">PROMOB</th>
-        <th style="width:60%" scope="col">IMAGENS</th>
-        <th style="width:60%" scope="col">MEDIDAS</th>
+        <th style="width:100%; text-align: center;" scope="col">Nome</th>
+        <th style="width:100%; text-align:center" scope="col">Comodo</th>
+        <th style="width:100%" scope="col">PROMOB</th>
+        <th style="width:100%" scope="col">IMAGENS</th>
+        <th style="width:100%" scope="col">MEDIDAS</th>
       </tr>
     </thead>
 
@@ -22,19 +25,19 @@
     <tbody>
       {% for ambiente in ambientes %}
 
-      <tr class="">
+      <tr class="" id={{ambiente.id}}>
 
         <td style="text-align:center" scope="row">
-          <input type="text" value={{ambiente.projetos.cliente_nome}}>
+          {{ambiente.projetos.cliente_nome}}
         </td>
 
         <td style="text-align:center">
-          <input type="text" value={{ambiente.comodo}}>
+          {{ambiente.comodo}}
         </td>
 
         <td class="descricao" style=" white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px;">
           {% if ambiente.promobe_arquivos %}
-            <input type="text" value={{ambiente.promobe_arquivos}}></td>
+            <a href=" {{ambiente.promobe_arquivos}}"> promobe_arquivos</a></td>
           {% else %}
             <input class="form-control-file" type="file" ></td>
           {% endif %}
@@ -42,14 +45,14 @@
 
         <td class="descricao" style=" white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px;">
           {% if ambiente.promobe_arquivos %}
-            <input type="text" value={{ambiente.medidas_pdf}}></td>
+            <a href=" {{ambiente.medidas_pdf}}"> medidas_pdf</a></td>
           {% else %}
             <input class="form-control-file" type="file" ></td>
           {% endif %}
         
         <td class="descricao" style=" white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px;">
           {% if ambiente.promobe_arquivos %}
-            <input type="text" value={{ambiente.fotos_medição}}></td>
+            <a href=" {{ambiente.fotos_medição}}"> fotos_medição</a></td>
           {% else %}
             <input class="form-control-file" type="file" ></td>
           {% endif %}
@@ -58,4 +61,42 @@
     </tbody>
   </table>
 </div>
+<script>
+  $(document).ready(function () {
+    $('#tabela_projetos').DataTable(
+        {
+            "searching": true,
+            responsive: true,
+            "processing": true,
+            "dom": "<lf<t>ip>",
+            "language":
+            {
+                "zeroRecords": "Nenhum registro corresponde foi encontrado!",
+                "paginate": {
+                    "first": "Primeira",
+                    "last": "Última",
+                    "next": "Próxima",
+                    "previous": "Anterior"
+                },
+                "aria": {
+                    "sortAscending": ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                },
+                "emptyTable": "Você não possui clientes adicionados!",
+                "info": "Mostrando _START_ de _END_ do total de _TOTAL_ clientes",
+                "infoEmpty": "Mostrando 0 de 0 clientes",
+                "infoFiltered": "(filtrando de _MAX_ total clientes)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ clientes",
+                "loadingRecords": "Carregando...",
+                "processing": "Processando...",
+                "search": "Buscar:",
+
+            }
+
+        });
+    $('.dataTables_length').addClass('bs-select');
+});
+</script>
 {% endblock body %}

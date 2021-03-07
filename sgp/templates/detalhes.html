@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+
+
+{% endblock head %}
+{% block body %}
+<table id="tabela">
+    <thead>
+        <tr>
+            <th>cliente_nome</th>
+            <th>telefone</th>
+            <th>endereco</th>
+            <th>data_entrada</th>
+            <th>ambientes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for projeto in projetos %}
+        <tr id="{{projeto.id}}">
+            <td>{{projeto.cliente_nome}}</td>
+            <td>{{projeto.telefone}}</td>
+            <td>{{projeto.endereco}}</td>
+            <td>{{projeto.data_entrada}}</td>
+            <td>{% for amb in projeto.ambientes %}{{amb}}{%endfor%}</td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+
+<br>
+<script>
+    $(document).ready(function () {
+        $('#tabela').DataTable(
+            {
+                "searching": true,
+                responsive: true,
+                "processing": true,
+                "dom": "<lf<t>ip>",
+                "language":
+                {
+                    "zeroRecords": "Nenhum registro corresponde foi encontrado!",
+                    "paginate": {
+                        "first": "Primeira",
+                        "last": "Última",
+                        "next": "Próxima",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activate to sort column ascending",
+                        "sortDescending": ": activate to sort column descending"
+                    },
+                    "emptyTable": "Você não possui clientes adicionados!",
+                    "info": "Mostrando _START_ de _END_ do total de _TOTAL_ clientes",
+                    "infoEmpty": "Mostrando 0 de 0 clientes",
+                    "infoFiltered": "(filtrando de _MAX_ total clientes)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ clientes",
+                    "loadingRecords": "Carregando...",
+                    "processing": "Processando...",
+                    "search": "Buscar:",
+
+                }
+
+            });
+        $('.dataTables_length').addClass('bs-select');
+    });
+
+    $('#tabela').on('click', 'tbody     tr', function () {
+       window.location = "/detalhado?id_projeto="+this.id
+    });
+</script>
+{% endblock body %}

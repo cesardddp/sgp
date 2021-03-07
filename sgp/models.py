@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy.model import camel_to_snake_case
 import ipdb
 from sqlalchemy import (
     Column,
@@ -35,11 +36,11 @@ class Projetos(db.Model):
     id = db.Column(db.Integer, primary_key=True)#,autoincrement=True)
     cliente_nome = Column(VARCHAR(60),nullable=False)
     telefone = Column(VARCHAR(50),nullable=False)
-    endereço = Column(VARCHAR(200),nullable=False)
+    endereco = Column(VARCHAR(200),nullable=False)
     data_entrada = Column(DATE, nullable=False)
 
-    data_medição = Column(DATE)
-    fotos_medição = Column(UnicodeText)
+    data_medicao = Column(DATE)
+    fotos_medicao = Column(UnicodeText)
 
     data_final = Column(DATE)
     
@@ -47,13 +48,13 @@ class Projetos(db.Model):
     renders_jpg = Column( UnicodeText)
     medidas_pdf = Column( UnicodeText)
 
-    data_apresentação = Column(DATE)
+    data_apresentacao = Column(DATE)
 
-    # aprovação = Column(BOOLEAN)
-    aprovação = Column(Enum("Pendente", "Aprovado"))
+    # aprovacao = Column(BOOLEAN)
+    aprovacao = Column(Enum("Pendente", "Aprovado"))
 
 
-    orçamento = Column(String(30))
+    orcamento = Column(String(30))
     pagamento = Column(String(30))
 
     ambientes = db.relationship('Ambientes', back_populates='projetos', lazy=True)
@@ -63,7 +64,7 @@ class Projetos(db.Model):
         return {
             "cliente_nome":self.cliente_nome,
             "telefone":self.telefone,
-            "endereço":self.endereço,
+            "endereco":self.endereco,
             "data_entrada":self.data_entrada
             }.__str__()
     def __repr__(self):
@@ -71,7 +72,7 @@ class Projetos(db.Model):
         return {
             "cliente_nome":self.cliente_nome,
             "telefone":self.telefone,
-            "endereço":self.endereço,
+            "endereco":self.endereco,
             "data_entrada":self.data_entrada
             }.__str__()
 
@@ -84,7 +85,7 @@ class Ambientes(db.Model):
     promobe_arquivos = Column( UnicodeText)
     renders_jpg = Column( UnicodeText)
     medidas_pdf = Column( UnicodeText)
-    fotos_medição = Column(UnicodeText)
+    fotos_medicao = Column(UnicodeText)
 
     projetos = db.relationship('Projetos', back_populates='ambientes', lazy=True)
     projeto_id = db.Column(db.Integer, db.ForeignKey('projetos.id'), nullable=False)
@@ -95,7 +96,7 @@ class Ambientes(db.Model):
             "promobe_arquivos":self.promobe_arquivos,
             "renders_jpg":self.renders_jpg,
             "medidas_pdf":self.medidas_pdf,
-            "fotos_medição":self.fotos_medição
+            "fotos_medicao":self.fotos_medicao
             }.__str__()
     def __repr__(self):
         # return f"{self.cliente_nome}" # - {} - {} - {}"
@@ -104,7 +105,7 @@ class Ambientes(db.Model):
             "promobe_arquivos":self.promobe_arquivos,
             "renders_jpg":self.renders_jpg,
             "medidas_pdf":self.medidas_pdf,
-            "fotos_medição":self.fotos_medição
+            "fotos_medicao":self.fotos_medicao
             }.__str__()
 
 
@@ -112,8 +113,8 @@ class User(db.Model,UserMixin):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)#,autoincrement=True)
     nome = db.Column(VARCHAR(60),nullable=False)
-
-    # auntenticação = False
+    # senha = db.Column(VARCHAR(60) ,nullable=False)
+   # auntenticaoao = False
     # ativo = False
 
 # The class that you use to represent users needs to implement these properties and methods:
@@ -152,7 +153,7 @@ class User(db.Model,UserMixin):
 def cria(
     cliente_nome:str,
     telefone:str,
-    endereço:str,
+    endereco:str,
     data_entrada:str,
     ambientes:list,
     **kwargs
@@ -166,11 +167,11 @@ def cria(
         # id = uuid.uuid4().bytes,
         cliente_nome = cliente_nome,
         telefone = telefone,
-        endereço = endereço,
+        endereco = endereco,
         data_entrada = datetime.strptime(data_entrada,"%Y-%m-%d") if data_entrada else datetime.now(),
         # data_entrada = datetime.strptime(data_entrada,"%dd/%mm/%Y") if data_entrada else datetime.now(),
         ambientes = ambientes_,
-        aprovação = "Pendente"
+        aprovacao = "Pendente"
     
     )
 
@@ -181,10 +182,13 @@ def cria(
     return Projetos.query.get(projeto.id)
 
 def atulaliza(**kwargs):
-    """ recebe os parametro que serão atualizados
+    """ recebe os parametro que serao atualizados
     e tenta add ao banco
 
     """
+
+    ipdb.set_trace()
+
     kwargs["ambientes"] = [
         Ambientes(comodo=amb)
         for amb in kwargs.get("ambientes",[])
@@ -194,7 +198,8 @@ def atulaliza(**kwargs):
     projeto = Projetos.query.get(
         kwargs.pop("id"))
     for campo,valor in kwargs.items()  :
-        setattr(projeto,campo)
+        if campo:
+            setattr(projeto,campo,valor)
     db.session.add(projeto)
     db.session.commit()
 
@@ -208,11 +213,22 @@ def all(table):
 
 def get(id):
     return Projetos.query.get(id)
+
+
+
+
+
+
+
+
+
+
+
 # def teste():
 #     cria(
 #         cliente_nome = "Teste-cliente_nome",
 #         telefone = "Teste-telefone",
-#         endereço = "Teste-endereço",
+#         endereco = "Teste-endereco",
 #         data_entrada = "Teste-data_entrada",
 #         ambientes = "Teste-ambientes",
 #         **kwargs

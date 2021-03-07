@@ -7,36 +7,36 @@
 
         <div class="row justify-content-md-center">
             <div class="form-group col-md-auto">
-                <label for="cliente_nome">cliente_nome: </label>
-                <input type="text" name="cliente_nome" id="" value={% if config["TESTE"]%}teste {%endif%}>
+                <label for="cliente_nome">Nome do Cliente: </label>
+                <input type="text" name="cliente_nome" id="" value={% if config["TESTE"]%}lora {%endif%}>
             </div>
         </div>
 
         <div class="row justify-content-md-center">
             <div class="form-group col-md-auto">
-                <label for="telefone">telefone: </label>
+                <label for="telefone">Telefone: </label>
                 <input type="tel" name="telefone" id="" value={% if config["TESTE"]%}(19)99999-9999 {%endif%}>
             </div>
         </div>
 
         <div class="row justify-content-md-center">
             <div class="form-group col-md-auto">
-                <label for="data_entrada">data_entrada: </label>
-                <input type="date" class="date" name="data_entrada" id="" value={% if config["TESTE"]%}{%endif%}>
+                <label for="data_entrada">Data de entrada: </label>
+                <input type="date" class="date" name="data_entrada" id="" value={% if config["TESTE"]%}11/02/2020{%endif%}>
             </div>
         </div>
 
         <div class="row justify-content-md-center">
             <div class="form-group col-md-auto">
-                <label for="endereço">endereço: </label>
-                <input type="text" name="endereço" id="" value={% if config["TESTE"]%} "av.16 a 1300" {%endif%}>
+                <label for="endereco">Endereço: </label>
+                <input type="text" name="endereco" id="" value={% if config["TESTE"]%} "av.16 a 1300" {%endif%}>
             </div>
         </div>
 
         <div class="row justify-content-md-center">
             <div class="form-group col-md-auto">
-                <label for="ambientes">ambiente  
-                    <input type="text" name="ambientes" id="ambientes" value={% if config["TESTE"]%}teste {%endif%}>
+                <label for="ambientes">Ambientes  
+                    <input type="text" name="ambientes" id="ambientes" value={% if config["TESTE"]%}sala {%endif%}>
                     <button type="button" class="button" id="mais" onclick="novoCampo()">+</button>
                 </label>
             </div>

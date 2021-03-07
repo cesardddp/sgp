@@ -1,0 +1,93 @@
+{% extends 'layout.html' %}
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+
+
+{% endblock head %}
+{% block body %}
+<br>
+<div id="pid">{{projeto.id}}</div>
+<br>
+<th>cliente_nome</th>
+<br>
+<td>{{projeto.cliente_nome}}</td>
+<br>
+<th>telefone</th>
+<br>
+<td>{{projeto.telefone}}</td>
+<br>
+<th>endereco</th>
+<br>
+<td>{{projeto.endereco}}</td>
+<br>
+<th>data_entrada</th>
+<br>
+<td>{{projeto.data_entrada}}</td>
+<br>
+<th>ambientes</th>
+<br>
+{% for amb in projeto.ambientes %}
+<form enctype="multipart/form-data">
+    Comodo: <label for="comodo">{{amb.comodo}}</label>
+    <br>
+    {%if amb.promobe_arquivos == None %}
+    promobe_arquivos: <input type="file" name="promobe_arquivos" id="promobe_arquivos"><br>
+    {%else%}
+    <a href="{{amb.promobe_arquivos}}">{{amb.promobe_arquivos}}</a>
+     <br>   
+    {%endif%}
+    {%if amb.renders_jpg == None %}
+    renders_jpg: <input type="file" name="renders_jpg" id="renders_jpg"><br>
+    {%else%}
+    <a href="{{amb.renders_jpg}}">{{amb.renders_jpg}}</a>
+     <br>    
+    {%endif%}
+    {%if amb.medidas_pdf == None %}
+    medidas_pdf: <input type="file" name="medidas_pdf" id="medidas_pdf"><br>
+    {%else%}
+    <a href="{{amb.medidas_pdf}}">{{amb.medidas_pdf}}</a>
+     <br>    
+    {%endif%}
+    {%if amb.fotos_medicao == None %}
+    fotos_medicao: <input type="file" name="fotos_medicao" id="fotos_medicao"><br>
+    {%else%}
+    <a href="{{amb.fotos_medicao}}">{{amb.fotos_medicao}}</a>
+     <br>  
+    {%endif%}
+
+    <br>
+</form>
+{%endfor%}
+<input type="submit" id="btnSubmit" value="Enviar arquivos">
+
+
+<br>
+<script>
+    $("input").on("change", function () {
+        emput = this
+        console.log(this.files[0]);
+        var data = new FormData(this.parentElement);
+        jQuery.ajax({
+            url: '/data/' + this.parentElement.children[0].textContent + '/' + $("#pid").text(),
+            type: "POST",
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            cache: false,
+            data: data,
+            success: function (data) {
+                $(emput).remove()
+            },
+            error: function (data) {
+                alert('Sorry.');
+            }
+        });
+    })
+
+//    $('#tabela').on('click', 'tbody tr', function () {
+  //     window.location = "/detalhes?id_projeto="+this.id
+    //});
+</script>
+{% endblock body %}
