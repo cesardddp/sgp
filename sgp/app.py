@@ -98,7 +98,8 @@ def detalhado():
 # @app.route("/_uploads/files/")
 def uploads(name):
     # import pdb;pdb.set_trace()
-    return send_from_directory("/home/cesar/git/diego/SGP/files",name)
+    
+    return send_from_directory(os.path.dirname(os.path.realpath(__file__))[:-3]+"files",name)
 
 @app.route("/data/<ambiente>/<id>",methods=["POST"])
 def data(ambiente,id):
