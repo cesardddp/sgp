@@ -1,234 +1,59 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask_sqlalchemy.model import camel_to_snake_case
-import ipdb
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    Binary,
-    DATE,
-    BOOLEAN,
-    Binary,
-    Enum,
-    UnicodeText,
-    VARCHAR
-)
-from sqlalchemy_utils import PhoneNumber
+from flask_marshmallow import Marshmallow
+
+# from sqlalchemy_utils import PhoneNumber
 from datetime import datetime
-from flask_login import UserMixin
+# from flask_login import UserMixin
 
 import uuid
-import ipdb
 db = SQLAlchemy()
 
 
 def configure(app):
     db.init_app(app)
-    db.Projetos = Projetos
-    db.Ambientes = Ambientes 
-    db.User = User
+    db.Projeto = Projeto
+    db.Ambiente = Ambiente
+    db.Cliente = Cliente
+    db.Usuario = Usuario
     app.db = db
+
     return db
 
+class Cliente (db.Model):
+    __tablename__ = "Cliente"
+    id = db.Column('id', db.Integer, primary_key = True)
+    nome = db.Column('nome', db.String)
+    endereço = db.Column('endereço', db.String)
+    telefone = db.Column('telefone', db.String)
 
-class Projetos(db.Model):
-    __tablename__ = "projetos"
-    id = db.Column(db.Integer, primary_key=True)#,autoincrement=True)
-    cliente_nome = Column(VARCHAR(60),nullable=False)
-    telefone = Column(VARCHAR(50),nullable=False)
-    endereco = Column(VARCHAR(200),nullable=False)
-    data_entrada = Column(DATE, nullable=False)
+class Ambiente (db.Model):
+    __tablename__ = "Ambiente"
+    id = db.Column('id', db.Integer, primary_key = True)
+    nome = db.Column('nome', db.String)
+    projeto_id = db.Column('Projeto_id', db.Integer, db.ForeignKey('Projeto.id'))
 
-    data_medicao = Column(DATE)
-    fotos_medicao = Column(UnicodeText)
+    projeto = db.relationship('Projeto', foreign_keys=projeto_id)
 
-    data_final = Column(DATE)
-    
-    promobe_arquivos = Column( UnicodeText)
-    renders_jpg = Column( UnicodeText)
-    medidas_pdf = Column( UnicodeText)
+class Projeto (db.Model):
+    __tablename__ = "Projeto"
+    id = db.Column('id', db.Integer, primary_key = True)
+    cliente = db.Column('cliente', db.String)
+    data_entrada = db.Column('data_entrada', db.DateTime)
+    data_medicao = db.Column('data_medicao', db.DateTime)
+    data_apresentacao = db.Column('data_apresentacao', db.DateTime)
+    fotos = db.Column('fotos', db.String)
+    arquivos = db.Column('arquivos', db.String)
+    aprovacao = db.Column('aprovacao', db.String)
+    orcamento = db.Column('orcamento', db.String)
+    pagamento = db.Column('pagamento', db.String)
+    usuario_id = db.Column('Usuario_id', db.Integer, db.ForeignKey('Usuario.id'))
+    cliente_id = db.Column('Cliente_id', db.Integer, db.ForeignKey('Cliente.id'))
 
-    data_apresentacao = Column(DATE)
+    usuario = db.relationship('Usuario', foreign_keys=usuario_id)
+    cliente = db.relationship('Cliente', foreign_keys=cliente_id)
 
-    # aprovacao = Column(BOOLEAN)
-    aprovacao = Column(Enum("Pendente", "Aprovado"))
+class Usuario (db.Model):
+    __tablename__ = "Usuario"
+    id = db.Column('id', db.Integer, primary_key = True)
+    nome = db.Column('nome', db.Integer)
 
-
-    orcamento = Column(String(30))
-    pagamento = Column(String(30))
-
-    ambientes = db.relationship('Ambientes', back_populates='projetos', lazy=True)
-    
-
-    def __str__(self):
-        return {
-            "cliente_nome":self.cliente_nome,
-            "telefone":self.telefone,
-            "endereco":self.endereco,
-            "data_entrada":self.data_entrada
-            }.__str__()
-    def __repr__(self):
-        # return f"{self.cliente_nome}" # - {} - {} - {}"
-        return {
-            "cliente_nome":self.cliente_nome,
-            "telefone":self.telefone,
-            "endereco":self.endereco,
-            "data_entrada":self.data_entrada
-            }.__str__()
-
-
-class Ambientes(db.Model):
-    __tablename__ = "ambientes"
-    id = db.Column(db.Integer, primary_key=True)#,autoincrement=True)
-    comodo = Column(VARCHAR(60),nullable=False)
-
-    promobe_arquivos = Column( UnicodeText)
-    renders_jpg = Column( UnicodeText)
-    medidas_pdf = Column( UnicodeText)
-    fotos_medicao = Column(UnicodeText)
-
-    projetos = db.relationship('Projetos', back_populates='ambientes', lazy=True)
-    projeto_id = db.Column(db.Integer, db.ForeignKey('projetos.id'), nullable=False)
-
-    def __str__(self):
-        return {
-            "comodo":self.comodo,
-            "promobe_arquivos":self.promobe_arquivos,
-            "renders_jpg":self.renders_jpg,
-            "medidas_pdf":self.medidas_pdf,
-            "fotos_medicao":self.fotos_medicao
-            }.__str__()
-    def __repr__(self):
-        # return f"{self.cliente_nome}" # - {} - {} - {}"
-        return {
-            "comodo":self.comodo,
-            "promobe_arquivos":self.promobe_arquivos,
-            "renders_jpg":self.renders_jpg,
-            "medidas_pdf":self.medidas_pdf,
-            "fotos_medicao":self.fotos_medicao
-            }.__str__()
-
-
-class User(db.Model,UserMixin):
-    __tablename__ = "user"
-    id = db.Column(db.Integer, primary_key=True)#,autoincrement=True)
-    nome = db.Column(VARCHAR(60),nullable=False)
-    # senha = db.Column(VARCHAR(60) ,nullable=False)
-   # auntenticaoao = False
-    # ativo = False
-
-# The class that you use to represent users needs to implement these properties and methods:
-
-    # def is_authenticated(self):
-    #     """ This property should return True if the user is authenticated, i.e. they have provided valid credentials.
-    #     (Only authenticated users will fulfill the criteria of login_required.)"""
-
-    #     return self.auntenticado
-
-    # def is_active(self):
-    #     """This property should return True if this is an active user - in addition to being authenticated, 
-    #     they also have activated their account, not been suspended, or any condition your application has for rejecting an account.
-    #     Inactive accounts may not log in (without being forced of course)."""
-
-    #     return self.ativo
-
-
-    # def is_anonymous():
-    #     """This property should return True if this is an anonymous user. (Actual users should return False instead.)"""
-
-    #     return False
-
-    def get_id(self):
-        """This method must return a unicode that uniquely identifies this user, and can be used to load the user from the user_loader callback. Note that this must be a unicode - if the ID is natively an int or some other type, you will need to convert it to unicode.
-        To make implementing a user class easier, you can inherit from UserMixin, which provides default implementations for all of these properties and methods. (It’s not required, though.)
-        """
-        try:
-
-            return self.id
-        except AttributeError:
-            raise NotImplementedError('No `id` attribute - override `get_id`')
-
-
-
-def cria(
-    cliente_nome:str,
-    telefone:str,
-    endereco:str,
-    data_entrada:str,
-    ambientes:list,
-    **kwargs
-):
-    ambientes_=[]
-    for amb in ambientes:
-        ambientes_.append(Ambientes(comodo=amb))
-
-    # import ipdb;ipdb.set_trace()
-    projeto = Projetos(
-        # id = uuid.uuid4().bytes,
-        cliente_nome = cliente_nome,
-        telefone = telefone,
-        endereco = endereco,
-        data_entrada = datetime.strptime(data_entrada,"%Y-%m-%d") if data_entrada else datetime.now(),
-        # data_entrada = datetime.strptime(data_entrada,"%dd/%mm/%Y") if data_entrada else datetime.now(),
-        ambientes = ambientes_,
-        aprovacao = "Pendente"
-    
-    )
-
-    # projeto.
-
-    db.session.add(projeto)
-    db.session.commit()
-    return Projetos.query.get(projeto.id)
-
-def atulaliza(**kwargs):
-    """ recebe os parametro que serao atualizados
-    e tenta add ao banco
-
-    """
-
-    ipdb.set_trace()
-
-    kwargs["ambientes"] = [
-        Ambientes(comodo=amb)
-        for amb in kwargs.get("ambientes",[])
-    ]
-    
-
-    projeto = Projetos.query.get(
-        kwargs.pop("id"))
-    for campo,valor in kwargs.items()  :
-        if campo:
-            setattr(projeto,campo,valor)
-    db.session.add(projeto)
-    db.session.commit()
-
-def all(table):
-    # ipdb.set_trace()
-
-    return{
-        "projetos":Projetos.query.all(),
-        "ambientes":Ambientes.query.all(),
-    }.get(table,None)
-
-def get(id):
-    return Projetos.query.get(id)
-
-
-
-
-
-
-
-
-
-
-
-# def teste():
-#     cria(
-#         cliente_nome = "Teste-cliente_nome",
-#         telefone = "Teste-telefone",
-#         endereco = "Teste-endereco",
-#         data_entrada = "Teste-data_entrada",
-#         ambientes = "Teste-ambientes",
-#         **kwargs

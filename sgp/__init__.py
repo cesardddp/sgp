@@ -4,7 +4,6 @@ from .models import configure as configure_db
 from flask_migrate import Migrate
 from flask_uploads import  UploadSet,IMAGES,DOCUMENTS
 from flask_login import LoginManager
-
 # from flask_admin.contrib.sqla import ModelView
 
 

@@ -6,3 +6,6 @@ Book1.xlsx
 __pycache__/
 files/*
 sgp/test.db
+poetry.lock
+sgp/populadb.py
+sgp/teste.py
