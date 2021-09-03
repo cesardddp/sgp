@@ -1,48 +1,49 @@
-from .models import Projeto
+from .models import Cliente, Projeto
 from . import create_app
 # from .models import Cliente, Projeto
-from flask import json, request, render_template, flash, redirect,current_app
+from flask import Blueprint, json, request, render_template, flash, redirect,current_app
 from pprint import pprint as print
-from .schema import ClienteSchema, ProjetoSchema
+from .schema import ClienteSchema
 from marshmallow import ValidationError
-# from flask_login import login_user, login_required, logout_user
-# from sgp.Login import User
-# import os
+from sqlalchemy.orm.exc import NoResultFound
 
-app = create_app()
 
-@app.route("/",methods=["GET"])
-def index():
+cliente_bp = Blueprint("clente_bp",__name__,url_prefix="/cliente")
+clente_schema = ClienteSchema()
 
-    html = ""
-    for linha in current_app.url_map.iter_rules():
-        # import pdb;pdb.set_trace()
-        if( not "PUT" in linha.methods 
-            and not "static" in linha.rule 
-            and not "uploads" in linha.rule 
-            and linha.rule[-1] != '>' ):
-            html+=f'<p><a href="http://localhost:5000{linha.rule}">{linha.rule}</a></p>'
 
-    return html
-    
+@cliente_bp.route("/", methods=["GET"])
+def lista_clientes():
+    clientes = Cliente.query.all()
 
-@app.route("/novo_cliente",methods=["POST"])
+    result = clente_schema.dump(clientes, many=True)
+    return {"clientes": result}
+   
+
+@cliente_bp.route("/novo",methods=["POST"])
 def novo_cliente():
-    print(request.json)
-    try:
-        novo_cliente = current_app.db.Cliente(**request.json)
-    except:
-        raise
     
-    # import pdb;pdb.set_trace()
-    current_app.db.session.add(novo_cliente)
+    json_data = request.get_json()
+    if not json_data:
+        return {"message": "No input data provided"}, 400
+
+    # Validate and deserialize input
+    try:
+        data = clente_schema.load(json_data)
+    except ValidationError as err:
+        return err.messages, 422    
+    
+    cliente = Cliente(
+        **data
+    )
+    current_app.db.session.add(cliente)
     current_app.db.session.commit()
 
-    return ClienteSchema().jsonify(novo_cliente)
+    result = clente_schema.dump(Cliente.query.get(cliente.id))
+    return {"message": "Created new projeto.", "projeto": result}
 
-@app.route("/cliente",methods=["GET"])
-@app.route("/cliente/<id_cliente>",methods=["GET"])
-def cliente(id_cliente=None):
+@cliente_bp.route("/<id_cliente>",methods=["GET"])
+def pega_cliente(id_cliente=None):
     if not id_cliente is None:
         return ClienteSchema().jsonify(
             current_app.db.Cliente.get(id_cliente)
@@ -52,40 +53,14 @@ def cliente(id_cliente=None):
 
     return ClienteSchema(many=True).jsonify(current_app.db.Cliente.query.all())
 
-@app.route("/novo_projeto",methods=["POST"])
-def novo_projeto():
-    json_data = request.get_json()
-    projeto_schema = ProjetoSchema()
-    if not json_data:
-        return {"message": "No input data provided"}, 400
-    # Validate and deserialize input
+@cliente_bp.route("/busca/<string:busca>")
+def busca_cliente(busca):
     try:
-        data = projeto_schema.load(json_data)
-    except ValidationError as err:
-        return err.messages, 422
-
-    # cliente = Cliente.query.filter_by(**????).first()
-    # if author is None:
-    #     Create a new author
-    #     author = Author(first=first, last=last)
-    #     db.session.add(author)
-    # Create new quote
-    projeto = Projeto(
-        **data
-    )
-    current_app.db.session.add(projeto)
-    current_app.db.session.commit()
-    result = projeto_schema.dump(Projeto.query.get(projeto.id))
-    return {"message": "Created new projeto.", "projeto": result}
-
-@app.route("/projeto",methods=["GET"])
-@app.route("/projeto/<id_projeto>",methods=["GET"])
-def projeto(id_projeto=None):
-    if not id_projeto is None:
-        return ProjetoSchema().jsonify(
-            current_app.db.Projeto.get(id_projeto)
-        )
-
-    # import pdb;pdb.set_trace()
-
-    return ProjetoSchema(many=True).jsonify(current_app.db.Projeto.query.all())
+        # projeto = Projeto.query.filter(Projeto.id == pk).one()
+        projeto = Cliente.query.filter(Cliente.nome.startswith(busca)).all()
+        # import pdb;pdb.set_trace()
+    # except NoResultFound:
+    except NoResultFound:
+        return {"message": "Projeto could not be found."}, 400
+    result = clente_schema.dump(projeto)
+    return {"projeto": result}

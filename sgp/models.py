@@ -1,6 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-from requests import NullHandler
-from sqlalchemy import Integer, Enum
 import datetime
 import enum
 
@@ -27,7 +25,7 @@ class Cliente (db.Model):
     __tablename__ = "Cliente"
     id = db.Column('id', db.Integer, primary_key = True)
     nome = db.Column('nome', db.String)
-    endereço = db.Column('endereço', db.String)
+    endereco = db.Column('endereco', db.String)
     telefone = db.Column('telefone', db.String)
 
 class Ambiente (db.Model):
@@ -35,8 +33,6 @@ class Ambiente (db.Model):
     id = db.Column('id', db.Integer, primary_key = True)
     nome = db.Column('nome', db.String)
     projeto_id = db.Column('Projeto_id', db.Integer, db.ForeignKey('Projeto.id'))
-    # person_id = db.Column(db.Integer, db.ForeignKey('person.id'),nullable=False)
-    projeto = db.relationship('Projeto', foreign_keys=projeto_id)
 
 class Aprovacao(enum.Enum):
     aprovado = "aprovado"
