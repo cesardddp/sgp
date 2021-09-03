@@ -1,50 +1,38 @@
+from .models import Projeto
 from . import create_app
 # from .models import Cliente, Projeto
-from flask import json, request, render_template, flash, redirect
+from flask import json, request, render_template, flash, redirect,current_app
 from pprint import pprint as print
-from .schema import ClienteSchema
-# from werkzeug.utils import
+from .schema import ClienteSchema, ProjetoSchema
+from marshmallow import ValidationError
+from .projeto import projeto_bp
 # from flask_login import login_user, login_required, logout_user
-
-# from sgp import
-# from flask_wtf import
-
 # from sgp.Login import User
-
-import os
+# import os
 
 app = create_app()
+app.register_blueprint(projeto_bp)
 
-@app.route("/novo_cliente",methods=["PUT"])
-def novo_cliente():
-    print(request.json)
-    try:
-        novo_cliente = app.db.Cliente(**request.json)
-    except:
-        raise
+@app.route('/')
+def index():
+    return render_template("index.html")
     
-    # import pdb;pdb.set_trace()
-    app.db.session.add(novo_cliente)
-    app.db.session.commit()
+@app.route('/entregas')
+def entregas():
+    return render_template("entrega.html")
 
-    return ClienteSchema().dump(novo_cliente),200
+@app.route("/rotas",methods=["GET"])
+def rotas():
 
-@app.route("/cliente",methods=["GET"])
-@app.route("/cliente/<id_cliente>",methods=["GET"])
-def cliente(id_cliente=None):
-    if not id_cliente is None:
-        return ClienteSchema().dump(
-            app.db.Cliente.get(id_cliente)
-        )
+    html = ""
+    for linha in current_app.url_map.iter_rules():
+        # import pdb;pdb.set_trace()
+        if( not "PUT" in linha.methods 
+            and not "static" in linha.rule 
+            and not "uploads" in linha.rule 
+            and linha.rule[-1] != '>' ):
+            html+=f'<p><a href="http://localhost:5000{linha.rule}">{linha.rule}</a></p>'
 
-    # import pdb;pdb.set_trace()
- 
-    return json.jsonify( ClienteSchema(many=True).dump(
-        app.db.Cliente.query.all()
-    ))
-    # print(request.json)
-    # import pdb;pdb.set_trace()
-
-    # return "",200
-
+    return html
+    
 

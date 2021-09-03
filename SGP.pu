@@ -1,0 +1,45 @@
+@startuml
+
+title SGP
+
+class Cliente {
+- Long id
+- String nome
+- String endereço
+- String telefone
++ Usuario()
+}
+
+class Ambiente {
+  - Long id
+  - String nome
+}
+class Projeto {
+  - Long id
+  - Cliente cliente
+  - DateTime data_entrada
+  - DateTime data_medicao
+  - DateTime data_apresentacao
+  - String fotos
+  - String arquivos
+  - Boolean aprovacao
+  - String orcamento
+  - String pagamento
+  + Projeto()
+}
+class Usuario {
+  - Long id
+  - String nome
+}
+
+Usuario "1" *-- "0...*" Projeto : possui >
+Projeto "0...*" *-- "1" Cliente : possui >
+Projeto "1" *-- "1...*" Ambiente : possui >
+
+
+
+@enduml
+' o-- associação
+' *-- composição
+' <|-- extenção
+' Ente "1" <- Ente : relação >

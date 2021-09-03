@@ -1,4 +1,5 @@
 .vscode/
+.venv/
 migrations
 sgp/__pycache__/
 teste/
@@ -9,3 +10,4 @@ sgp/test.db
 poetry.lock
 sgp/populadb.py
 sgp/teste.py
+sgp-front/

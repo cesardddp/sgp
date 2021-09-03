@@ -1,102 +1,47 @@
 {% extends 'layout.html' %}
-
-{% block head %}
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
-{% endblock head %} 
-
+{% block link_rel %}
+{% endblock link_rel %}
 {% block body %}
+	
+<body class="container mx-auto px-6">
+	<div class="cloud x2"></div>
+	<div id="app">
+		<div class="table  w-full">
+			<div class="table-row-group ">
+				<div v-for="projeto in projetos" :key="projeto.id" class="table-row">
+					<div class="table-cell rounded-full bg-white text-gray-700 px-4 py-2 text-sm">{{'{{'}}projeto.nome{{'}}'}}</div>
+					<div class="table-cell rounded-full bg-white text-gray-700 px-4 py-2 text-sm">{{'{{'}}projeto.comodo{{'}}'}}sala</div>
+					<div class="table-cell rounded-full bg-white text-gray-700 px-2 py-2 text-sm">{{'{{'}}projeto.promob{{'}}'}}f</div>
+					<div class="table-cell rounded-full bg-white text-gray-700 px-2 py-2 text-sm">{{'{{'}}projeto.fotos{{'}}'}}f</div>
+					<div class="table-cell rounded-full bg-white text-gray-700 px-2 py-2 text-sm">{{'{{'}}projeto.pdf{{'}}'}}f</div>
+				</div>
+			</div>
 
-<div class="table-responsive">
-
-  <table id="tabela_projetos" class="table table-striped" id="showresults">
-    <thead>
-      <tr>
-        <th style="width:100%; text-align: center;" scope="col">Nome</th>
-        <th style="width:100%; text-align:center" scope="col">Comodo</th>
-        <th style="width:100%" scope="col">PROMOB</th>
-        <th style="width:100%" scope="col">IMAGENS</th>
-        <th style="width:100%" scope="col">MEDIDAS</th>
-      </tr>
-    </thead>
-
-
-
-    <tbody>
-      {% for ambiente in ambientes %}
-
-      <tr class="" id={{ambiente.id}}>
-
-        <td style="text-align:center" scope="row">
-          {{ambiente.projetos.cliente_nome}}
-        </td>
-
-        <td style="text-align:center">
-          {{ambiente.comodo}}
-        </td>
-
-        <td class="descricao" style=" white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px;">
-          {% if ambiente.promobe_arquivos %}
-            <a href=" {{ambiente.promobe_arquivos}}"> promobe_arquivos</a></td>
-          {% else %}
-            <input class="form-control-file" type="file" ></td>
-          {% endif %}
+		</div>
+	</div>
 
 
-        <td class="descricao" style=" white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px;">
-          {% if ambiente.promobe_arquivos %}
-            <a href=" {{ambiente.medidas_pdf}}"> medidas_pdf</a></td>
-          {% else %}
-            <input class="form-control-file" type="file" ></td>
-          {% endif %}
-        
-        <td class="descricao" style=" white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px;">
-          {% if ambiente.promobe_arquivos %}
-            <a href=" {{ambiente.fotos_medição}}"> fotos_medição</a></td>
-          {% else %}
-            <input class="form-control-file" type="file" ></td>
-          {% endif %}
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-<script>
-  $(document).ready(function () {
-    $('#tabela_projetos').DataTable(
-        {
-            "searching": true,
-            responsive: true,
-            "processing": true,
-            "dom": "<lf<t>ip>",
-            "language":
-            {
-                "zeroRecords": "Nenhum registro corresponde foi encontrado!",
-                "paginate": {
-                    "first": "Primeira",
-                    "last": "Última",
-                    "next": "Próxima",
-                    "previous": "Anterior"
-                },
-                "aria": {
-                    "sortAscending": ": activate to sort column ascending",
-                    "sortDescending": ": activate to sort column descending"
-                },
-                "emptyTable": "Você não possui clientes adicionados!",
-                "info": "Mostrando _START_ de _END_ do total de _TOTAL_ clientes",
-                "infoEmpty": "Mostrando 0 de 0 clientes",
-                "infoFiltered": "(filtrando de _MAX_ total clientes)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ clientes",
-                "loadingRecords": "Carregando...",
-                "processing": "Processando...",
-                "search": "Buscar:",
+	<script>
+		const app = {
+			data() {
+				return {
+					projetos: [
+						{ nome: "carlos", comodo: "sala", promob: "", fotos: "", pdf: "", id:12 },
+						{ nome: "lara", comodo: "quarto", promob: "", fotos: "", pdf: "", id:2 },
+						{ nome: "marcia", comodo: "varanda", promob: "", fotos: "", pdf: "", id:3 },
+						{ nome: "rodriguete", comodo: "bicleario", promob: "", fotos: "", pdf: "", id: 4},
+						{ nome: "abraham", comodo: "garagem", promob: "", fotos: "", pdf: "", id:5 },
+						{ nome: "nina", comodo: "etc", promob: "", fotos: "", pdf: "", id:6 }
+					]
 
-            }
+				}
+			},
+			watch: {
 
-        });
-    $('.dataTables_length').addClass('bs-select');
-});
-</script>
+			},
+		}
+		const vm = Vue.createApp(app)
+		vm.mount("#app")
+	</script>
+</body>
 {% endblock body %}
