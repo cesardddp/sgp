@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% block link_rel %}
+{% endblock link_rel %}
+{% block body %}
+	
+<body class="container mx-auto px-6">
+	<div class="cloud x2"></div>
+	<div id="app">
+		<div class="table  w-full">
+			<div class="table-row-group">
+                <projeto-item
+                v-for="p in projetos" :key="p.id"
+                :projeto="p"
+                ></projeto-item>
+			</div>
+
+		</div>
+	</div>
+	<script>
+        
+		const app = {
+            
+			data() {
+				return {
+					projetos: [
+						{ nome: "carlos", valor: "21.000", aprovacao: true, id:12 },
+						{ nome: "lara", valor: "8000", aprovacao: true, id:2 },
+						{ nome: "marcia", valor: "5000", aprovacao: true, id:3 },
+						{ nome: "rodriguete", valor: "4000", aprovacao: false, id: 4},
+						{ nome: "abraham", valor: "3500", aprovacao: false, id:5 },
+						{ nome: "nina", valor: "5000", aprovacao: true, id:6 },
+						{ nome: "nona", valor: "5000", aprovacao: true, id:6 }
+					]
+
+				}
+			},
+			computed: {
+                
+			},
+		}
+        const vm = Vue.createApp(app)
+        vm.config.compilerOptions.delimiters =  ['@{', '}']
+        vm.component('projeto-item',{
+            props:['projeto'],
+            template:`
+                <div class="table-row">
+					<div :class = "projeto.aprovacao ? 'bg-green-300':'bg-red-300'"  class="table-cell rounded-full text-gray-700 px-4 py-2 text-sm">@{projeto.nome}</div>
+					<div :class = "projeto.aprovacao ? 'bg-green-300':'bg-red-300'" class="table-cell rounded-full text-gray-700 px-4 py-2 text-sm">R$@{projeto.valor}</div>
+					<div :class = "projeto.aprovacao ? 'bg-green-300':'bg-red-300'" class="table-cell rounded-full text-gray-700 px-2 py-2 text-sm">R$@{cincoP100}</div>
+					<div class="table-cell px-2 py-2">
+                        <img :src="projeto.aprovacao?'{{ url_for('static', filename='imgs/joia_azul.jpeg') }}':'{{ url_for('static', filename='imgs/joia_negativo 2.jpeg') }}'"
+                        alt="" srcset="" class="h-5">
+                        </div>
+				</div>`,
+            computed:{
+                cincoP100(){
+                    return (
+                        (parseFloat(this.projeto.valor) * 5/100).toFixed(2)
+                    )
+                }
+            }
+        })
+		vm.mount("#app")
+	</script>
+</body>
+{% endblock body %}

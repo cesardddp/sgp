@@ -1,0 +1,107 @@
+{% extends 'layout.html' %}
+{% block link_rel %}
+{% endblock link_rel %}
+{% block body %}
+
+<body class="container mx-auto px-6">
+	<div class="cloud x2"></div>
+	<div id="app">
+		<input type="search" name="busca" v-model="busca">
+		<br>
+		<projeto-item
+		v-for="resultado in resultados" :key="resultado.id"
+		:projeto="resultado"
+		></projeto-item>
+			
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+	<script src="https://unpkg.com/lodash@4.17.20/lodash.min.js"></script>
+	<script>
+
+		const app = {
+			data() {
+				return {
+					busca: '',
+					resultados: [
+						{
+							ambientes: [
+								{
+									id: 1,
+									nome: 'sala',
+									projeto_id: 1
+								},
+								{
+									id: 21,
+									nome: 'quarto',
+									projeto_id: 1
+								},
+								{
+									id: 13,
+									nome: 'teto',
+									projeto_id: 1
+								}
+							],
+							aprovacao: false,
+							cliente: {
+								endereco: 'av.15 bela longe',
+								id: 1,
+								nome: 'teste',
+								telefone: '12-2121-2121'
+							},
+							cliente_id: 1,
+							data_entrada: '2021-08-13T19:06:15.036352',
+							id: 1,
+							usuario_id: 1
+						},
+					]
+				}
+			},
+			watch: {
+				busca() {
+					this.busca.trim() ? this.faz_busca() : null
+				}
+			},
+			methods: {
+				faz_busca: _.debounce(function () {
+					axios
+						.get(
+							'{{ url_for("projeto_bp.busca_projeto",busca="") }}' //substitui pela url de busca
+							+ this.busca.trim())
+						.then(response => {
+							this.resultados = response.data.projeto
+							console.log(this.resultados);
+						})
+						.catch(error => {
+							this.resultados = 'Erro! Não foi possível adquirir resultados da API: ' + error
+						})
+
+				}, 550)
+			},
+		}
+
+		const vm = Vue.createApp(app)
+		vm.config.compilerOptions.delimiters = ['@{', '}']
+		vm.component('projeto-item', {
+			props: ["projeto"],
+			data() {
+				return{show: false}
+			},
+			template: `
+				<li class="list-none bg-white text-gray-700 px-2 py-2 text-sm"  @click="show=!show">
+					<p>@{projeto.cliente.nome}</p>
+					<p>@{projeto.cliente.endereco} - @{projeto.cliente.telefone}</p>
+					<div v-if="show" class="">
+						<b>Ambientes: </b>
+						<div class="inline" v-for="amb in projeto.ambientes">@{amb.nome} - </div>
+					</div>
+				</li>
+			`
+		})
+		vm.mount("#app")
+	</script>
+
+
+
+</body>
+{% endblock body %}

@@ -6,12 +6,14 @@ from pprint import pprint as print
 from .schema import ClienteSchema, ProjetoSchema
 from marshmallow import ValidationError
 from .projeto import projeto_bp
+from .cliente import cliente_bp
 # from flask_login import login_user, login_required, logout_user
 # from sgp.Login import User
 # import os
 
 app = create_app()
 app.register_blueprint(projeto_bp)
+app.register_blueprint(cliente_bp)
 
 @app.route('/')
 def index():
@@ -20,6 +22,14 @@ def index():
 @app.route('/entregas')
 def entregas():
     return render_template("entrega.html")
+
+@app.route('/devolutivas')
+def devolutivas():
+    return render_template("devolutivas.html")
+    
+@app.route('/busca')
+def busca():
+    return render_template("busca.html")
 
 @app.route("/rotas",methods=["GET"])
 def rotas():
