@@ -18,20 +18,24 @@ app.register_blueprint(cliente_bp)
 @app.route('/')
 def index():
     return render_template("index.html")
+
+@app.route('/novo')
+def novo():
+    return render_template("novo.html")
     
-@app.route('/entregas')
+@app.get('/entregas')
 def entregas():
     return render_template("entrega.html")
 
-@app.route('/devolutivas')
+@app.get('/devolutivas')
 def devolutivas():
     return render_template("devolutivas.html")
     
-@app.route('/busca')
+@app.get('/busca')
 def busca():
     return render_template("busca.html")
 
-@app.route("/rotas",methods=["GET"])
+@app.get("/rotas")
 def rotas():
 
     html = ""

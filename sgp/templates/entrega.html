@@ -1,9 +1,12 @@
 {% extends 'layout.html' %}
 {% block link_rel %}
 {% endblock link_rel %}
-{% block body %}
+{% block main %}
 	
-<body class="container mx-auto px-6">
+<main class="container mx-auto px-6">
+	<div class="flex justify-center">
+		<img src="{{ url_for('static',filename='imgs/quadro.ico')}}" alt="" class="h-16 w-16" srcset="">
+	</div>
 	<div class="cloud x2"></div>
 	<div id="app">
 		<div class="table  w-full">
@@ -43,5 +46,5 @@
 		const vm = Vue.createApp(app)
 		vm.mount("#app")
 	</script>
-</body>
-{% endblock body %}
+</main>
+{% endblock main %}

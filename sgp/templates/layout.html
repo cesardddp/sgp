@@ -18,17 +18,11 @@
 	</style>
 </head>
 <header>
-	<div class="flex justify-center">
-		<img src="{{ url_for('static',filename='imgs/logo.jpeg') }}" alt="" class="h-32" srcset="">
-	</div>
-	<div class="flex justify-center">
-		<img src="{{ url_for('static',filename='imgs/pessoa_fundo_verde.jpeg') }}" alt="" class="h-16 w-16" srcset="">
-	</div>
-
-	</div>
-
+	<a href="/" class="flex justify-center {% block logo_class %}{% endblock logo_class %}">
+		<img src="{{ url_for('static',filename='imgs/logo.ico') }}" alt="" class="h-32" srcset="">
+	</a>
 </header>
-{% block body %}
+{% block main %}
 	
-{% endblock body %}
+{% endblock main %}
 </html>

@@ -1,9 +1,14 @@
 {% extends 'layout.html' %}
 {% block link_rel %}
 {% endblock link_rel %}
-{% block body %}
+{% block main %}
+{% block logo_class %}
 
-<body class="container mx-auto px-6">
+{% endblock logo_class %}
+<main class="container mx-auto px-6">
+	<div class="flex justify-center">
+		<img src="{{ url_for('static',filename='imgs/lupa2-trans.ico')}}" alt="" class="h-16 w-16" srcset="">
+	</div>
 	<div class="cloud x2"></div>
 	<div id="app">
 		<input type="search" name="busca" v-model="busca">
@@ -103,5 +108,5 @@
 
 
 
-</body>
-{% endblock body %}
+</main>
+{% endblock main %}
