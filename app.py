@@ -8,7 +8,7 @@ from marshmallow import ValidationError
 from .projeto import projeto_bp
 from .cliente import cliente_bp
 # from flask_login import login_user, login_required, logout_user
-# from sgp.Login import User
+# from .Login import User
 # import os
 
 app = create_app()
