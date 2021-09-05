@@ -5,8 +5,8 @@ from flask_uploads import  UploadSet,IMAGES,DOCUMENTS
 # from flask_login import LoginManager
 from flask_cors import CORS
 # from flask.ext.superadmin import Admin, model
-from .models import configure as configure_db
-from .schema import configure as configure_schema
+from models import configure as configure_db
+from schema import configure as configure_schema
 
 __version__ = '0.1.1'
 
@@ -34,7 +34,7 @@ def create_app():
     configure_schema(app)
     Migrate(app,app.db)
 
-    # from .admin import configure as configure_admin
+    # from admin import configure as configure_admin
     # configure_admin(app)
 
     configure_uploads(app, app.file)

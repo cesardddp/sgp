@@ -1,5 +1,5 @@
 from flask_marshmallow import Marshmallow
-from .models import Cliente,Ambiente,Projeto,Usuario
+from models import Cliente,Ambiente,Projeto,Usuario
 
 ma = Marshmallow()
 

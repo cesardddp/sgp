@@ -1,9 +1,8 @@
-from .models import Cliente, Projeto
-from . import create_app
-# from .models import Cliente, Projeto
-from flask import Blueprint, json, request, render_template, flash, redirect,current_app
+from models import Cliente, Projeto
+# from models import Cliente, Projeto
+from flask import Blueprint, request, current_app
 from pprint import pprint as print
-from .schema import ClienteSchema
+from schema import ClienteSchema
 from marshmallow import ValidationError
 from sqlalchemy.orm.exc import NoResultFound
 

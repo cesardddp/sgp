@@ -1,9 +1,8 @@
 from types import TracebackType
-from .models import Ambiente, Cliente, Projeto, Usuario
-from . import create_app
-from flask import json, request, render_template, flash, redirect,current_app,Blueprint,jsonify
+from models import Ambiente, Cliente, Projeto, Usuario
+from flask import request, current_app,Blueprint,jsonify
 from pprint import pprint as print
-from .schema import ProjetoSchema
+from schema import ProjetoSchema
 from marshmallow import ValidationError
 from sqlalchemy.orm.exc import NoResultFound
 

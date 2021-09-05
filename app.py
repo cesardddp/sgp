@@ -1,14 +1,14 @@
-from .models import Projeto
+from models import Projeto
 from . import create_app
-# from .models import Cliente, Projeto
+# from models import Cliente, Projeto
 from flask import json, request, render_template, flash, redirect,current_app
 from pprint import pprint as print
-from .schema import ClienteSchema, ProjetoSchema
+from schema import ClienteSchema, ProjetoSchema
 from marshmallow import ValidationError
-from .projeto import projeto_bp
-from .cliente import cliente_bp
+from projeto import projeto_bp
+from cliente import cliente_bp
 # from flask_login import login_user, login_required, logout_user
-# from .Login import User
+# from Login import User
 # import os
 
 app = create_app()
