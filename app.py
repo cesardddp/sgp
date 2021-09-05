@@ -1,5 +1,5 @@
 from models import Projeto
-from . import create_app
+from sgp import create_app
 # from models import Cliente, Projeto
 from flask import json, request, render_template, flash, redirect,current_app
 from pprint import pprint as print

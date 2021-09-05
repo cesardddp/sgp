@@ -34,13 +34,13 @@ def novo_projeto()->str:
     for amb in ambientes:
         data.setdefault("ambientes",[]).append(Ambiente(**amb))
 
-    import pdb;pdb.set_trace()
+    #import pdb;pdb.set_trace()
     projeto = Projeto(
         **data
     )
     # if cliente: cliente = cliente
     
-    import pdb;pdb.set_trace()
+    #import pdb;pdb.set_trace()
 
     current_app.db.session.add(projeto)
     current_app.db.session.commit()
