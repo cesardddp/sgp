@@ -5,7 +5,7 @@
 	
 <main class="container mx-auto px-6">
 	<div class="flex justify-center">
-		<img src="{{ url_for('static',filename='imgs/dinheiro.ico')}}" alt="" class="h-16 w-16" srcset="">
+		<img src="{{ url_for('static',filename='imgs/dinheiro.png')}}" alt="" class="h-16 w-16" srcset="">
 	</div>
 	<div class="cloud x2"></div>
 	<div id="app">
@@ -51,7 +51,7 @@
 					<div :class = "projeto.aprovacao ? 'bg-green-300':'bg-red-300'" class="table-cell rounded-full text-gray-700 px-4 py-2 text-sm">R$@{projeto.valor}</div>
 					<div :class = "projeto.aprovacao ? 'bg-green-300':'bg-red-300'" class="table-cell rounded-full text-gray-700 px-2 py-2 text-sm">R$@{cincoP100}</div>
 					<div class="table-cell px-2 py-2">
-                        <img :src="projeto.aprovacao?'{{ url_for('static', filename='imgs/joia_azul.ico') }}':'{{ url_for('static', filename='imgs/joia_negativo 2.ico') }}'"
+                        <img :src="projeto.aprovacao?'{{ url_for('static', filename='imgs/joia_azul.png') }}':'{{ url_for('static', filename='imgs/joia_negativo 2.png') }}'"
                         alt="" srcset="" class="h-5">
                         </div>
 				</div>`,
