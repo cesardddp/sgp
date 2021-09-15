@@ -1,7 +1,7 @@
 from types import TracebackType
 from models import Ambiente, Cliente, Projeto, Usuario
-from flask import request, current_app,Blueprint,jsonify
-from pprint import pprint as print
+from flask import request, current_app,Blueprint,jsonify,Response
+# from pprint import pprint as print
 from schema import ProjetoSchema
 from marshmallow import ValidationError
 from sqlalchemy.orm.exc import NoResultFound
@@ -65,6 +65,38 @@ def get_projetos():
     result = projeto_schema.dump(projetos, many=True)
     return {"projetos": result}
 
+@projeto_bp.patch("/<int:pk>/")
+def update_projeto(pk:int):
+
+    json_data:dict = request.get_json()
+
+    if not json_data:
+        return {"message": "No input data provided"}, 400
+
+    try:
+        projeto = Projeto.query.filter(Projeto.id == pk).one()
+    except NoResultFound:
+        return {"message": "Projeto could not be found."}, 400
+    
+    try:
+        projeto_dict = projeto_schema.dump(projeto)
+        
+        json_data = projeto_schema.load(json_data)
+        for chave,valor in json_data.items():
+            # print(chave,valor)
+            setattr(projeto,chave,valor)
+        # import ipdb;ipdb.set_trace()
+        # projeto:Projeto = projeto_schema.load(projeto_dict)
+
+    except ValidationError as err:
+        return err.messages, 422
+
+    # import ipdb;ipdb.set_trace()
+
+    current_app.db.session.add(projeto)
+    current_app.db.session.commit()
+    # result = projeto_schema.dump(Projeto.query.get(projeto.id))
+    return Response(status=204)
 
 
 @projeto_bp.route("/busca/<string:busca>")

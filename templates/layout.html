@@ -6,16 +6,18 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>SGP</title>
+	<link rel="shortcut icon" href="{{ url_for('static',filename='imgs/logo.ico') }}">
 	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 	{% block link_rel %}
-		
+
 	{% endblock link_rel %}
 	<link href="{{ url_for('static', filename='css/nuvens.css') }}" rel="stylesheet">
 	<script src="https://unpkg.com/vue@next"></script>
 	<style>
-		
-		
+
+
 	</style>
+	<script src="https://kit.fontawesome.com/3db21c2fa2.js" crossorigin="anonymous"></script>
 </head>
 <header>
 	<a href="/" class="flex justify-center {% block logo_class %}{% endblock logo_class %}">
@@ -23,6 +25,7 @@
 	</a>
 </header>
 {% block main %}
-	
+
 {% endblock main %}
+
 </html>

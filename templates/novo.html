@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 {% block link_rel %}
-    <link href="{{ url_for('static', filename='css/floatin-label.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/floatin-label.css') }}" rel="stylesheet">
 {% endblock link_rel %}
 {% block main %}
 
 <main class="container mx-auto px-6">
     <div class="flex justify-center">
-		<img src="{{ url_for('static',filename='imgs/pessoa_fundo_verde.ico')}}" alt="" class="h-16 w-16" srcset="">
-	</div>
+        <img src="{{ url_for('static',filename='imgs/pessoa_fundo_verde.ico')}}" alt="" class="h-16 w-16" srcset="">
+    </div>
     <div class="cloud x2"></div>
     <div id="app">
         <form class="flex flex-col justify-items-center space-y-3" @submit.prevent>
@@ -18,7 +18,6 @@
                 <label class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500" for="nome">Nome</label>
                 <!-- <span class="text-sm text-red-600 hidden" id="error">Name is required</span> -->
             </div>
-            
 
             <div class="flex justify-center">
                 <div class="relative z-0 w-5/6 mb-5">
@@ -66,10 +65,11 @@
             <button class="self-end bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full"
                 @click="add_amb">+ambs</button>
 
-            </form>
-            <button @click="novoProjeto" class="btn bg-red-200 hover:bg-red-300 py-2 px-4 rounded-b-3xl">Novo Projeto</button>
+        </form>
+        <button @click="novoProjeto" class="btn bg-red-200 hover:bg-red-300 py-2 px-4 rounded-b-3xl">
+            Novo Projeto</button>
     </div>
-	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <script type="application/javascript">
         const App = {
             data() {
@@ -78,13 +78,13 @@
                     ambientes: [
                         { nome: "", id: 1, label: "Ambiente 1" }
                     ],
-                    cliente:{
-                        nome:"cesar",
-                        endereco:"longe pakas",
-                        telefone:"19 929 919911",
-                        numero:1300,
-                        data:"3/12/2021",
-                        hora:"11:12"
+                    cliente: {
+                        nome: "name test",
+                        endereco: "av. 13a",
+                        telefone: "019 1 0829 9911",
+                        numero: 1300,
+                        data: "3/12/2021",
+                        hora: "11:12"
                     },
                 }
             },
@@ -93,53 +93,47 @@
                     this.ultimo = this.ultimo + 1
                     console.log(this.ultimo, this.ambientes)
                     this.ambientes.push(
-                        { nome: `ambiente-${this.ultimo}`, id: this.ultimo, label: 'Ambiente ' + this.ultimo }
+                        { nome: "", id: this.ultimo, label: 'Ambiente ' + this.ultimo }
                     )
                 },
-                novoProjeto(){
+                novoProjeto() {
                     const iso_data = new Date(
-                        this.cliente.data+' '+this.cliente.hora
-                        ).toISOString();
+                        this.cliente.data + ' ' + this.cliente.hora
+                    ).toISOString();
                     // console.log(iso_data);
                     // console.log(this.ambientes);
                     this.ambientes.forEach(element => {
-                            delete(element.id);delete(element.label)
-                        })
+                        delete (element.id); delete (element.label)
+                    })
                     let projeto = {
-                        usuario_id:1,
-                        cliente_id:null,
-                        cliente:{
-                            endereco:this.cliente.endereco,
-                            nome:this.cliente.nome,
-                            telefone:this.cliente.telefone
+                        usuario_id: 1,
+                        cliente_id: null,
+                        cliente: {
+                            endereco: this.cliente.endereco,
+                            nome: this.cliente.nome,
+                            telefone: this.cliente.telefone
                         },
-                        ambientes:this.ambientes,
-                        data_entrada:iso_data
+                        ambientes: this.ambientes,
+                        data_entrada: iso_data
                     }
                     console.log(projeto);
-                    debugger
+
                     axios
-                    .post(
-                        "{{ url_for('projeto_bp.novo_projeto') }}",
-                        projeto
+                        .post(
+                            "{{ url_for('projeto_bp.novo_projeto') }}",
+                            projeto
                         )
                         .then(response => {
-                            console.log(response);
-                            
+                            if (response.status === 200) {
+                                location.pathname = "{{ url_for('index') }}" + "/detalhes/" + response.data.projeto.id
+                            }
+
                         })
                         .catch(function (error) {
                             console.log(error);
                         });
                 }
-
-                
             },
-            watch:{
-                // 'cliente.nome':function(){
-				// 	this.busca.trim() ? this.faz_busca() : null
-                // },
-
-            }
         }
         var app = Vue.createApp(App)
         app.mount("#app")

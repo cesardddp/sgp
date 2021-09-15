@@ -1,0 +1,198 @@
+{% extends 'layout.html' %}
+{% block link_rel %}
+<link href="{{ url_for('static', filename='css/floatin-label.css') }}" rel="stylesheet">
+{% endblock link_rel %}
+{% block main %}
+
+<main class="container mx-auto px-6">
+    <div class="flex justify-center">
+        <img src="{{ url_for('static',filename='imgs/pessoa_fundo_verde.ico')}}" alt="" class="h-16 w-16" srcset="">
+    </div>
+    <div class="cloud x2"></div>
+    <div id="app">
+        <button @click="editando=!editando"><i class="fas fa-edit"></i>Editar</button>
+
+        <p><b>Cliente: </b>
+        <div>@{cliente}</div>
+        </p>
+
+        <p><b>Data de Entrada: </b></p>
+        <input :disabled="!editando" type="date" v-model="data_entrada">
+        <input :disabled="!editando" type="time" v-model="hora_entrada">
+        <button-save v-if="editando" :field_name="'data_entrada'"></button-save>
+
+        <p><b>Data medição: </b></p>
+        <input :disabled="!editando" type="date" v-model="data_medicao">
+        <input :disabled="!editando" type="time" v-model="hora_medicao">
+        <button-save v-if="editando" :field_name="'data_medicao'"></button-save>
+
+        <p><b>Data apresentação: </b></p>
+        <input :disabled="!editando" type="date" v-model="data_apresentacao">
+        <input :disabled="!editando" type="time" v-model="hora_apresentacao">
+        <button-save v-if="editando" :field_name="'data_apresentacao'"></button-save>
+
+        <p><b>Aprovado: </b>@{projeto.aprovacao}</p>
+        <p><b>Orçamento: </b>@{projeto.orcamento}</p>
+        <p><b>Fotos: </b>@{projeto.orcamento}</p>
+        <p><b>Arquivos: </b>@{projeto.orcamento}</p>
+        <ol>
+            <li v-for="(amb, index) in projeto.ambientes" :key="amb.id">
+                <b>Ambiente: </b>
+                @{amb.nome}
+            </li>
+        </ol>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script type="application/javascript">
+        const App = {
+            compilerOptions: {
+                delimiters: ['@{', '}']
+            },
+            data() {
+                return {
+                    projeto: {
+                        cliente: {}
+                    },
+                    editando: false
+                }
+            },
+            methods: {
+                add_amb() {
+                    this.ultimo = this.ultimo + 1
+                    console.log(this.ultimo, this.ambientes)
+                    this.ambientes.push({
+                        nome: `ambiente-${this.ultimo}`,
+                        id: this.ultimo,
+                        label: 'Ambiente ' + this.ultimo
+                    })
+                },
+                get_hora(field_name) {
+                    return this.projeto["data_" + field_name] ?
+                        new Date(this.projeto["data_" + field_name]).toLocaleTimeString() : ""
+                },
+                set_hora(field_name, nova_hora) {
+                    // debugger
+                    let data = this["data_" + field_name] === "Não definida" ? "2001-01-01" : this["data_" +
+                        field_name]
+                    this.projeto["data_" + field_name] = new Date(data + "T" + nova_hora).toISOString()
+                },
+                get_data(field_name) {
+                    return this.projeto["data_" + field_name] ?
+                        new Date(this.projeto["data_" + field_name]).toISOString().split('T')[0] :
+                        "Não definida"
+                },
+                set_data(field_name, nova_data) {
+                    let hora = this["hora_" + field_name] === "" ? "00:00" : this["hora_" + field_name]
+                    this.projeto["data_" + field_name] = new Date(nova_data + "T" + hora).toISOString()
+                }
+            },
+            beforeMount() {
+                return (
+                    axios
+                        .get("{{ url_for('projeto_bp.get_projeto',pk=projeto_id) }}",)
+                        .then(response => {
+                            this.projeto = response.data.projeto
+                        })
+                )
+            },
+            computed: {
+                cliente() {
+                    return this.projeto.cliente.nome +
+                        " - " + this.projeto.cliente.endereco +
+                        " - " + this.projeto.cliente.telefone
+                },
+                data_entrada: {
+                    get() {
+                        return this.get_data("entrada")
+                    },
+                    set(nova_data) {
+                        this.set_data("entrada", nova_data)
+                    }
+                },
+                hora_entrada: {
+                    get() {
+                        return this.get_hora("entrada")
+                    },
+                    set(nova_hora) {
+                        this.set_hora("entrada", nova_hora)
+                    }
+                },
+                data_medicao: {
+                    get() {
+                        return this.get_data("medicao")
+                    },
+                    set(nova_data) {
+                        this.set_data("medicao", nova_data)
+                    }
+                },
+                hora_medicao: {
+                    get() {
+                        return this.get_hora("medicao")
+                    },
+                    set(nova_hora) {
+                        this.set_hora("medicao", nova_hora)
+                    }
+                },
+                data_apresentacao: {
+                    get() {
+                        return this.get_data("apresentacao")
+                    },
+                    set(nova_data) {
+                        this.set_data("apresentacao", nova_data)
+                    }
+                },
+                hora_apresentacao: {
+                    get() {
+                        return this.get_hora("apresentacao")
+                    },
+                    set(nova_hora) {
+                        this.set_hora("apresentacao", nova_hora)
+                    }
+                },
+            },
+
+
+        }
+        const app = Vue.createApp(App)
+        app.component('button-save', {
+            props: ['field_name'],
+            data() {
+                return {
+                    save: true,
+                    loading: false,
+                    ready: false
+                }
+            },
+            methods: {
+                atualizar_projeto(field_name) {
+                    data = {}
+                    data[field_name] = this.$parent.projeto[field_name]
+                    // debugger
+                    axios
+                        .patch("{{ url_for('projeto_bp.update_projeto',pk=projeto_id) }}", data)
+                        .then(response => {
+                            if (response.status === 204) {
+                                this.loading = false
+                                this.ready = true
+                            }
+                        })
+                        .catch(
+                            function (error) {
+                                console.log(error);
+                            })
+                },
+
+            },
+            template: `
+            <button v-show="save" @click="save=!save,loading=true;atualizar_projeto(field_name)">
+                <i class="fas fa-save"></i>
+            </button>
+            <i  v-show="loading" @click="loading=!loading,ready=true" class="fas fa-cog fa-spin"></i>
+            <i  v-show="ready" @click="ready=!ready,save=true" class="fas fa-check"></i>
+                `
+        })
+        app.mount("#app")
+    </script>
+</main>
+
+{% endblock main %}

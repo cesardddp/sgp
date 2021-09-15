@@ -5,26 +5,30 @@
     <!-- <a href="">NOVO PROJETO</a> -->
     <div class="cloud x2"></div>
 
-<div class="flex justify-center">
-    <!-- Button trigger modal -->
-    <a href="{{ url_for('novo') }}" type="button" class="flex-none mx-2">
-        <img class="h-20 md:max-h-screen" src="{{ url_for('static', filename='imgs/pessoa_fundo_verde.ico') }}" alt="" srcset="">
-        <!-- <i class="bi bi-calendar-plus"></i> -->
-    </a>
-    <a href="{{ url_for('busca') }}" type="button" class="flex-none mx-2">
-        <img class="h-20 md:max-h-screen" src="{{ url_for('static', filename='imgs/lupa2-trans.ico') }}" alt="" srcset="">
-        <!-- <i class="bi bi-search"></i>  -->
-    </a>
-    <a href="{{ url_for('entregas') }}" type="button" class="flex-none mx-2">
-        <img class="h-20 md:max-h-screen" src="{{ url_for('static', filename='imgs/quadro.ico') }}" alt="" srcset="">
-        <!-- <i class="bi bi-calendar-check"></i> -->
-    </a>
-    
-    <a href="{{ url_for('devolutivas') }}" type="button" class="flex-none mx-2">
-        <img class="h-20 md:max-h-screen" src="{{ url_for('static', filename='imgs/dinheiro.ico') }}" alt="" srcset="">
-        <!-- <i class="bi bi-calendar-check"></i>-->
-    </a>
-</div>
+    <div class="flex justify-center">
+        <!-- Button trigger modal -->
+        <a href="{{ url_for('novo') }}" type="button" class="flex-none mx-2">
+            <img class="h-20 md:max-h-screen" src="{{ url_for('static', filename='imgs/pessoa_fundo_verde.ico') }}"
+                alt="" srcset="">
+            <!-- <i class="bi bi-calendar-plus"></i> -->
+        </a>
+        <a href="{{ url_for('busca') }}" type="button" class="flex-none mx-2">
+            <img class="h-20 md:max-h-screen" src="{{ url_for('static', filename='imgs/lupa2-trans.ico') }}" alt=""
+                srcset="">
+            <!-- <i class="bi bi-search"></i>  -->
+        </a>
+        <a href="{{ url_for('entregas') }}" type="button" class="flex-none mx-2">
+            <img class="h-20 md:max-h-screen" src="{{ url_for('static', filename='imgs/quadro.ico') }}" alt=""
+                srcset="">
+            <!-- <i class="bi bi-calendar-check"></i> -->
+        </a>
+
+        <a href="{{ url_for('devolutivas') }}" type="button" class="flex-none mx-2">
+            <img class="h-20 md:max-h-screen" src="{{ url_for('static', filename='imgs/dinheiro.ico') }}" alt=""
+                srcset="">
+            <!-- <i class="bi bi-calendar-check"></i>-->
+        </a>
+    </div>
 </main>
 
 {% endblock main %}
