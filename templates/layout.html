@@ -8,14 +8,20 @@
 	<title>SGP</title>
 	<link rel="shortcut icon" href="{{ url_for('static',filename='imgs/logo.png') }}">
 	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.2/dist/full.css" rel="stylesheet" type="text/css" />
+
 	{% block link_rel %}
 
 	{% endblock link_rel %}
 	<link href="{{ url_for('static', filename='css/nuvens.css') }}" rel="stylesheet">
 	<script src="https://unpkg.com/vue@next"></script>
+	<!-- <script src="https://unpkg.com/petite-vue" defer init></script> -->
+
 	<style>
 
+		{% block style %}
 
+		{% endblock %}
 	</style>
 	<script src="https://kit.fontawesome.com/3db21c2fa2.js" crossorigin="anonymous"></script>
 </head>

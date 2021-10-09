@@ -2,49 +2,135 @@
 {% block link_rel %}
 {% endblock link_rel %}
 {% block main %}
-	
+
 <main class="container mx-auto px-6">
 	<div class="flex justify-center">
 		<img src="{{ url_for('static',filename='imgs/quadro.png')}}" alt="" class="h-16 w-16" srcset="">
 	</div>
 	<div class="cloud x2"></div>
+	<p class="text-xs">AMARELO SÃO PROJETOS QUE ESTÃO FICANDO ATRASADOS</p>
 	<div id="app">
-		<div class="table  w-full">
-			<div class="table-row-group ">
-				<div v-for="projeto in projetos" :key="projeto.id" class="table-row">
-					<div class="table-cell rounded-full bg-white text-gray-700 px-4 py-2 text-sm">{{'{{'}}projeto.nome{{'}}'}}</div>
-					<div class="table-cell rounded-full bg-white text-gray-700 px-4 py-2 text-sm">{{'{{'}}projeto.comodo{{'}}'}}sala</div>
-					<div class="table-cell rounded-full bg-white text-gray-700 px-2 py-2 text-sm">{{'{{'}}projeto.promob{{'}}'}}f</div>
-					<div class="table-cell rounded-full bg-white text-gray-700 px-2 py-2 text-sm">{{'{{'}}projeto.fotos{{'}}'}}f</div>
-					<div class="table-cell rounded-full bg-white text-gray-700 px-2 py-2 text-sm">{{'{{'}}projeto.pdf{{'}}'}}f</div>
-				</div>
+		<div class="table w-full">
+			<div class="table-row-group">
+				<projeto-row v-for="projeto in projetos" :key="projeto.id" :projeto="projeto"
+					@click="detalhes(projeto.id)">
+				</projeto-row>
 			</div>
-
 		</div>
 	</div>
 
-
+	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
 	<script>
-		const app = {
+		const App = {
+			compilerOptions: {
+				delimiters: ['@{', '}']
+			},
 			data() {
 				return {
 					projetos: [
-						{ nome: "carlos", comodo: "sala", promob: "", fotos: "", pdf: "", id:12 },
-						{ nome: "lara", comodo: "quarto", promob: "", fotos: "", pdf: "", id:2 },
-						{ nome: "marcia", comodo: "varanda", promob: "", fotos: "", pdf: "", id:3 },
-						{ nome: "rodriguete", comodo: "bicleario", promob: "", fotos: "", pdf: "", id: 4},
-						{ nome: "abraham", comodo: "garagem", promob: "", fotos: "", pdf: "", id:5 },
-						{ nome: "nina", comodo: "etc", promob: "", fotos: "", pdf: "", id:6 }
+						{
+							ambientes: [
+								{
+									id: -1,
+								},
+							],
+							cliente: {
+								nome: "",
+							},
+							data_apresentacao: "",
+							data_entrada: "",
+							data_medicao: "",
+							fotos: null,
+							id: -1,
+						},
 					]
-
 				}
 			},
-			watch: {
-
+			// mounted {
+			created() {
+				return (
+					axios
+						.get("{{ url_for('projeto_bp.get_projetos') }}",)
+						.then(response => {
+							this.projetos = response.data.projetos
+						})
+				)
 			},
 		}
-		const vm = Vue.createApp(app)
-		vm.mount("#app")
+		const app = Vue.createApp(App)
+		app.component('projeto-row', {
+			compilerOptions: {
+				delimiters: ['@{', '}']
+			},
+			props: ['projeto'],
+			computed: {
+				colorStatus() {
+					
+					if (!this.projeto.data_medicao) { return "bg-white" }
+					const data_medicao = new Date(this.projeto.data_medicao);
+					const now = new Date();
+					const diffTime = Math.abs(data_medicao - now);
+					const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+					//console.log(diffDays + " days");
+					debugger
+					console.log(data_medicao,now)
+					if (diffDays >= 7) { return "bg-red-200" }
+					else { return "bg-white" }
+				}
+			},
+			template: `
+			<div class="table-row">
+				<div title="cliente.nome" class="table-cell rounded-fulltext-gray-700 px-4 py-2 text-sm"
+				:class="colorStatus"
+				>
+					@{projeto.cliente.nome}</div>
+				<div class="table-cell rounded-full bg-white text-gray-700 px-4 py-2 text-sm">
+					<span v-for="amb in projeto.ambientes" :key="amb.id">
+						@{amb.nome}, </span>
+				</div>
+				<div class="table-cell rounded-full bg-white text-gray-700 px-2 py-2 text-sm">
+					@{projeto.fotos}</div>
+				<div class="table-cell rounded-full bg-white text-gray-700 px-2 py-2 text-sm">
+					@{projeto.arquivos}</div>
+				<div class="table-cell rounded-full bg-white text-gray-700 px-2 py-2 text-sm">
+					@{projeto.pdf}</div>
+			</div>
+                `
+		})
+		app.mount("#app")
 	</script>
 </main>
 {% endblock main %}
+<script>
+	a = {
+		ambientes: [
+			{
+				id: 1,
+				nome: "sala",
+				projeto_id: 1
+			},
+			{
+				id: 2,
+				nome: "teto",
+				projeto_id: 1
+			}
+		],
+		aprovacao: false,
+		arquivos: null,
+		cliente: {
+			endereco: "longe 1",
+			id: 1,
+			nome: "nome 1",
+			telefone: "19929 92929 1"
+		},
+		cliente_id: 1,
+		data_apresentacao: "2021-09-01T18:12:12",
+		data_entrada: "2021-09-01T09:19:09",
+		data_medicao: "2021-09-01T18:12:12",
+		fotos: null,
+		id: 1,
+		orcamento: null,
+		pagamento: null,
+		usuario_id: 1
+	}
+</script>

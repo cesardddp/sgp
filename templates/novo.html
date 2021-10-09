@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% block link_rel %}
 <link href="{{ url_for('static', filename='css/floatin-label.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{url_for('static',filename='css/modal.css')}}">
 {% endblock link_rel %}
 {% block main %}
 
@@ -9,19 +10,32 @@
         <img src="{{ url_for('static',filename='imgs/pessoa_fundo_verde.png')}}" alt="" class="h-16 w-16" srcset="">
     </div>
     <div class="cloud x2"></div>
-    <div id="app">
-        <form class="flex flex-col justify-items-center space-y-3" @submit.prevent>
+    <div id="app"
+        class="text-gray-500 bg-blend-lighten bg-blue-200 border-4 border-light-blue-500 border-opacity-25 rounded-md">
 
-            <div class="relative z-0 w-full mb-5">
-                <input type="text" name="nome" placeholder=" " v-model="cliente.nome"
-                    class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
-                <label class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500" for="nome">Nome</label>
-                <!-- <span class="text-sm text-red-600 hidden" id="error">Name is required</span> -->
+
+        <form class="flex flex-col justify-items-center space-y-3 " @submit.prevent>
+
+            <div class="w-full flex">
+                <div class="relative z-0 w-5/6 mb-5">
+                    <input type="text" name="nome" placeholder=" " v-model="cliente.nome"
+                        class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
+                    <label class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500" for="nome">Nome</label>
+                </div>
+                <div class="w-1/6">
+                    <a class="btn btn-square btn-ghost" href="{{ url_for('busca') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                class="inline-block w-6 h-6 stroke-current">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </a>
+                </div>
             </div>
 
             <div class="flex justify-center">
                 <div class="relative z-0 w-5/6 mb-5">
-                    <input type="text" name="endereco" placeholder=" " v-model="cliente.endereco"
+                    <input type="text" name="endereco" placeholder=" " v-model="cliente.endereco" 
                         class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
                     <label for="endereco"
                         class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Endereco</label>
@@ -35,7 +49,7 @@
 
             <div class="flex justify-center">
                 <div class="relative z-0 w-full">
-                    <input type="tel" name="telefone" placeholder=" " v-model="cliente.telefone"
+                    <input type="tel" name="telefone" placeholder=" " v-model="cliente.telefone" required
                         class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
                     <label class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
                         for="telefone">Telefone</label>
@@ -44,20 +58,18 @@
 
 
             <div class="flex justify-center">
-                <div class="relative z-0 w-full">
-                    <input type="date" name="data" v-model="cliente.data"
-                        class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
-                    <!-- <label for="data">Data</label> -->
+                <div class="relative z-0 w-4/6">
+                    <input type="date" name="data" v-model="data" required
+                        class="w-full text-gray-500 pt-3 pb-2 block px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
                 </div>
-                <div class="relative z-0 w-full">
-                    <input type="time" name="hora" v-model="cliente.hora"
-                        class="pt-3 pb-2 block  px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
-                    <!-- <label for="hora">hora</label> -->
+                <div class="relative z-0 w-2/6">
+                    <input type="time" name="hora" v-model="hora" required
+                        class="w-full text-gray-500 pt-3 pb-2 block  px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
                 </div>
             </div>
 
             <div v-for="amb in ambientes" class="relative z-0 w-5/6" :key="amb.id">
-                <input type="tel" v-model="amb.nome" placeholder=" "
+                <input type="tel" v-model="amb.nome" placeholder=" " required
                     class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
                 <label class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
                     for="ambiente-1">{{'{{'}}amb.label{{'}}'}}</label>
@@ -66,58 +78,74 @@
                 @click="add_amb">+ambs</button>
 
         </form>
-        <button @click="novoProjeto" class="btn bg-red-200 hover:bg-red-300 py-2 px-4 rounded-b-3xl">
+        <button :disabled="valida_campos" @click="novoProjeto" class="btn bg-red-200 hover:bg-red-300 py-2 px-4 rounded-b-3xl">
             Novo Projeto</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <script type="application/javascript">
+        default_teste = {
+            nome: "name test",
+            endereco: "av. 13a",
+            telefone: "019 1 0829 9911",
+            numero: 1300,
+            data: "3/12/2021",
+            hora: "11:12"
+        }
         const App = {
             data() {
                 return {
                     ultimo: 1,
-                    ambientes: [
-                        { nome: "", id: 1, label: "Ambiente 1" }
-                    ],
+                    ambientes: [{
+                        nome: "",
+                        id: 1,
+                        label: "Ambiente 1"
+                    }],
                     cliente: {
-                        nome: "name test",
-                        endereco: "av. 13a",
-                        telefone: "019 1 0829 9911",
-                        numero: 1300,
-                        data: "3/12/2021",
-                        hora: "11:12"
+                        nome: "",
+                        endereco: "",
+                        telefone: "",
+                        id: ""
                     },
+                    data: "",
+                    hora: ""
                 }
             },
             methods: {
                 add_amb() {
                     this.ultimo = this.ultimo + 1
                     console.log(this.ultimo, this.ambientes)
-                    this.ambientes.push(
-                        { nome: "", id: this.ultimo, label: 'Ambiente ' + this.ultimo }
-                    )
+                    this.ambientes.push({
+                        nome: "",
+                        id: this.ultimo,
+                        label: 'Ambiente ' + this.ultimo
+                    })
                 },
                 novoProjeto() {
                     const iso_data = new Date(
-                        this.cliente.data + ' ' + this.cliente.hora
+                        this.data + ' ' + this.hora
                     ).toISOString();
                     // console.log(iso_data);
                     // console.log(this.ambientes);
                     this.ambientes.forEach(element => {
-                        delete (element.id); delete (element.label)
+                        delete (element.id);
+                        delete (element.label)
                     })
                     let projeto = {
                         usuario_id: 1,
-                        cliente_id: null,
-                        cliente: {
-                            endereco: this.cliente.endereco,
-                            nome: this.cliente.nome,
-                            telefone: this.cliente.telefone
-                        },
                         ambientes: this.ambientes,
                         data_entrada: iso_data
                     }
-                    console.log(projeto);
-
+                    if (!this.cliente.id) {
+                        let cliente = {
+                            endereco: this.cliente.endereco,
+                            nome: this.cliente.nome,
+                            telefone: this.cliente.telefone
+                        }
+                        projeto.cliente = cliente
+                    } else {
+                        projeto.cliente_id = this.cliente.id
+                    }
+                    debugger
                     axios
                         .post(
                             "{{ url_for('projeto_bp.novo_projeto') }}",
@@ -125,13 +153,21 @@
                         )
                         .then(response => {
                             if (response.status === 200) {
-                                location.pathname = "{{ url_for('index') }}" + "/detalhes/" + response.data.projeto.id
+                                location.pathname = "{{ url_for('index') }}" + "detalhes/" + response.data
+                                    .projeto.id
                             }
-
                         })
                         .catch(function (error) {
                             console.log(error);
                         });
+                }
+            },
+            mounted() {
+                if ("{{cliente|safe}}" != "None") {
+                    this.cliente.nome = "{{cliente.nome|safe}}"
+                    this.cliente.endereco = "{{cliente.endereco|safe}}"
+                    this.cliente.telefone = "{{cliente.telefone|safe}}"
+                    this.cliente.id = "{{cliente.id|safe}}"
                 }
             },
         }
@@ -141,3 +177,51 @@
 </main>
 
 {% endblock main %}
+
+<!-- template for the modal component -->
+<script type="text/x-template" id="modal-template">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+
+          <div class="modal-header">
+            <slot name="header">
+              default header
+            </slot>
+          </div>
+
+          <div class="modal-body">
+            <slot name="body">
+              default body
+            </slot>
+          </div>
+
+          <div class="modal-footer">
+            <slot name="footer">
+              default footer
+              <button class="modal-default-button" @click="$emit('close')">
+                OK
+              </button>
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+</script>
+
+<!-- app -->
+<div id="app">
+    <button id="show-modal" @click="showModal = true">Show Modal</button>
+    <!-- use the modal component, pass in the prop -->
+    <transition name="modal">
+        <modal v-if="showModal" @close="showModal = false">
+            <!--
+      you can use custom content here to overwrite
+      default content
+    -->
+            <template v-slot:header>
+                <h3>custom header</h3>
+            </template>
+        </modal>
+    </transition>
+</div>

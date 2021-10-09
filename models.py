@@ -27,6 +27,7 @@ class Cliente (db.Model):
     nome = db.Column('nome', db.String)
     endereco = db.Column('endereco', db.String)
     telefone = db.Column('telefone', db.String)
+    numero = db.Column('numero', db.Integer)
 
 class Ambiente (db.Model):
     __tablename__ = "Ambiente"

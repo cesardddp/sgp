@@ -12,3 +12,8 @@ sgp/populadb.py
 sgp/teste.py
 sgp-front/
 sgp/templates/index-componentizado.html
+index.html
+sgp_real.csv
+templates/daisyTeste.html
+templates/modal_teste.html
+templates/teste.html

@@ -18,34 +18,34 @@ def novo_projeto()->str:
     if not json_data:
         return {"message": "No input data provided"}, 400
     # Validate and deserialize input
+
     try:
         data:dict = projeto_schema.load(json_data)
     except ValidationError as err:
         return err.messages, 422
 
 
-    if data["cliente_id"] is None:
+    if data.get("cliente_id") is None:
         cliente = Cliente(**data["cliente"])
         data["cliente"] = cliente
+    else:
+        cliente = Cliente.query.get(data["cliente_id"])
+    
+    # import ipdb;ipdb.set_trace()
 
     ambientes = data.pop('ambientes')
-    # ambientes_db_obj = []
-    # ambientes_db_obj.re
+
     for amb in ambientes:
         data.setdefault("ambientes",[]).append(Ambiente(**amb))
 
-    #import pdb;pdb.set_trace()
     projeto = Projeto(
         **data
     )
-    # if cliente: cliente = cliente
-    
-    #import pdb;pdb.set_trace()
 
     current_app.db.session.add(projeto)
     current_app.db.session.commit()
     result = projeto_schema.dump(Projeto.query.get(projeto.id))
-    # json.jsonify()
+
     return {"message": "Created new projeto.", "projeto": result}
 
 @projeto_bp.route("/<int:pk>",methods=["GET"])

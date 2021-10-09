@@ -11,17 +11,47 @@
 	</div>
 	<div class="cloud x2"></div>
 	<div id="app">
-		<input type="search" name="busca" v-model="busca">
+		<div class="form-control">
+			<label class="label">
+				<span class="label-text">connected</span>
+			</label>
+			<div class="relative">
+				<input name="busca" v-model="busca" type="text" placeholder="Comece a digitar..."
+					class="w-full pr-16 input input-primary input-bordered">
+				<!-- <button class="absolute top-0 right-0 rounded-l-none btn btn-primary"><svg
+						xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+						class="inline-block w-6 h-6 stroke-current">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+							d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+					</svg></button> -->
+			</div>
+		</div>
 		<br>
-		<projeto-item
-		v-for="resultado in resultados" :key="resultado.id"
-		:projeto="resultado"
-		></projeto-item>
-			
+		<projeto-item v-for="resultado in resultados" :key="resultado.id" :projeto="resultado"></projeto-item>
+
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
 	<script src="https://unpkg.com/lodash@4.17.20/lodash.min.js"></script>
+	
+	<script type="text/x-template" id="projeto-item-template">
+		<li tabindex="0" class="text-black collapse border rounded-box border-base-300 collapse-arrow">
+			<div class="collapse-title text-xl font-medium">
+				<div class="avatar">
+					<div class="rounded-full w-10 h-10">
+						<img src="{{url_for('static',filename='imgs/avatar_example.bmp')}}">
+					</div>
+					<span class="my-auto px-1">@{projeto.cliente.nome}</span>
+				</div>
+			</div>
+			<div class="collapse-content">
+				<a :href="'{{ url_for('novo') }}/' + projeto.cliente.id" class="btn btn-outline btn-accent btn-sm">+Novo Projeto</a>
+				<p>@{projeto.cliente.endereco} - @{projeto.cliente.telefone}</p>
+				<b>Ambientes: </b>
+			<div class="inline" v-for="amb in projeto.ambientes">@{amb.nome} - </div>
+			</div>
+		</li>
+	</script>
 	<script>
 
 		const app = {
@@ -51,7 +81,7 @@
 							cliente: {
 								endereco: 'av.15 bela longe',
 								id: 1,
-								nome: 'teste',
+								nome: 'Diego Teste',
 								telefone: '12-2121-2121'
 							},
 							cliente_id: 1,
@@ -90,23 +120,15 @@
 		vm.component('projeto-item', {
 			props: ["projeto"],
 			data() {
-				return{show: false}
+				return { show: false }
 			},
-			template: `
-				<li class="list-none bg-white text-gray-700 px-2 py-2 text-sm"  @click="show=!show">
-					<p>@{projeto.cliente.nome}</p>
-					<p>@{projeto.cliente.endereco} - @{projeto.cliente.telefone}</p>
-					<div v-if="show" class="">
-						<b>Ambientes: </b>
-						<div class="inline" v-for="amb in projeto.ambientes">@{amb.nome} - </div>
-					</div>
-				</li>
-			`
+			template: '#projeto-item-template',
+
 		})
 		vm.mount("#app")
 	</script>
 
-
+	
 
 </main>
 {% endblock main %}
