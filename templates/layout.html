@@ -25,13 +25,14 @@
 	</style>
 	<script src="https://kit.fontawesome.com/3db21c2fa2.js" crossorigin="anonymous"></script>
 </head>
-<header>
-	<a href="/" class="flex justify-center {% block logo_class %}{% endblock logo_class %}">
-		<img src="{{ url_for('static',filename='imgs/logo.png') }}" alt="" class="h-32" srcset="">
+<body class="flex flex-col h-screen">
+	
+	<header>
+		<a href="/" class="flex justify-center {% block logo_class %}{% endblock logo_class %}">
+			<img src="{{ url_for('static',filename='imgs/logo.png') }}" alt="" class="h-32" srcset="">
 	</a>
 </header>
-{% block main %}
-
-{% endblock main %}
-
+	{% block main %}
+	{% endblock main %}
+</body>
 </html>

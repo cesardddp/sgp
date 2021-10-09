@@ -5,7 +5,8 @@
 {% block logo_class %}
 
 {% endblock logo_class %}
-<main class="container mx-auto px-6">
+<main class="container mx-auto px-6 mb-auto">
+
 	<div class="flex justify-center">
 		<img src="{{ url_for('static',filename='imgs/lupa2-trans.ico')}}" alt="" class="h-16 w-16" srcset="">
 	</div>
@@ -18,37 +19,31 @@
 			<div class="relative">
 				<input name="busca" v-model="busca" type="text" placeholder="Comece a digitar..."
 					class="w-full pr-16 input input-primary input-bordered">
-				<!-- <button class="absolute top-0 right-0 rounded-l-none btn btn-primary"><svg
-						xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-						class="inline-block w-6 h-6 stroke-current">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-							d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-					</svg></button> -->
 			</div>
 		</div>
 		<br>
-		<projeto-item v-for="resultado in resultados" :key="resultado.id" :projeto="resultado"></projeto-item>
+		<cliente-item v-for="cliente in clientes" :key="cliente.id" :cliente="cliente"></cliente-item>
 
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
 	<script src="https://unpkg.com/lodash@4.17.20/lodash.min.js"></script>
-	
-	<script type="text/x-template" id="projeto-item-template">
+
+	<script type="text/x-template" id="cliente-item-template">
 		<li tabindex="0" class="text-black collapse border rounded-box border-base-300 collapse-arrow">
-			<div class="collapse-title text-xl font-medium">
-				<div class="avatar">
+			<div class="collapse-title text-xl font-medium flex">
+				<div class="avatar ">
 					<div class="rounded-full w-10 h-10">
-						<img src="{{url_for('static',filename='imgs/avatar_example.bmp')}}">
+						<img :src="'https://avatars.dicebear.com/api/gridy/'+cliente.nome+'.svg'">
 					</div>
-					<span class="my-auto px-1">@{projeto.cliente.nome}</span>
+					<span class="my-auto px-1">@{cliente.nome}</span>
 				</div>
+				<a :href="'{{ url_for('novo') }}/' + cliente.id" class="btn btn-outline btn-accent btn-sm align-top ml-auto mr-5">+Novo Projeto</a>
 			</div>
 			<div class="collapse-content">
-				<a :href="'{{ url_for('novo') }}/' + projeto.cliente.id" class="btn btn-outline btn-accent btn-sm">+Novo Projeto</a>
-				<p>@{projeto.cliente.endereco} - @{projeto.cliente.telefone}</p>
-				<b>Ambientes: </b>
-			<div class="inline" v-for="amb in projeto.ambientes">@{amb.nome} - </div>
+				<p>@{cliente.endereco} - @{cliente.telefone}</p>
+				<b>Projetos: </b>
+			<div class="inline" v-for="proj in cliente.projetos">@{proj.id} - </div>
 			</div>
 		</li>
 	</script>
@@ -58,36 +53,21 @@
 			data() {
 				return {
 					busca: '',
-					resultados: [
+					clientes: [
 						{
-							ambientes: [
+							endereco: "longe pakas",
+							id: 2,
+							nome: "cesar",
+							numero: null,
+							projetos: [
 								{
-									id: 1,
-									nome: 'sala',
-									projeto_id: 1
-								},
-								{
-									id: 21,
-									nome: 'quarto',
-									projeto_id: 1
-								},
-								{
-									id: 13,
-									nome: 'teto',
-									projeto_id: 1
+									"data_apresentacao": null,
+									"data_medicao": null,
+									"id": 2,
+									"usuario_id": 1
 								}
 							],
-							aprovacao: false,
-							cliente: {
-								endereco: 'av.15 bela longe',
-								id: 1,
-								nome: 'Diego Teste',
-								telefone: '12-2121-2121'
-							},
-							cliente_id: 1,
-							data_entrada: '2021-08-13T19:06:15.036352',
-							id: 1,
-							usuario_id: 1
+							telefone: "19 929 919911"
 						},
 					]
 				}
@@ -101,10 +81,11 @@
 				faz_busca: _.debounce(function () {
 					axios
 						.get(
-							'{{ url_for("projeto_bp.busca_projeto",busca="") }}' //substitui pela url de busca
+							'{{ url_for("cliente_bp.busca_cliente",busca="") }}' //substitui pela url de busca
 							+ this.busca.trim())
 						.then(response => {
-							this.resultados = response.data.projeto
+							//debugger
+							this.clientes = response.data.clientes
 							console.log(this.resultados);
 						})
 						.catch(error => {
@@ -113,22 +94,36 @@
 
 				}, 550)
 			},
+			mounted() {
+				axios
+					.get(
+						'{{ url_for("cliente_bp.lista_clientes") }}' //substitui pela url de busca
+					)
+					.then(response => {
+						//debugger
+						this.clientes = response.data.clientes
+						console.log(this.resultados);
+					})
+					.catch(error => {
+						this.resultados = 'Erro! Não foi possível adquirir resultados da API: ' + error
+					})
+			},
 		}
 
 		const vm = Vue.createApp(app)
 		vm.config.compilerOptions.delimiters = ['@{', '}']
-		vm.component('projeto-item', {
-			props: ["projeto"],
+		vm.component('cliente-item', {
+			props: ["cliente"],
 			data() {
 				return { show: false }
 			},
-			template: '#projeto-item-template',
+			template: '#cliente-item-template',
 
 		})
 		vm.mount("#app")
 	</script>
 
-	
+
 
 </main>
 {% endblock main %}

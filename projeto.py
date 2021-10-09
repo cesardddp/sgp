@@ -61,7 +61,6 @@ def get_projeto(pk=None):
 @projeto_bp.route("/", methods=["GET"])
 def get_projetos():
     projetos = Projeto.query.all()
-
     result = projeto_schema.dump(projetos, many=True)
     return {"projetos": result}
 

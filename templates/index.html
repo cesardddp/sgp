@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block main %}
 
-<main class="container  mx-auto px-6">
+<main class="container mx-auto px-6 mb-auto">
     <!-- <a href="">NOVO PROJETO</a> -->
     <div class="cloud x2"></div>
 
@@ -30,5 +30,9 @@
         </a>
     </div>
 </main>
-
+<footer>
+	<a href="{{ url_for('login_bp.logout') }}" class="flex justify-end">
+		<img src="{{ url_for('static',filename='imgs/logout.jpeg') }}" alt="" class="h-24" srcset="">
+	</a>
+</footer>
 {% endblock main %}

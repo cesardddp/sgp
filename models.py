@@ -1,16 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Column
+from flask_sqlalchemy.model import Model
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash,check_password_hash
 import datetime
 import enum
 
 
-# from flask_marshmallow import Marshmallow
-
-# from sqlalchemy_utils import PhoneNumber
-# from datetime import datetime
-# from flask_login import UserMixin
-
-# import uuid
-db = SQLAlchemy()
+db:SQLAlchemy = SQLAlchemy()
 
 
 def configure(app):
@@ -28,6 +25,7 @@ class Cliente (db.Model):
     endereco = db.Column('endereco', db.String)
     telefone = db.Column('telefone', db.String)
     numero = db.Column('numero', db.Integer)
+    projetos = db.relationship('Projeto',backref='cliente', lazy=True)
 
 class Ambiente (db.Model):
     __tablename__ = "Ambiente"
@@ -57,13 +55,21 @@ class Projeto (db.Model):
     cliente_id = db.Column('Cliente_id', db.Integer, db.ForeignKey('Cliente.id'))
     
     usuario = db.relationship('Usuario', foreign_keys=usuario_id)
-    cliente = db.relationship('Cliente', foreign_keys=cliente_id)
+    # cliente = db.relationship('Cliente',backref='Projeto', lazy=True, foreign_keys=cliente_id)
     # ambientes = db.relationship('Ambiente',backref="projeto")
     ambientes = db.relationship('Ambiente', backref='Projeto', lazy=True)
     # cliente = db.Column('cliente', db.String)
 
-class Usuario (db.Model):
+class Usuario (db.Model,UserMixin):
     __tablename__ = "Usuario"
     id = db.Column('id', db.Integer, primary_key = True)
-    nome = db.Column('nome', db.Integer)
+    nome = db.Column('nome', db.String(20))
+    senha = db.Column('senha',db.String(240)) 
+
+    def __init__(self, nome, senha):#, **kwargs):
+        self.nome = nome
+        self.senha = generate_password_hash(senha)
+
+    def veryfy(self,senha):
+        return check_password_hash(self.senha, senha)
 

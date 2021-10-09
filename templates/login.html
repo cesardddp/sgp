@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block link_rel %}
+{% endblock link_rel %}
+{% block main %}
+{% block logo_class %}
+
+{% endblock logo_class %}
+	<div class="flex justify-center">
+		<img src="{{ url_for('static',filename='imgs/lupa2-trans.ico')}}" alt="" class="h-16 w-16" srcset="">
+	</div>
+	<div class="cloud x2"></div>
+	<form class="w-96 mx-auto" action="{{ url_for('login_bp.login') }}" method="post">
+		<div class="p-10 card bg-blue-200 text-black">
+			<div class="form-control">
+				<label class="label ">
+					<span class="w-full text-center">Username</span>
+				</label>
+				<input type="text" name="nome" class="input input-ghost" required>
+			</div>
+			<div class="form-control">
+				<label class="label text-black">
+					<span class="w-full text-center">Senha</span>
+				</label>
+				<input type="password" name="senha" class="input input-ghost" required>
+			</div>
+		</div>
+		<button type="submit" class="w-full btn bg-red-200 hover:bg-red-300 py-2 px-4 rounded-b-3xl">
+			Login
+		</button>
+	</form>
+</main>
+{% endblock main %}

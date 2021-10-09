@@ -17,3 +17,6 @@ sgp_real.csv
 templates/daisyTeste.html
 templates/modal_teste.html
 templates/teste.html
+.cspell/
+populadb.py
+test.db
