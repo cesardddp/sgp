@@ -23,7 +23,6 @@
 		</div>
 		<br>
 		<cliente-item v-for="cliente in clientes" :key="cliente.id" :cliente="cliente"></cliente-item>
-
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
@@ -48,28 +47,23 @@
 		</li>
 	</script>
 	<script>
-
 		const app = {
 			data() {
 				return {
 					busca: '',
-					clientes: [
-						{
-							endereco: "longe pakas",
-							id: 2,
-							nome: "cesar",
-							numero: null,
-							projetos: [
-								{
-									"data_apresentacao": null,
-									"data_medicao": null,
-									"id": 2,
-									"usuario_id": 1
-								}
-							],
-							telefone: "19 929 919911"
-						},
-					]
+					clientes: [{
+						endereco: "longe pakas",
+						id: 2,
+						nome: "cesar",
+						numero: null,
+						projetos: [{
+							"data_apresentacao": null,
+							"data_medicao": null,
+							"id": 2,
+							"usuario_id": 1
+						}],
+						telefone: "19 929 919911"
+					}, ]
 				}
 			},
 			watch: {
@@ -82,7 +76,8 @@
 					axios
 						.get(
 							'{{ url_for("cliente_bp.busca_cliente",busca="") }}' //substitui pela url de busca
-							+ this.busca.trim())
+							+
+							this.busca.trim())
 						.then(response => {
 							//debugger
 							this.clientes = response.data.clientes
@@ -115,7 +110,9 @@
 		vm.component('cliente-item', {
 			props: ["cliente"],
 			data() {
-				return { show: false }
+				return {
+					show: false
+				}
 			},
 			template: '#cliente-item-template',
 

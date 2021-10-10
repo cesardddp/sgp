@@ -20,3 +20,4 @@ templates/teste.html
 .cspell/
 populadb.py
 test.db
+test.db.old

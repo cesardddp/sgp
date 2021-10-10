@@ -13,7 +13,7 @@
         <button @click="editando=!editando"><i class="fas fa-edit"></i>Editar</button>
 
         <p><b>Cliente: </b>
-        <div>@{cliente}</div>
+            <div>@{cliente}</div>
         </p>
 
         <p><b>Data de Entrada: </b></p>
@@ -89,10 +89,10 @@
             beforeMount() {
                 return (
                     axios
-                        .get("{{ url_for('projeto_bp.get_projeto',pk=projeto_id) }}",)
-                        .then(response => {
-                            this.projeto = response.data.projeto
-                        })
+                    .get("{{ url_for('projeto_bp.get_projeto',pk=projeto_id) }}", )
+                    .then(response => {
+                        this.projeto = response.data.projeto
+                    })
                 )
             },
             computed: {
@@ -155,7 +155,7 @@
         }
         const app = Vue.createApp(App)
         app.component('button-save', {
-            
+
             props: ['field_name'],
 
             data() {
@@ -189,7 +189,6 @@
             <button v-show="save" @click="save=!save,loading=true;atualizar_projeto(field_name)">
                 <i class="fas fa-save"></i>
             </button>
-            @{field_name}
             <i  v-show="loading" @click="loading=!loading,ready=true" class="fas fa-cog fa-spin"></i>
             <i  v-show="ready" @click="ready=!ready,save=true" class="fas fa-check"></i>
                 `

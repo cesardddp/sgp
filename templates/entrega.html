@@ -2,7 +2,6 @@
 {% block link_rel %}
 {% endblock link_rel %}
 {% block main %}
-
 <main class="container mx-auto px-6">
 	<div class="flex justify-center">
 		<img src="{{ url_for('static',filename='imgs/quadro.png')}}" alt="" class="h-16 w-16" srcset="">
@@ -20,6 +19,24 @@
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+	<script type="text/x-template" id="projeto-row">
+		<div class="table-row text-black">
+		<div title="cliente.nome" class="table-cell rounded-full px-4 py-2 text-sm"
+		:class="colorStatus"
+		>
+			@{projeto.cliente.nome}</div>
+		<div class="table-cell rounded-full bg-white  px-4 py-2 text-sm" :class="colorStatus">
+			<span v-for="amb in projeto.ambientes" :key="amb.id">
+				@{amb.nome}, </span>
+		</div>
+		<div class="table-cell rounded-full bg-white  px-2 py-2 text-sm" :class="colorStatus">
+			@{projeto.fotos}</div>
+		<div class="table-cell rounded-full bg-white  px-2 py-2 text-sm" :class="colorStatus">
+			@{projeto.arquivos}</div>
+		<div class="table-cell rounded-full bg-white  px-2 py-2 text-sm" :class="colorStatus">
+			@{projeto.pdf}</div>
+	</div>
+</script>
 	<script>
 		const App = {
 			compilerOptions: {
@@ -27,33 +44,28 @@
 			},
 			data() {
 				return {
-					projetos: [
-						{
-							ambientes: [
-								{
-									id: -1,
-								},
-							],
-							cliente: {
-								nome: "",
-							},
-							data_apresentacao: "",
-							data_entrada: "",
-							data_medicao: "",
-							fotos: null,
+					projetos: [{
+						ambientes: [{
 							id: -1,
+						}, ],
+						cliente: {
+							nome: "",
 						},
-					]
+						data_apresentacao: "",
+						data_entrada: "",
+						data_medicao: "",
+						fotos: null,
+						id: -1,
+					}, ]
 				}
 			},
-			// mounted {
 			created() {
 				return (
 					axios
-						.get("{{ url_for('projeto_bp.get_projetos') }}",)
-						.then(response => {
-							this.projetos = response.data.projetos
-						})
+					.get("{{ url_for('projeto_bp.get_projetos') }}", )
+					.then(response => {
+						this.projetos = response.data.projetos
+					})
 				)
 			},
 		}
@@ -65,37 +77,24 @@
 			props: ['projeto'],
 			computed: {
 				colorStatus() {
-					
-					if (!this.projeto.data_medicao) { return "bg-white" }
+					if (!this.projeto.data_medicao) {
+						return "bg-white"
+					}
 					const data_medicao = new Date(this.projeto.data_medicao);
 					const now = new Date();
 					const diffTime = Math.abs(data_medicao - now);
 					const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 					//console.log(diffDays + " days");
-					debugger
-					console.log(data_medicao,now)
-					if (diffDays >= 7) { return "bg-red-200" }
-					else { return "bg-white" }
+
+					console.log(data_medicao, now)
+					if (diffDays >= 7) {
+						return "bg-red-200"
+					} else {
+						return "bg-white"
+					}
 				}
 			},
-			template: `
-			<div class="table-row">
-				<div title="cliente.nome" class="table-cell rounded-fulltext-gray-700 px-4 py-2 text-sm"
-				:class="colorStatus"
-				>
-					@{projeto.cliente.nome}</div>
-				<div class="table-cell rounded-full bg-white text-gray-700 px-4 py-2 text-sm">
-					<span v-for="amb in projeto.ambientes" :key="amb.id">
-						@{amb.nome}, </span>
-				</div>
-				<div class="table-cell rounded-full bg-white text-gray-700 px-2 py-2 text-sm">
-					@{projeto.fotos}</div>
-				<div class="table-cell rounded-full bg-white text-gray-700 px-2 py-2 text-sm">
-					@{projeto.arquivos}</div>
-				<div class="table-cell rounded-full bg-white text-gray-700 px-2 py-2 text-sm">
-					@{projeto.pdf}</div>
-			</div>
-                `
+			template: "#projeto-row"
 		})
 		app.mount("#app")
 	</script>
@@ -103,8 +102,7 @@
 {% endblock main %}
 <script>
 	a = {
-		ambientes: [
-			{
+		ambientes: [{
 				id: 1,
 				nome: "sala",
 				projeto_id: 1
