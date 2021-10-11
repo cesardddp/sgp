@@ -6,3 +6,18 @@ Projeto CRUD de exprimentação a partir da ideia desenhada por um amigo
 ### - Vue.js 3 - embutido no html para dar certa reatividade e comunicação com a api
 
 #### demo hospedado em [<img src="https://www.pythonanywhere.com/static/anywhere/images/PA-logo.svg" alt="PythonAnyWhere" width="200"/>](https://sgpdiego.pythonanywhere.com)
+
+### instalação
+- pip install poetry (projeto e denependias gerenciadas por [poetry( https://python-poetry.org/) )
+- git clone https://github.com/cesardddp/sgp
+- cd sgp
+- poetry install
+
+### uso
+Inicialize a database
+- make db
+
+inicialize o servidor de desenvolvimento
+- make run
+
+abra no navegador http://localhost:5050
