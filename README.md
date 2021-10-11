@@ -7,17 +7,21 @@ Projeto CRUD de exprimentação a partir da ideia desenhada por um amigo
 
 #### demo hospedado em [<img src="https://www.pythonanywhere.com/static/anywhere/images/PA-logo.svg" alt="PythonAnyWhere" width="200"/>](https://sgpdiego.pythonanywhere.com)
 
-### instalação
-- pip install poetry (projeto e denependias gerenciadas por [poetry( https://python-poetry.org/) )
-- git clone https://github.com/cesardddp/sgp
-- cd sgp
-- poetry install
-
+### instalação:
+```SHELL
+  $ pip install poetry (projeto e denependias gerenciadas por [poetry( https://python-poetry.org/) )
+  $ git clone https://github.com/cesardddp/sgp
+  $ cd sgp
+  $ poetry install
+```
 ### uso
 Inicialize a database
-- make db
-
+```SHELL
+  $ make db
+```
 inicialize o servidor de desenvolvimento
-- make run
+```SHELL
+  $ make run
+```
 
 abra no navegador http://localhost:5050
