@@ -9,32 +9,58 @@
         <img src="{{ url_for('static',filename='imgs/pessoa_fundo_verde.png')}}" alt="" class="h-16 w-16" srcset="">
     </div>
     <div class="cloud x2"></div>
-    <div id="app" class="bg-blend-lighten bg-blue-200 text-black">
-        <button @click="editando=!editando"><i class="fas fa-edit"></i>Editar</button>
+    <div id="app" class="bg-blend-lighten bg-blue-200 text-black p-1">
 
+        <button @click="editando=!editando" class="btn btn-accent btn-outline">
+            <i class="fas fa-edit">Editar</i></button>
         <p><b>Cliente: </b>
-            <div>@{cliente}</div>
+        <div>@{cliente}</div>
         </p>
 
         <p><b>Data de Entrada: </b></p>
-        <input :disabled="!editando" type="date" v-model="data_entrada">
-        <input :disabled="!editando" type="time" v-model="hora_entrada">
+        <input :disabled="!editando" type="date" v-model="data_entrada" class="input input-info input-bordered mr-1">
+        <input :disabled="!editando" type="time" v-model="hora_entrada" class="input input-info input-bordered mr-1">
         <button-save v-if="editando" :field_name="'data_entrada'"></button-save>
 
         <p><b>Data medição: </b></p>
-        <input :disabled="!editando" type="date" v-model="data_medicao">
-        <input :disabled="!editando" type="time" v-model="hora_medicao">
+        <input :disabled="!editando" type="date" v-model="data_medicao" class="input input-info input-bordered mr-1">
+        <input :disabled="!editando" type="time" v-model="hora_medicao" class="input input-info input-bordered mr-1">
         <button-save v-if="editando" :field_name="'data_medicao'"></button-save>
 
         <p><b>Data apresentação: </b></p>
-        <input :disabled="!editando" type="date" v-model="data_apresentacao">
-        <input :disabled="!editando" type="time" v-model="hora_apresentacao">
+        <input :disabled="!editando" type="date" v-model="data_apresentacao"
+            class="input input-info input-bordered mr-1">
+        <input :disabled="!editando" type="time" v-model="hora_apresentacao"
+            class="input input-info input-bordered mr-1">
         <button-save v-if="editando" :field_name="'data_apresentacao'"></button-save>
 
-        <p><b>Aprovado: </b>@{projeto.aprovacao}</p>
+        <p class="mt-1"><b>Aprovado: </b>
+            <input type="checkbox" v-model="projeto.aprovacao" class="checkbox checkbox-accent align-middle	"
+                :disabled="!editando">
+        </p>
+
         <p><b>Orçamento: </b>@{projeto.orcamento}</p>
-        <p><b>Fotos: </b>@{projeto.orcamento}</p>
-        <p><b>Arquivos: </b>@{projeto.orcamento}</p>
+        <!-- <p><b>Fotos: </b>@{projeto.fotos}</p>
+        <input type="file" name="fotos" multiple>
+        <button class="btn btn-accent btn-outline" @click="fotos">
+            <i class="fas fa-file-upload text-2xl"></i>
+        </button> -->
+
+        <p><b>Arquivos: </b>@{projeto.arquivos}</p>
+        <input type="file" id="files" ref="files" hidden multiple v-on:change="handleFilesUpload()">
+        <div v-for="(file, key) in files" class="border-base-300">@{ file.name } <span class="remove-file"
+                v-on:click="removeFile( key )">
+                <button class="btn btn-error btn-xs" @click="fotos">
+                    <i class="fas fa-minus"></i>
+                </button></span>
+        </div>
+        <button class="btn btn-success btn-sm" @click="addFiles">
+            <i class="fas fa-plus"></i>
+        </button>
+        <button class="btn btn-accent " @click="submitFiles">
+            <i class="fas fa-file-upload text-2xl"></i>
+        </button>
+
         <ol>
             <li v-for="(amb, index) in projeto.ambientes" :key="amb.id">
                 <b>Ambiente: </b>
@@ -43,6 +69,20 @@
         </ol>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script type="text/x-template" id="button-save">
+        <button v-show="save" @click="save=!save,loading=true;atualizar_projeto(field_name)"
+            class="btn btn-square btn-accent btn-sm">
+            <i class="fas fa-save "></i>
+        </button>
+        <button  v-show="loading" @click="loading=!loading,ready=true"
+            class="btn btn-square btn-warning btn-sm">
+            <i  class="fas fa-cog fa-spin"></i>
+        </button>
+        <button v-show="ready" @click="ready=!ready,save=true"
+            class="btn btn-square btn-success btn-sm">
+            <i   class="fas fa-check"></i>
+        </button>
+        </script>
     <script type="application/javascript">
         const App = {
             compilerOptions: {
@@ -53,7 +93,10 @@
                     projeto: {
                         cliente: {}
                     },
-                    editando: false
+                    editando: false,
+                    fotos: [],
+                    arquivos: [],
+                    files: []
                 }
             },
             methods: {
@@ -84,15 +127,72 @@
                 set_data(field_name, nova_data) {
                     let hora = this["hora_" + field_name] === "" ? "00:00" : this["hora_" + field_name]
                     this.projeto["data_" + field_name] = new Date(nova_data + "T" + hora).toISOString()
+                },
+                addFotos(event) {
+                    console.log(event.target.files);
+                },
+                addFiles() {
+                    this.$refs.files.click();
+                },
+                /*
+                  Submits files to the server
+                */
+                submitFiles() {
+                    /*
+                      Initialize the form data
+                    */
+                    let formData = new FormData();
+                    /*
+                      Iteate over any file sent over appending the files
+                      to the form data.
+                    */
+                    for (var i = 0; i < this.files.length; i++) {
+                        let file = this.files[i];
+                        formData.append('files[' + i + ']', file);
+                    }
+                    /*
+                      Make the request to the POST /select-files URL
+                    */
+                    axios.post('/select-files',
+                        formData,
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        }
+                    ).then(function () {
+                        console.log('SUCCESS!!');
+                    })
+                        .catch(function () {
+                            console.log('FAILURE!!');
+                        });
+                },
+                /*
+                  Handles the uploading of files
+                */
+                handleFilesUpload() {
+                    let uploadedFiles = this.$refs.files.files;
+                    /*
+                      Adds the uploaded file to the files array
+                    */
+                    for (var i = 0; i < uploadedFiles.length; i++) {
+                        this.files.push(uploadedFiles[i]);
+                    }
+                },
+                /*
+                  Removes a select file the user has uploaded
+                */
+                removeFile(key) {
+                    this.files.splice(key, 1);
                 }
             },
             beforeMount() {
                 return (
                     axios
-                    .get("{{ url_for('projeto_bp.get_projeto',pk=projeto_id) }}", )
-                    .then(response => {
-                        this.projeto = response.data.projeto
-                    })
+                        .get("{{ url_for('projeto_bp.get_projeto',pk=projeto_id) }}",)
+                        .then(response => {
+                            this.projeto = response.data.projeto
+                        })
                 )
             },
             computed: {
@@ -155,9 +255,7 @@
         }
         const app = Vue.createApp(App)
         app.component('button-save', {
-
             props: ['field_name'],
-
             data() {
                 return {
                     save: true,
@@ -183,15 +281,8 @@
                                 console.log(error);
                             })
                 },
-
             },
-            template: `
-            <button v-show="save" @click="save=!save,loading=true;atualizar_projeto(field_name)">
-                <i class="fas fa-save"></i>
-            </button>
-            <i  v-show="loading" @click="loading=!loading,ready=true" class="fas fa-cog fa-spin"></i>
-            <i  v-show="ready" @click="ready=!ready,save=true" class="fas fa-check"></i>
-                `
+            template: '#button-save'
         })
         app.mount("#app")
     </script>

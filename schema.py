@@ -16,6 +16,7 @@ class ClienteSchema(ma.SQLAlchemyAutoSchema):
                 "data_medicao",
                 "data_apresentacao",
                 "usuario_id",
+                "ambientes"
             ),
         )
     ) 

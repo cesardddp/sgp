@@ -1,0 +1,159 @@
+{% extends 'layout.html' %}
+{% block link_rel %}
+<link href="{{ url_for('static', filename='css/floatin-label.css') }}" rel="stylesheet">
+{% endblock link_rel %}
+{% block main %}
+<main class="container mx-auto px-6 mb-auto">
+
+    <div class="flex justify-center">
+        <img src="{{ url_for('static',filename='imgs/pessoa_fundo_verde.png')}}" alt="" class="h-16 w-16" srcset="">
+    </div>
+    <div class="cloud x2"></div>
+    <div id="app" class="bg-blend-lighten bg-blue-200 text-black">
+
+        <div class="card text-center shadow-2xl">
+            <figure class="px-20 pt-20">
+                <img :src="'https://avatars.dicebear.com/api/gridy/'+cliente.nome+'.svg'">
+            </figure>
+            <div class="card-body">
+                <h2 class="card-title">@{cliente.nome}</h2>
+                <h3 class="card-title">@{cliente.endereco}</h3>
+                <h3 class="card-title">@{cliente.telefone}</h3>
+                <p v-for="proj in cliente.projetos">
+                    <a :href="'{{ url_for("index") }}'+'detalhes/'+proj.id"
+                    class="btn btn-info btn-sm mt-1"
+                    ><b>Projeto:</b> @{proj.id}</a>
+                <!-- <span>@{proj.data_apresentacao}</span>
+                <span>@{proj.data_medicao}</span> -->
+                </p>
+
+                <div class="justify-center card-actions">
+                    <a :href="'{{ url_for('novo') }}/' + cliente.id" class="btn btn-outline btn-accent">+Novo Projeto</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script type="text/x-template" id="cliente-item-template">
+    </script>
+    <script type="application/javascript">
+        const App = {
+            compilerOptions: {
+                delimiters: ['@{', '}']
+            },
+            data() {
+                return {
+                    cliente: {
+                        endereco: "",
+                        id: 1,
+                        nome: "",
+                        numero: null,
+                        projetos: [
+                            {
+                                ambientes: [
+                                    {
+                                        id: 1,
+                                        nome: "",
+                                        projeto_id: 1
+                                    },
+                                    {
+                                        id: 2,
+                                        nome: "",
+                                        projeto_id: 1
+                                    }
+                                ],
+                                data_apresentacao: null,
+                                data_medicao: null,
+                                id: 1,
+                                usuario_id: 1
+                            },
+                            {
+                                ambientes: [
+                                    {
+                                        id: 9,
+                                        nome: "",
+                                        projeto_id: 6
+                                    },
+                                ],
+                                data_apresentacao: null,
+                                data_medicao: "2021-10-15T03:00:00",
+                                id: 6,
+                                usuario_id: 1
+                            }
+                        ],
+                        telefone: ""
+
+
+                    }
+                }
+            },
+            methods: {
+
+            },
+            mounted() {
+                return (
+                    axios
+                        .get("{{ url_for('cliente_bp.pega_cliente',pk=cliente_id) }}",)
+                        .then(response => {
+                            // debugger
+                            this.cliente = response.data
+                        })
+                )
+            },
+            computed: {
+                // cliente() {
+                //     return this.projeto.cliente.nome +
+                //         " - " + this.projeto.cliente.endereco +
+                //         " - " + this.projeto.cliente.telefone
+                // },
+            },
+
+
+        }
+        const app = Vue.createApp(App)
+        app.component('button-save', {
+
+            props: ['field_name'],
+
+            data() {
+                return {
+                    save: true,
+                    loading: false,
+                    ready: false
+                }
+            },
+            methods: {
+                atualizar_projeto(field_name) {
+                    data = {}
+                    data[field_name] = this.$parent.projeto[field_name]
+                    // debugger
+                    axios
+                        .patch("{{ url_for('cliente_bp.pega_cliente',pk=cliente_id) }}", data)
+                        .then(response => {
+                            if (response.status === 204) {
+                                this.loading = false
+                                this.ready = true
+                            }
+                        })
+                        .catch(
+                            function (error) {
+                                console.log(error);
+                            })
+                },
+
+            },
+            template: `
+            <button v-show="save" @click="save=!save,loading=true;atualizar_projeto(field_name)">
+                <i class="fas fa-save"></i>
+            </button>
+            <i  v-show="loading" @click="loading=!loading,ready=true" class="fas fa-cog fa-spin"></i>
+            <i  v-show="ready" @click="ready=!ready,save=true" class="fas fa-check"></i>
+                `
+        })
+        app.mount("#app")
+    </script>
+</main>
+
+{% endblock main %}

@@ -38,11 +38,12 @@ def novo_cliente():
     result = cliente_schema.dump(Cliente.query.get(cliente.id))
     return {"message": "Created new projeto.", "projeto": result}
 
-@cliente_bp.route("/<id_cliente>",methods=["GET"])
-def pega_cliente(id_cliente=None):
-    if not id_cliente is None:
-        return ClienteSchema().jsonify(
-            Cliente.get(id_cliente)
+@cliente_bp.route("/<int:pk>",methods=["GET"])
+def pega_cliente(pk=None):
+    # import ipdb;ipdb.set_trace()
+    if not pk is None:
+        return cliente_schema.jsonify(
+            Cliente.query.get(pk)
         )
     return ClienteSchema(many=True).jsonify(Cliente.query.all())
 

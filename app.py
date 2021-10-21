@@ -44,9 +44,16 @@ def busca():
 
 
 @app.get("/detalhes/<int:pk>")
-def detalhes(pk: int):
+@app.get("/detalhes/")
+def detalhes(pk: int=-1):
     # import ipdb;ipdb.set_trace()
     return render_template("detalhes.html", projeto_id=pk)
+
+@app.get("/cliente_info/")
+@app.get("/cliente_info/<int:pk>")
+def cliente(pk: int=-1):
+    # import ipdb;ipdb.set_trace()
+    return render_template("cliente.html", cliente_id=pk)
 
 
 @app.get("/rotas")
