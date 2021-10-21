@@ -1,8 +1,8 @@
 SHELL := /bin/bash
 run:
 	source /home/cesar/sgp/.venv/bin/activate;\
-	export FLASK_APP=app;\
     export FLASK_ENV=development;\
+	export FLASK_APP=app;\
 	flask run -p 5050
 db:
 	export FLASK_APP=sgp.app;\
