@@ -1,11 +1,9 @@
-from models import Cliente, Projeto
-# from models import Cliente, Projeto
 from flask import Blueprint, request, current_app
-from pprint import pprint as print
-from schema import ClienteSchema
+from .models import Cliente
+from .schema import ClienteSchema
 from marshmallow import ValidationError
 from sqlalchemy.orm.exc import NoResultFound
-
+from . import db
 
 cliente_bp = Blueprint("cliente_bp",__name__,url_prefix="/cliente")
 cliente_schema = ClienteSchema()
@@ -34,8 +32,8 @@ def novo_cliente():
     cliente = Cliente(
         **data
     )
-    current_app.db.session.add(cliente)
-    current_app.db.session.commit()
+    db.session.add(cliente)
+    db.session.commit()
 
     result = cliente_schema.dump(Cliente.query.get(cliente.id))
     return {"message": "Created new projeto.", "projeto": result}
@@ -44,9 +42,9 @@ def novo_cliente():
 def pega_cliente(id_cliente=None):
     if not id_cliente is None:
         return ClienteSchema().jsonify(
-            current_app.db.Cliente.get(id_cliente)
+            Cliente.get(id_cliente)
         )
-    return ClienteSchema(many=True).jsonify(current_app.db.Cliente.query.all())
+    return ClienteSchema(many=True).jsonify(Cliente.query.all())
 
 @cliente_bp.route("/busca/<string:busca>")
 def busca_cliente(busca):

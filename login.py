@@ -1,7 +1,8 @@
 from flask import Blueprint, request, render_template, redirect, url_for,current_app
 from flask_login import login_required,login_user,logout_user
-from models import Usuario
+from .models import Usuario
 import flask_login
+from . import db
 
 login_bp = Blueprint("login_bp",__name__,url_prefix="/auth")
 
@@ -39,11 +40,11 @@ def cadastrar_user():
     if request.method == "GET":
         return render_template("cadastrar.html")
 
-    import ipdb;ipdb.set_trace()
+    # import ipdb;ipdb.set_trace()
 
-    user = current_app.db.Usuario(nome=request.form["nome"], senha=request.form["senha"])
-    current_app.db.session.add(user)
-    current_app.db.session.commit()
+    user = Usuario(nome=request.form["nome"], senha=request.form["senha"])
+    db.session.add(user)
+    db.session.commit()
     return redirect(url_for("index"))
 
 @login_bp.route("/logout")

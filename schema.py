@@ -1,12 +1,6 @@
-from flask_marshmallow import Marshmallow
-from models import Cliente, Ambiente, Projeto, Usuario
+from .models import Cliente, Ambiente, Projeto, Usuario
+from . import ma
 
-ma: Marshmallow = Marshmallow()
-
-
-def configure(app):
-    ma.init_app(app)
-    # app.ma = ma
 
 
 class ClienteSchema(ma.SQLAlchemyAutoSchema):
@@ -24,9 +18,7 @@ class ClienteSchema(ma.SQLAlchemyAutoSchema):
                 "usuario_id",
             ),
         )
-    )  # , exclude=("cliente",))
-    # projetos = ma.Nested(lambda: ProjetoSchema())
-
+    ) 
 
 class AmbienteSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -42,8 +34,6 @@ class ProjetoSchema(ma.SQLAlchemyAutoSchema):
     cliente = ma.Nested(ClienteSchema)  # , exclude=("cliente",))
     ambientes = ma.Nested(AmbienteSchema, many=True)  # exclude=("cliente",))
 
-
-# setattr(ClienteSchema,"projetos",ma.List(ProjetoSchema))
 
 
 class UsuarioSchema(ma.SQLAlchemyAutoSchema):

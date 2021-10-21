@@ -21,3 +21,4 @@ templates/teste.html
 populadb.py
 test.db
 test.db.old
+.python-version
