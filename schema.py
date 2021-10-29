@@ -26,6 +26,11 @@ class AmbienteSchema(ma.SQLAlchemyAutoSchema):
         model = Ambiente
         include_fk = True
 
+class Files(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Ambiente
+        include_fk = True
+
 
 class ProjetoSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

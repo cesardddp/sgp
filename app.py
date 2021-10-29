@@ -2,10 +2,21 @@ from . import create_app
 from flask import render_template, current_app, request
 from flask_login import login_required
 from .models import Cliente
-
+from .populadb import popula_db
+from flask_assets import Bundle, Environment
 
 app = create_app()
 
+assets = Environment(app)
+css = Bundle("src/main.css", output="dist/main.css", filters="postcss")
+
+assets.register("css", css)
+# import ipdb;ipdb.set_trace()
+css.build()
+
+@app.before_first_request
+def first():
+    popula_db()
 
 @app.route("/")
 @login_required

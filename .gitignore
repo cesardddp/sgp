@@ -14,11 +14,14 @@ sgp-front/
 sgp/templates/index-componentizado.html
 index.html
 sgp_real.csv
-templates/daisyTeste.html
-templates/modal_teste.html
-templates/teste.html
 .cspell/
 populadb.py
 test.db
 test.db.old
 .python-version
+node_modules/
+package-lock.json
+tailwind.config.js
+static/.webassets-cache/
+static/dist
+files/*

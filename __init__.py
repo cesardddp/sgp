@@ -6,6 +6,7 @@ from flask_cors import CORS
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_rest_paginate import Pagination
 
 
 
@@ -13,6 +14,7 @@ ma = Marshmallow()
 db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = "login_bp.login"
+pagination = Pagination()
 
 __version__ = "0.1.1"
 
@@ -42,6 +44,8 @@ def create_app():
     
     Migrate(app, db)
 
+    pagination.init_app(app, db)
+    
     configure_uploads(app, app.file)
 
     CORS(app)

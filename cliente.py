@@ -3,7 +3,7 @@ from .models import Cliente
 from .schema import ClienteSchema
 from marshmallow import ValidationError
 from sqlalchemy.orm.exc import NoResultFound
-from . import db
+from . import db,pagination
 
 cliente_bp = Blueprint("cliente_bp",__name__,url_prefix="/cliente")
 cliente_schema = ClienteSchema()
@@ -11,9 +11,12 @@ cliente_schema = ClienteSchema()
 
 @cliente_bp.route("/", methods=["GET"])
 def lista_clientes():
-    clientes = Cliente.query.all()
-    result = cliente_schema.dump(clientes, many=True,)
-    return {"clientes": result}
+    # clientes = Cliente.query.all()
+    # result = cliente_schema.dump(clientes, many=True,)
+    result = pagination.paginate(Cliente.query.all(),cliente_schema,True)
+    # import ipdb;ipdb.set_trace()
+
+    return result
    
 
 @cliente_bp.route("/novo",methods=["POST"])
@@ -40,7 +43,6 @@ def novo_cliente():
 
 @cliente_bp.route("/<int:pk>",methods=["GET"])
 def pega_cliente(pk=None):
-    # import ipdb;ipdb.set_trace()
     if not pk is None:
         return cliente_schema.jsonify(
             Cliente.query.get(pk)

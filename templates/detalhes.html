@@ -110,6 +110,7 @@
                     })
                 },
                 get_hora(field_name) {
+                    // debugger
                     return this.projeto["data_" + field_name] ?
                         new Date(this.projeto["data_" + field_name]).toLocaleTimeString() : ""
                 },
@@ -153,7 +154,9 @@
                     /*
                       Make the request to the POST /select-files URL
                     */
-                    axios.post('/select-files',
+                //    debugger
+                    axios
+                    .patch("{{ url_for('projeto_bp.update_projeto',pk=projeto_id) }}",
                         formData,
                         {
                             headers: {
@@ -178,6 +181,7 @@
                     for (var i = 0; i < uploadedFiles.length; i++) {
                         this.files.push(uploadedFiles[i]);
                     }
+                    
                 },
                 /*
                   Removes a select file the user has uploaded
@@ -211,9 +215,11 @@
                 },
                 hora_entrada: {
                     get() {
+                        // debugger
                         return this.get_hora("entrada")
                     },
                     set(nova_hora) {
+                        // debugger
                         this.set_hora("entrada", nova_hora)
                     }
                 },

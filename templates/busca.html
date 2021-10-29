@@ -13,9 +13,7 @@
 	<div class="cloud x2"></div>
 	<div id="app">
 		<div class="form-control">
-			<label class="label">
-				<span class="label-text">connected</span>
-			</label>
+			
 			<div class="relative">
 				<input name="busca" v-model="busca" type="text" placeholder="Comece a digitar..."
 					class="w-full pr-16 input input-primary input-bordered">
@@ -95,10 +93,9 @@
 						.then(response => {
 							//debugger
 							this.clientes = response.data.clientes
-							console.log(this.resultados);
 						})
 						.catch(error => {
-							this.resultados = 'Erro! Não foi possível adquirir resultados da API: ' + error
+							alert('Erro! Não foi possível adquirir resultados da API: ' + error)
 						})
 
 				}, 550)
@@ -109,12 +106,11 @@
 						'{{ url_for("cliente_bp.lista_clientes") }}' //substitui pela url de busca
 					)
 					.then(response => {
-						//debugger
-						this.clientes = response.data.clientes
-						console.log(this.resultados);
+						// debugger
+						this.clientes = response.data.data
 					})
 					.catch(error => {
-						this.resultados = 'Erro! Não foi possível adquirir resultados da API: ' + error
+						alert('Erro! Não foi possível adquirir resultados da API: ' + error)
 					})
 			},
 		}

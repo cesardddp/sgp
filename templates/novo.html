@@ -1,7 +1,6 @@
 {% extends 'layout.html' %}
 {% block link_rel %}
 <link href="{{ url_for('static', filename='css/floatin-label.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="{{url_for('static',filename='css/modal.css')}}">
 {% endblock link_rel %}
 {% block main %}
 <main class="container mx-auto px-6 mb-auto">
@@ -11,7 +10,7 @@
     </div>
     <div class="cloud x2"></div>
     <div id="app"
-        class="p-3 text-gray-500 bg-blend-lighten bg-blue-200 border-4 border-light-blue-500 border-opacity-25 rounded-md">
+        class="p-3 text-gray-500 border-blue-200 bg-blue-200 border-4  rounded-md">
 
 
         <form class="flex flex-col justify-items-center space-y-3 " @submit.prevent="novoProjeto">
@@ -72,7 +71,7 @@
             </div>
 
             <div v-for="amb in ambientes" class="relative z-0 w-5/6" :key="amb.id">
-                <input type="tel" v-model="amb.nome" placeholder=" " required
+                <input type="text" v-model="amb.nome" placeholder=" " required
                     class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
                 <label class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
                     for="ambiente-1">@{amb.label}</label>

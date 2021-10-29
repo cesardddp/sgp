@@ -5,6 +5,7 @@ from .schema import ProjetoSchema
 from marshmallow import ValidationError
 from sqlalchemy.orm.exc import NoResultFound
 from . import db
+from flask_uploads.exceptions import UploadNotAllowed
 
 projeto_bp = Blueprint("projeto_bp", __name__, url_prefix="/projeto")
 projeto_schema = ProjetoSchema()
@@ -68,7 +69,7 @@ def update_projeto(pk: int):
 
     json_data: dict = request.get_json()
 
-    if not json_data:
+    if not json_data and not request.files:
         return {"message": "No input data provided"}, 400
 
     try:
@@ -77,13 +78,22 @@ def update_projeto(pk: int):
         return {"message": "Projeto could not be found."}, 400
 
     try:
-        projeto_dict = projeto_schema.dump(projeto)
+        files=[]
+        if request.files:
+            for c,v in request.files.items():
+                files.append(current_app.file.save(v))
+    except UploadNotAllowed:
+        print("not alloewd upload")
+    
+    import ipdb;ipdb.set_trace()
+
+    try:
+        # projeto_dict = projeto_schema.dump(projeto)
 
         json_data = projeto_schema.load(json_data)
         for chave, valor in json_data.items():
             # print(chave,valor)
             setattr(projeto, chave, valor)
-        # import ipdb;ipdb.set_trace()
         # projeto:Projeto = projeto_schema.load(projeto_dict)
 
     except ValidationError as err:
