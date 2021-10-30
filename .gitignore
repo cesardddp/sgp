@@ -1,6 +1,6 @@
 .vscode/
 .venv/
-migrations
+# migrations
 sgp/__pycache__/
 teste/
 Book1.xlsx
@@ -16,12 +16,12 @@ index.html
 sgp_real.csv
 .cspell/
 populadb.py
-test.db
+# test.db
 test.db.old
 .python-version
 node_modules/
 package-lock.json
 tailwind.config.js
-static/.webassets-cache/
-static/dist
+# static/.webassets-cache/
+# static/
 files/*
