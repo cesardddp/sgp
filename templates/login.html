@@ -16,19 +16,26 @@
 					<span class="w-full text-center">Username</span>
 				</label>
 				<!-- <input type="text" name="nome" class="input input-ghost" required> -->
-				<input type="text" name="nome" 
-				class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" 
-				required/>
+				<input type="text" placeholder="Senha" name="nome" class="input input-accent input-bordered" required>				
+				<!-- class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+				required/>  -->
 
 			</div>
-			<div class="form-control">
+			<!-- <div class="form-control">
 				<label class="label text-black">
 					<span class="w-full text-center">Senha</span>
 				</label>
 				<input type="password" name="senha" class="input input-ghost" required>
-			</div>
+			</div> -->
+
+			<div class="form-control">
+				<label class="label">
+				  <span class="label-text text-center">Senha</span>
+				</label> 
+				<input type="password" name="senha" placeholder="Senha" class="input input-accent input-bordered">
+			  </div>
 		</div>
-		<button type="submit" class="w-full btn bg-red-200 hover:bg-red-300 py-2 px-4 rounded-b-3xl">
+		<button type="submit" class="w-full btn btn-accent py-2 px-4 rounded-b-3xl">
 			Login
 		</button>
 	</form>

@@ -13,12 +13,12 @@
 	{% endblock link_rel %}
 	<link href="{{ url_for('static', filename='css/nuvens.css') }}" rel="stylesheet">
 
+	<link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.2/dist/full.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.6/dist/themes.css" rel="stylesheet" type="text/css" />
 	{% assets 'css' %}
 		<link href="{{ ASSET_URL }}" rel="stylesheet">
     {% endassets %}
-	<link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.2/dist/full.css" rel="stylesheet" type="text/css" />
-	<link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.6/dist/themes.css" rel="stylesheet" type="text/css" />
-
+	
 	<script src="https://unpkg.com/vue@next"></script>
 	<style>
 

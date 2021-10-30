@@ -1,6 +1,13 @@
 {% extends 'layout.html' %}
 {% block link_rel %}
 {% endblock link_rel %}
+{% block style %}
+.table tbody td, .table tbody th {
+    --tw-bg-opacity: 1;
+}
+
+{% endblock  %}
+
 {% block main %}
 <main class="container mx-auto px-6">
 	<div class="flex justify-center">
@@ -9,33 +16,36 @@
 	<div class="cloud x2"></div>
 	<p class="text-xs">AMARELO SÃO PROJETOS QUE ESTÃO FICANDO ATRASADOS</p>
 	<div id="app">
-		<div class="table w-full">
-			<div class="table-row-group">
-				<projeto-row v-for="projeto in projetos" :key="projeto.id" :projeto="projeto"
-					@click="detalhes(projeto.id)">
-				</projeto-row>
-			</div>
-		</div>
+		<table class="table w-full">
+			<tbody>
+
+				<tr
+					is="vue:projeto-row"
+					v-for="projeto in projetos"
+					:key="projeto.id"
+					:projeto="projeto"
+					@click="detalhes(projeto.id)"
+				></tr>
+
+			</tbody>
+		</table>
+
+
+
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
 	<script type="text/x-template" id="projeto-row">
-		<div class="table-row text-black">
-		<div title="cliente.nome" class="table-cell rounded-full px-4 py-2 text-sm"
-		:class="colorStatus"
-		>
-			@{projeto.cliente.nome}</div>
-		<div class="table-cell rounded-full bg-white  px-4 py-2 text-sm" :class="colorStatus">
-			<span v-for="amb in projeto.ambientes" :key="amb.id">
+		<tr class="space-y-6" >
+			<th class=" rounded-full bg-white  px-4 py-2 text-sm " :class="colorStatus">@{projeto.cliente.nome}</th>
+			<td class=" rounded-full bg-white  px-4 py-2 text-sm" :class="colorStatus">
+				<span v-for="amb in projeto.ambientes" :key="amb.id">
 				@{amb.nome}, </span>
-		</div>
-		<div class="table-cell rounded-full bg-white  px-2 py-2 text-sm" :class="colorStatus">
-			@{projeto.fotos}</div>
-		<div class="table-cell rounded-full bg-white  px-2 py-2 text-sm" :class="colorStatus">
-			@{projeto.arquivos}</div>
-		<div class="table-cell rounded-full bg-white  px-2 py-2 text-sm" :class="colorStatus">
-			@{projeto.pdf}</div>
-	</div>
+			</td>
+			<td class="rounded-full bg-white  px-4 py-2 text-sm" :class="colorStatus" >@{projeto.fotos}</td>
+			<td class="rounded-full bg-white  px-4 py-2 text-sm" :class="colorStatus" >@{projeto.arquivos}</td>
+			<td class="rounded-full bg-white  px-4 py-2 text-sm" :class="colorStatus" >@{projeto.pdf}</td>
+		</tr>
 </script>
 	<script>
 		const App = {
@@ -59,7 +69,13 @@
 					}, ]
 				}
 			},
-			created() {
+			methods:{
+				detalhes(id){
+					location.pathname = "{{ url_for('index') }}" + "detalhes/" + id				
+				}
+			},
+
+			mounted() {
 				return (
 					axios
 					.get("{{ url_for('projeto_bp.get_projetos') }}", )
@@ -81,6 +97,7 @@
 						return "bg-white"
 					}
 					const data_medicao = new Date(this.projeto.data_medicao);
+					// debugger
 					const now = new Date();
 					const diffTime = Math.abs(data_medicao - now);
 					const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));

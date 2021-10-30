@@ -10,7 +10,7 @@
     </div>
     <div class="cloud x2"></div>
     <div id="app"
-        class="p-3 text-gray-500 border-blue-200 bg-blue-200 border-4  rounded-md">
+        class="p-3 text-gray-500 border-blue-200 alert-info border-4  rounded-md">
 
 
         <form class="flex flex-col justify-items-center space-y-3 " @submit.prevent="novoProjeto">
@@ -76,12 +76,12 @@
                 <label class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
                     for="ambiente-1">@{amb.label}</label>
             </div>
-            <button class="self-end bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full"
+            <button class="self-end btn-info text-white py-2 px-4 rounded-full"
                 @click.prevent="add_amb">+ambs</button>
-            <button class="self-end bg-red-200 hover:bg-red-500 text-pink-900 py-2 px-4 rounded-full"
+            <button class="self-end btn-error text-pink-900 py-2 px-4 rounded-full"
                 @click.prevent="rm_amb">-ambs</button>
 
-            <button class="btn bg-red-200 hover:bg-red-300 py-2 px-4 rounded-b-3xl">
+            <button class="btn  btn-accent  py-2 px-4 rounded-b-3xl">
                 Novo Projeto</button>
         </form>
     </div>
