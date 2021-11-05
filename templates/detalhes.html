@@ -7,31 +7,33 @@
 <main class="container mx-auto px-6 mb-auto">
 
     <div class="flex justify-center">
-        <img src="{{ url_for('static',filename='imgs/pessoa_fundo_verde.png')}}" alt="" class="h-16 w-16" srcset="">
+        <img src="{{ url_for('static',filename='icons/file.png')}}" alt="" class="h-16 w-16" srcset="">
     </div>
     <div class="cloud x2"></div>
-    <div id="app" class="bg-blend-lighten bg-blue-200 text-black p-1">
+    <div id="app" class="border bg-base text-base-content p-1">
 
         <button @click="editando=!editando" class="btn btn-accent">
             <i class="fas fa-edit">Editar</i></button>
         <p><b>Cliente: </b>
-        <div>@{cliente}</div>
+            <div>@{cliente}</div>
         </p>
 
         <p><b>Data de Entrada: </b></p>
         <input :readonly="!editando" type="date" v-model="data_entrada" class="input input-info input-bordered mr-1">
-        <input :readonly="!editando" type="time" v-model="hora_entrada" class="input input-info input-bordered mr-1">
+        <input :readonly="!editando" type="time" v-model="hora_entrada_locale"
+            class="input input-info input-bordered mr-1">
         <button-save v-if="editando" :field_name="'data_entrada'"></button-save>
 
         <p><b>Data medição: </b></p>
         <input :readonly="!editando" type="date" v-model="data_medicao" class="input input-info input-bordered mr-1">
-        <input :readonly="!editando" type="time" v-model="hora_medicao" class="input input-info input-bordered mr-1">
+        <input :readonly="!editando" type="time" v-model="hora_medicao_locale"
+            class="input input-info input-bordered mr-1">
         <button-save v-if="editando" :field_name="'data_medicao'"></button-save>
 
         <p><b>Data apresentação: </b></p>
         <input :readonly="!editando" type="date" v-model="data_apresentacao"
             class="input input-info input-bordered mr-1">
-        <input :readonly="!editando" type="time" v-model="hora_apresentacao"
+        <input :readonly="!editando" type="time" v-model="hora_apresentacao_locale"
             class="input input-info input-bordered mr-1">
         <button-save v-if="editando" :field_name="'data_apresentacao'"></button-save>
 
@@ -53,8 +55,11 @@
             </li>
         </ol>
 
-        
-        <p><b>Arquivos: </b>@{projeto.arquivos}</p>
+        <p><b>Arquivos: </b>
+            <a v-for='arq in projeto.arquivos' :href='arq.url'>@{arq.nome} - </a>
+        </p>
+<br>
+        <!-- <p><b>Arquivos: </b></p> -->
         <input type="file" id="files" ref="files" hidden multiple v-on:change="handleFilesUpload()">
         <div v-for="(file, key) in files" class="border-base-300">@{ file.name } <span class="remove-file"
                 v-on:click="removeFile( key )">
@@ -69,7 +74,7 @@
             <i class="fas fa-file-upload text-2xl"></i>
         </button>
 
-        
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <script type="text/x-template" id="button-save">
@@ -124,6 +129,10 @@
                     this.projeto["data_" + field_name] = new Date(data + "T" + nova_hora).toISOString()
                 },
                 get_data(field_name) {
+                    if (field_name === "entrada") {
+                        // debugger
+                    }
+
                     return this.projeto["data_" + field_name] ?
                         new Date(this.projeto["data_" + field_name]).toISOString().split('T')[0] :
                         "Não definida"
@@ -139,7 +148,7 @@
                     this.$refs.files.click();
                 },
                 /*
-                  Submits files to the server
+                    Submits files to the server
                 */
                 submitFiles() {
                     /*
@@ -147,30 +156,33 @@
                     */
                     let formData = new FormData();
                     /*
-                      Iteate over any file sent over appending the files
-                      to the form data.
+                        Iteate over any file sent over appending the files
+                        to the form data.
                     */
                     for (var i = 0; i < this.files.length; i++) {
                         let file = this.files[i];
                         formData.append('files[' + i + ']', file);
                     }
                     /*
-                      Make the request to the POST /select-files URL
+                        Make the request to the POST /select-files URL
                     */
-                //    debugger
+                    //    debugger
                     axios
-                    .patch("{{ url_for('projeto_bp.update_projeto',pk=projeto_id) }}",
-                        formData,
-                        {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
+                        .patch("{{ url_for('projeto_bp.update_projeto',pk=projeto_id) }}",
+                            formData, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
                             }
-                        }
-                    ).then(function () {
-                        console.log('SUCCESS!!');
-                    })
-                        .catch(function () {
-                            console.log('FAILURE!!');
+                        ).then(function () {
+                            console.log('SUCCESS!!');
+                        })
+                        .catch(function (err) {
+                            // debugger
+                            console.log('FAILURE!!'+err);
+                            alert(
+                                'Erro '+err.status+': '+err.data.message
+                            )
                         });
                 },
                 /*
@@ -184,7 +196,7 @@
                     for (var i = 0; i < uploadedFiles.length; i++) {
                         this.files.push(uploadedFiles[i]);
                     }
-                    
+
                 },
                 /*
                   Removes a select file the user has uploaded
@@ -193,13 +205,15 @@
                     this.files.splice(key, 1);
                 }
             },
-            beforeMount() {
+            mounted() {
                 return (
                     axios
-                        .get("{{ url_for('projeto_bp.get_projeto',pk=projeto_id) }}",)
-                        .then(response => {
-                            this.projeto = response.data.projeto
-                        })
+                    .get("{{ url_for('projeto_bp.get_projeto',pk=projeto_id) }}", )
+                    .then(response => {
+                        // debugger
+// 
+                        this.projeto = response.data.projeto
+                    })
                 )
             },
             computed: {
@@ -257,6 +271,18 @@
                     set(nova_hora) {
                         this.set_hora("apresentacao", nova_hora)
                     }
+                },
+                hora_medicao_locale() {
+                    // debugger
+                    return this.get_hora("medicao")
+                },
+                hora_apresentacao_locale() {
+                    // debugger
+                    return this.get_hora("apresentacao")
+                },
+                hora_entrada_locale() {
+                    // debugger
+                    return this.get_hora("entrada")
                 },
             },
 

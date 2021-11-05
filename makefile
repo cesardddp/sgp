@@ -7,7 +7,7 @@ run:
 db:
 	export FLASK_APP=app;\
 	rm -rf migrations/;\
-	rm sgp/test.db;\
+	rm test.db;\
 	flask db init;\
 	flask db migrate;\
 	flask db upgrade;\

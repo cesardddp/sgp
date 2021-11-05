@@ -3,14 +3,15 @@
 <link href="{{ url_for('static', filename='css/floatin-label.css') }}" rel="stylesheet">
 {% endblock link_rel %}
 {% block main %}
-<main class="container mx-auto px-6 mb-auto">
+<main class="container mx-auto px-6 mb-auto ">
 
-    <div class="flex justify-center">
-        <img src="{{ url_for('static',filename='imgs/pessoa_fundo_verde.png')}}" alt="" class="h-16 w-16" srcset="">
+    <div class="flex justify-center my-5">
+        <img src="{{ url_for('static',filename='icons/file.png')}}" alt="" 
+        class="h-24 w-24 border border-warning p-1 rounded-full shadow-2xl" srcset="">
     </div>
     <div class="cloud x2"></div>
     <div id="app"
-        class="p-3 text-gray-500 border-blue-200 alert-info border-4  rounded-md">
+        class="p-3 text-black border-primary alert-info border-4 rounded-md bg-success">
 
 
         <form class="flex flex-col justify-items-center space-y-3 " @submit.prevent="novoProjeto">
@@ -60,7 +61,7 @@
 
 
             <div class="flex justify-center">
-                <div class="relative z-0 w-3/5">
+                <div class="relative z-0 w-2/5">
                     <input type="date" name="data" v-model="data" required
                         class="w-full text-gray-500 pt-3 pb-2 block px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
                 </div>
@@ -81,7 +82,7 @@
             <button class="self-end btn-error text-pink-900 py-2 px-4 rounded-full"
                 @click.prevent="rm_amb">-ambs</button>
 
-            <button class="btn  btn-accent  py-2 px-4 rounded-b-3xl">
+            <button class="btn btn-warning  py-2 px-4 rounded-b-3xl">
                 Novo Projeto</button>
         </form>
     </div>
@@ -140,6 +141,8 @@
                     this.ambientes.pop()
                 },
                 novoProjeto() {
+                    debugger
+
                     const iso_data = new Date(
                         this.data + ' ' + this.hora).toISOString();
 

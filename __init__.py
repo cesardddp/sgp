@@ -30,6 +30,7 @@ def create_app():
         # TESTE=True,
         UPLOADED_FILES_DEST="./files",
         ALLOWED_EXTENSIONS={"txt", "pdf", "png", "jpg", "jpeg", "gif"},
+        UPLOADS_AUTOSERVE = 'True'
     )
 
     app.file = UploadSet(

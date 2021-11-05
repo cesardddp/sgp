@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="178.53601mm"
+   height="80.899857mm"
+   viewBox="0 0 178.53601 80.899857"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="desenho.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="false"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.61647026"
+     inkscape:cx="129.77106"
+     inkscape:cy="-119.22716"
+     inkscape:window-width="1600"
+     inkscape:window-height="877"
+     inkscape:window-x="1358"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient12586">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop12582" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop12584" />
+    </linearGradient>
+    <rect
+       x="196.27873"
+       y="433.11093"
+       width="429.86664"
+       height="303.33987"
+       id="rect2277" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient12586"
+       id="radialGradient12588"
+       cx="237.16797"
+       cy="451.00052"
+       fx="237.16797"
+       fy="451.00052"
+       r="39.728516"
+       gradientTransform="matrix(1,0,0,0.45922029,0,243.89192)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-19.620695,-77.160509)">
+    <text
+       xml:space="preserve"
+       transform="matrix(2.2471425,0,0,2.2167309,-424.06152,-882.13633)"
+       id="text2275"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Jokerman;-inkscape-font-specification:'Jokerman, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect2277);fill:#9542aa;fill-opacity:1;stroke:#5344ef;stroke-opacity:1"><tspan
+         x="196.2793"
+         y="467.35793"
+         id="tspan16914">SGP</tspan></text>
+  </g>
+</svg>

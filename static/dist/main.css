@@ -1,7 +1,5 @@
 
-[35m🌼 daisyUI components 1.16.0[0m [0m https://github.com/saadeghi/daisyui
-  [32m✔︎ Including:[0m [0m base, components, themes[22], utilities
-  
+
 /*! tailwindcss v2.2.17 | MIT License | https://tailwindcss.com */
 
 /*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
@@ -521,30 +519,30 @@ html {
   }
 }
 
-[data-theme=light] {
-  --p: 259 94.4% 51.2%;
-  --pf: 259 94.3% 41%;
+[data-theme=forest] {
+  --p: 141 72% 42%;
+  --pf: 141 71.8% 32%;
   --pc: 0 0% 100%;
-  --s: 314 100% 47.1%;
-  --sf: 314 100% 37.1%;
+  --s: 141 74.7% 48%;
+  --sf: 141 75.3% 38%;
   --sc: 0 0% 100%;
-  --a: 174 60% 51%;
-  --af: 174 59.8% 41%;
+  --a: 35 69% 52%;
+  --af: 35 69.2% 42%;
   --ac: 0 0% 100%;
-  --n: 219 14.1% 27.8%;
-  --nf: 222 13.4% 19%;
+  --n: 0 9.7% 6.1%;
+  --nf: 0 20% 2%;
   --nc: 0 0% 100%;
-  --b1: 0 0% 100%;
-  --b2: 210 20% 98%;
-  --b3: 216 12.2% 83.9%;
-  --bc: 215 27.9% 16.9%;
-  --in: 207 89.8% 53.9%;
-  --su: 174 100% 29%;
-  --wa: 36 100% 50%;
-  --er: 14 100% 57.1%;
+  --b1: 0 12.2% 8%;
+  --b2: 0 9.7% 6.1%;
+  --b3: 0 20% 2%;
+  --bc: 0 0% 100%;
+  --rounded-btn: 0.5rem;
+  --in: 202 100% 70%;
+  --su: 89 61.6% 52%;
+  --wa: 54 68.8% 63.5%;
+  --er: 0 100% 71.8%;
   --border-color: var(--b3);
   --rounded-box: 1rem;
-  --rounded-btn: 0.5rem;
   --rounded-badge: 1.9rem;
   --animation-btn: 0.25s;
   --animation-input: .2s;
@@ -1650,14 +1648,14 @@ html {
   z-index: 0 !important;
 }
 
-.mx-2 {
-  margin-left: 0.5rem !important;
-  margin-right: 0.5rem !important;
-}
-
 .mx-auto {
   margin-left: auto !important;
   margin-right: auto !important;
+}
+
+.my-5 {
+  margin-top: 1.25rem !important;
+  margin-bottom: 1.25rem !important;
 }
 
 .my-auto {
@@ -1671,6 +1669,10 @@ html {
 
 .mt-1 {
   margin-top: 0.25rem !important;
+}
+
+.mt-5 {
+  margin-top: 1.25rem !important;
 }
 
 .mr-1 {
@@ -1769,6 +1771,14 @@ html {
   width: 4rem !important;
 }
 
+.w-20 {
+  width: 5rem !important;
+}
+
+.w-24 {
+  width: 6rem !important;
+}
+
 .w-80 {
   width: 20rem !important;
 }
@@ -1781,8 +1791,8 @@ html {
   width: 75% !important;
 }
 
-.w-3\/5 {
-  width: 60% !important;
+.w-2\/5 {
+  width: 40% !important;
 }
 
 .w-1\/6 {
@@ -1799,10 +1809,6 @@ html {
 
 .w-full {
   width: 100% !important;
-}
-
-.flex-none {
-  flex: none !important;
 }
 
 @keyframes spin {
@@ -1875,6 +1881,10 @@ html {
   flex-direction: column !important;
 }
 
+.items-center {
+  align-items: center !important;
+}
+
 .justify-end {
   justify-content: flex-end !important;
 }
@@ -1920,6 +1930,10 @@ html {
   border-width: 0px !important;
 }
 
+.border-2 {
+  border-width: 2px !important;
+}
+
 .border-4 {
   border-width: 4px !important;
 }
@@ -1942,14 +1956,24 @@ html {
   border-color: rgba(209, 213, 219, var(--tw-border-opacity)) !important;
 }
 
-.border-blue-200 {
+.border-primary {
   --tw-border-opacity: 1 !important;
-  border-color: rgba(191, 219, 254, var(--tw-border-opacity)) !important;
+  border-color: hsla(var(--p) / var(--tw-border-opacity)) !important;
 }
 
 .border-base-300 {
   --tw-border-opacity: 1 !important;
   border-color: hsla(var(--b3) / var(--tw-border-opacity)) !important;
+}
+
+.border-base-content {
+  --tw-border-opacity: 1 !important;
+  border-color: hsla(var(--bc) / var(--tw-border-opacity)) !important;
+}
+
+.border-warning {
+  --tw-border-opacity: 1 !important;
+  border-color: hsla(var(--wa) / var(--tw-border-opacity)) !important;
 }
 
 .focus\:border-black:focus {
@@ -1996,6 +2020,21 @@ html {
   background-color: rgba(59, 130, 246, var(--tw-bg-opacity)) !important;
 }
 
+.bg-base-100 {
+  --tw-bg-opacity: 1 !important;
+  background-color: hsla(var(--b1) / var(--tw-bg-opacity)) !important;
+}
+
+.bg-success {
+  --tw-bg-opacity: 1 !important;
+  background-color: hsla(var(--su) / var(--tw-bg-opacity)) !important;
+}
+
+.bg-warning {
+  --tw-bg-opacity: 1 !important;
+  background-color: hsla(var(--wa) / var(--tw-bg-opacity)) !important;
+}
+
 .hover\:bg-red-300:hover {
   --tw-bg-opacity: 1 !important;
   background-color: rgba(252, 165, 165, var(--tw-bg-opacity)) !important;
@@ -2012,6 +2051,10 @@ html {
 
 .p-1 {
   padding: 0.25rem !important;
+}
+
+.p-2 {
+  padding: 0.5rem !important;
 }
 
 .p-3 {
@@ -2147,6 +2190,11 @@ html {
   color: rgba(131, 24, 67, var(--tw-text-opacity)) !important;
 }
 
+.text-base-content {
+  --tw-text-opacity: 1 !important;
+  color: hsla(var(--bc) / var(--tw-text-opacity)) !important;
+}
+
 .bg-blend-lighten {
   background-blend-mode: lighten !important;
 }
@@ -2194,12 +2242,5 @@ html {
   .sm\:text-sm {
     font-size: 0.875rem !important;
     line-height: 1.25rem !important;
-  }
-}
-
-@media (min-width: 768px) {
-
-  .md\:max-h-screen {
-    max-height: 100vh !important;
   }
 }

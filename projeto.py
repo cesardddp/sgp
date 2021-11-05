@@ -1,11 +1,13 @@
-from types import TracebackType
-from .models import Ambiente, Cliente, Projeto, Usuario
+from datetime import datetime
+from .models import Ambiente, Cliente, Projeto, Files
 from flask import request, current_app, Blueprint, jsonify, Response
 from .schema import ProjetoSchema
 from marshmallow import ValidationError
 from sqlalchemy.orm.exc import NoResultFound
 from . import db
 from flask_uploads.exceptions import UploadNotAllowed
+from werkzeug.utils import secure_filename
+from typing import List
 
 projeto_bp = Blueprint("projeto_bp", __name__, url_prefix="/projeto")
 projeto_schema = ProjetoSchema()
@@ -31,13 +33,14 @@ def novo_projeto() -> str:
     else:
         cliente = Cliente.query.get(data["cliente_id"])
 
-    # import ipdb;ipdb.set_trace()
-
     ambientes = data.pop("ambientes")
 
     for amb in ambientes:
         data.setdefault("ambientes", []).append(Ambiente(**amb))
 
+    import ipdb
+
+    ipdb.set_trace()
     projeto = Projeto(**data)
 
     db.session.add(projeto)
@@ -53,6 +56,11 @@ def get_projeto(pk=None):
         projeto = Projeto.query.filter(Projeto.id == pk).one()
     except NoResultFound:
         return {"message": "Projeto could not be found."}, 400
+
+    # import ipdb
+
+    # ipdb.set_trace()
+
     result = projeto_schema.dump(projeto)
     return {"projeto": result}
 
@@ -73,30 +81,50 @@ def update_projeto(pk: int):
         return {"message": "No input data provided"}, 400
 
     try:
-        projeto = Projeto.query.filter(Projeto.id == pk).one()
+        projeto: Projeto = Projeto.query.filter(Projeto.id == pk).one()
     except NoResultFound:
         return {"message": "Projeto could not be found."}, 400
 
     try:
-        files=[]
+        files: List[str] = []
         if request.files:
-            for c,v in request.files.items():
-                files.append(current_app.file.save(v))
+            for chave, valor in request.files.items():
+                # import ipdb;ipdb.set_trace()
+                filename: str = secure_filename(valor.filename)
+
+                files.append(current_app.file.save(valor, name=filename))
+
     except UploadNotAllowed:
         print("not alloewd upload")
-    
-    import ipdb;ipdb.set_trace()
+
+        return {"message": "Arquivo não permitido"}, 422
+
+    # file_instance:List[Files] = []
+    for file in files:
+        projeto.arquivos.append(
+            Files(
+                data_criacao=datetime.now(), nome=file, tipo_arquivo=file.split(".")[-1],
+                url=current_app.file.url(file)
+            )
+        )
+
+    # import ipdb
+
+    # ipdb.set_trace()
 
     try:
         # projeto_dict = projeto_schema.dump(projeto)
-
-        json_data = projeto_schema.load(json_data)
-        for chave, valor in json_data.items():
-            # print(chave,valor)
-            setattr(projeto, chave, valor)
+        if json_data is not None:
+            json_data = projeto_schema.load(json_data)
+            for chave, valor in json_data.items():
+                # print(chave,valor)
+                setattr(projeto, chave, valor)
         # projeto:Projeto = projeto_schema.load(projeto_dict)
 
     except ValidationError as err:
+        import ipdb
+
+        ipdb.set_trace()
         return err.messages, 422
 
     # import ipdb;ipdb.set_trace()

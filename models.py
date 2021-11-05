@@ -34,16 +34,19 @@ class Files(db.Model):
     nome = db.Column("nome", db.String, nullable=False)
     data_criacao = db.Column("data_criacao", db.DateTime, default=datetime.datetime.now)
     tipo_arquivo = db.Column("tipo_arquivo", db.String, nullable=False)
-    projeto_id = db.Column("projeto_id", db.Integer, db.ForeignKey("Projeto.id"))
-    __mapper_args__ = {
-                'polymorphic_identity':'fotos',
-                'polymorphic_on': tipo_arquivo
-                }
+    url = db.Column("url", db.String, nullable=False)
 
-class Fotos(Files):
-    __tablename__ = "Fotos"
-    id = db.Column(db.Integer, db.ForeignKey('Files.id'), primary_key=True)
-    __mapper_args__ = {'polymorphic_identity': 'foto'}
+
+    projeto_id = db.Column("projeto_id", db.Integer, db.ForeignKey("Projeto.id"))
+    # __mapper_args__ = {
+    #             'polymorphic_identity':'fotos,pdf',
+    #             'polymorphic_on': tipo_arquivo
+    #             }
+
+# class Fotos(Files):
+#     __tablename__ = "Fotos"
+#     id = db.Column(db.Integer, db.ForeignKey('Files.id'), primary_key=True)
+#     __mapper_args__ = {'polymorphic_identity': 'foto'}
 
 # class Fotos(Files):
 #     tipo = db.Column("tipo",db.String,default="fotos")
@@ -51,7 +54,7 @@ class Fotos(Files):
 class Projeto(db.Model):
     __tablename__ = "Projeto"
     id = db.Column("id", db.Integer, primary_key=True)
-    data_entrada = db.Column("data_entrada", db.DateTime(timezone=True), default=datetime.datetime.now)
+    data_entrada = db.Column("data_entrada", db.DateTime(timezone=True))
     data_medicao = db.Column("data_medicao", db.DateTime, nullable=True)
     data_apresentacao = db.Column("data_apresentacao", db.DateTime, nullable=True)
     aprovacao = db.Column("aprovacao", db.Boolean, default=False)

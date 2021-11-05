@@ -5,34 +5,39 @@
     <!-- <a href="">NOVO PROJETO</a> -->
     <div class="cloud x2"></div>
 
-    <div class="flex justify-center">
+    <div class="flex flex-col items-center space-y-6 justify-center mt-5">
         <!-- Button trigger modal -->
-        <a href="{{ url_for('novo') }}" type="button" class="flex-none mx-2">
-            <img class="h-20 md:max-h-screen" src="{{ url_for('static', filename='imgs/pessoa_fundo_verde.png') }}"
-                alt="" srcset="">
+        <a href="{{ url_for('novo') }}" type="button" 
+        class="border-2 border-warning rounded-box w-1/6 p-2 shadow-2xl">
+            <img class=""
+                src="{{ url_for('static', filename='icons/file.png') }}" alt="" srcset="">
             <!-- <i class="bi bi-calendar-plus"></i> -->
         </a>
-        <a href="{{ url_for('busca') }}" type="button" class="flex-none mx-2">
-            <img class="h-20 md:max-h-screen" src="{{ url_for('static', filename='imgs/lupa2-trans.ico') }}" alt=""
-                srcset="">
-            <!-- <i class="bi bi-search"></i>  -->
+        <a href="{{ url_for('busca') }}" type="button" 
+        class="border-2 border-warning rounded-box w-1/6 p-2 shadow-2xl">
+            <img class=""
+                src="{{ url_for('static', filename='icons/search.png') }}" alt="" srcset="">
+            <!-- <i class="fas fa-id-card"></i> -->
         </a>
-        <a href="{{ url_for('entregas') }}" type="button" class="flex-none mx-2">
-            <img class="h-20 md:max-h-screen" src="{{ url_for('static', filename='imgs/quadro.png') }}" alt=""
-                srcset="">
+        <a href="{{ url_for('entregas') }}" type="button" 
+        class="border-2 border-warning rounded-box w-1/6 p-2 shadow-2xl">
+            <img class=""
+                src="{{ url_for('static', filename='icons/correction.png') }}" alt="" srcset="">
             <!-- <i class="bi bi-calendar-check"></i> -->
         </a>
 
-        <a href="{{ url_for('devolutivas') }}" type="button" class="flex-none mx-2">
-            <img class="h-20 md:max-h-screen" src="{{ url_for('static', filename='imgs/dinheiro.png') }}" alt=""
-                srcset="">
+        <a href="{{ url_for('devolutivas') }}" type="button" 
+        class="border-2 border-warning rounded-box w-1/6 p-2 shadow-2xl">
+            <img class=""
+                src="{{ url_for('static', filename='icons/deposit.png') }}" alt="" srcset="">
             <!-- <i class="bi bi-calendar-check"></i>-->
         </a>
     </div>
 </main>
 <footer>
-	<a href="{{ url_for('login_bp.logout') }}" class="flex justify-end">
-		<img src="{{ url_for('static',filename='imgs/logout.jpeg') }}" alt="" class="h-24" srcset="">
-	</a>
+    <a href="{{ url_for('login_bp.logout') }}" class="flex justify-end">
+        <img src="{{ url_for('static',filename='imgs/logout.jpeg') }}" alt="" class="h-24" srcset="">
+    </a>
+    <a href="https://www.freepik.com">designed by Freepik - Freepik.com</a>
 </footer>
 {% endblock main %}

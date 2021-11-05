@@ -1,4 +1,5 @@
-from flask import Blueprint, request, render_template, redirect, url_for,current_app
+from typing import Any
+from flask import Blueprint, request, render_template, redirect, url_for
 from flask_login import login_required,login_user,logout_user
 from .models import Usuario
 import flask_login
@@ -19,8 +20,8 @@ def login():
     if request.method == 'GET':
         return render_template("login.html")
     
-    nome = request.form.get("nome")
-    usuario = Usuario.query.filter_by(nome=nome).first()
+    nome:Any = request.form.get("nome")
+    usuario:Usuario = Usuario.query.filter_by(nome=nome).first()
     # import ipdb;ipdb.set_trace()
     if usuario.veryfy(request.form.get("senha")):
 

@@ -8,7 +8,6 @@ __pycache__/
 files/*
 sgp/test.db
 poetry.lock
-sgp/populadb.py
 sgp/teste.py
 sgp-front/
 sgp/templates/index-componentizado.html
@@ -25,3 +24,5 @@ tailwind.config.js
 # static/.webassets-cache/
 # static/
 files/*
+migrations
+test.db
