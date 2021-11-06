@@ -1,9 +1,10 @@
 import pandas as pd
 from multiprocessing import Process
+from .config import CSV_FILE_PATH
 
 url = "http://localhost:5050/cliente/novo"
 url = "https://sgpdiego.pythonanywhere.com/cliente/novo"
-df = pd.read_csv("/home/sgpdiego/sgp/sgp_real.csv")
+df = pd.read_csv(CSV_FILE_PATH)
 
 
 def cria_cliente(row):
