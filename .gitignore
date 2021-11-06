@@ -27,3 +27,4 @@ files/*
 migrations
 test.db
 migrations.zip
+config.py
