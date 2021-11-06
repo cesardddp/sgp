@@ -28,7 +28,7 @@ def create_app():
         FLASK_ADMIN_SWATCH="journal",  # http://bootswatch.com/3/,
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         # TESTE=True,
-        UPLOADED_FILES_DEST="./files",
+        UPLOADED_FILES_DEST="/home/sgpdiego/files",
         ALLOWED_EXTENSIONS={"txt", "pdf", "png", "jpg", "jpeg", "gif"},
         UPLOADS_AUTOSERVE = 'True'
     )
@@ -42,11 +42,11 @@ def create_app():
     db.init_app(app)
     ma.init_app(app)
     login_manager.init_app(app)
-    
+
     Migrate(app, db)
 
     pagination.init_app(app, db)
-    
+
     configure_uploads(app, app.file)
 
     CORS(app)
@@ -57,6 +57,6 @@ def create_app():
     app.register_blueprint(cliente_bp)
     from .login import login_bp
     app.register_blueprint(login_bp)
-    
+
 
     return app
