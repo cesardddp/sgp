@@ -1,10 +1,10 @@
 import pandas as pd
-from requests import get, post
 from multiprocessing import Process
+from .config import CSV_FILE_PATH
 
 url = "http://localhost:5050/cliente/novo"
 url = "https://sgpdiego.pythonanywhere.com/cliente/novo"
-df = pd.read_csv("sgp_real.csv")
+df = pd.read_csv(CSV_FILE_PATH)
 
 
 def cria_cliente(row):
@@ -29,7 +29,7 @@ schema = ClienteSchema()
 
 def popula_db():
     global df
-    
+
     if Usuario.query.filter_by(nome="cesar").first():return
     for index, row in df.iterrows():
         # Process(cria_cliente(row)).start()
@@ -46,11 +46,11 @@ def popula_db():
         except Exception as erro:
             print(erro)
             set_trace()
-    
+
     db.session.add(
         Usuario(
             "cesar","teste"
         )
     )
     db.session.commit()
-    
+

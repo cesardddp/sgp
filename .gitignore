@@ -28,3 +28,4 @@ migrations
 test.db
 migrations.zip
 templates/components.j2
+config.py

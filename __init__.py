@@ -7,7 +7,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_rest_paginate import Pagination
-
+from .
 
 
 ma = Marshmallow()
@@ -22,19 +22,11 @@ __version__ = "0.1.1"
 def create_app():
 
     app = Flask(__name__)
-    app.config.update(
-        SQLALCHEMY_DATABASE_URI="sqlite:///test.db",
-        SECRET_KEY="TEMPORARIO",
-        FLASK_ADMIN_SWATCH="journal",  # http://bootswatch.com/3/,
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
-        # TESTE=True,
-        UPLOADED_FILES_DEST="./files",
-        ALLOWED_EXTENSIONS={"txt", "pdf", "png", "jpg", "jpeg", "gif"},
-        UPLOADS_AUTOSERVE = 'True'
-    )
+    app.config.from_pyfile('config.py')
+    
 
     app.file = UploadSet(
-        extensions=DOCUMENTS + ("txt",), default_dest="./sgp/static/files"
+        extensions = DOCUMENTS + IMAGES + TEXT, default_dest="PATH_FILE_STORAGE"
     )
     # app.pdf = UploadSet("pdf", DOCUMENTS)
     # app.jpg = UploadSet("jpg", IMAGES)
@@ -42,11 +34,11 @@ def create_app():
     db.init_app(app)
     ma.init_app(app)
     login_manager.init_app(app)
-    
+
     Migrate(app, db)
 
     pagination.init_app(app, db)
-    
+
     configure_uploads(app, app.file)
 
     CORS(app)
@@ -57,6 +49,6 @@ def create_app():
     app.register_blueprint(cliente_bp)
     from .login import login_bp
     app.register_blueprint(login_bp)
-    
+
 
     return app
