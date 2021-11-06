@@ -11,7 +11,7 @@ assets = Environment(app)
 css = Bundle("src/main.css", output="dist/main.css", filters="postcss")
 
 assets.register("css", css)
-# import ipdb;ipdb.set_trace()
+
 css.build()
 
 @app.before_first_request
@@ -29,7 +29,7 @@ def index():
 @login_required
 def novo(pk=-1):
     cliente = Cliente.query.get(pk)
-    # import ipdb;ipdb.set_trace()
+    
 
     return render_template("novo.html", cliente=cliente)
 
@@ -49,7 +49,7 @@ def devolutivas():
 @app.get("/busca")
 @login_required
 def busca():
-    # import ipdb;ipdb.set_trace()
+    
     # cliente_bp.route()
     return render_template("busca.html")
 
@@ -57,13 +57,13 @@ def busca():
 @app.get("/detalhes/<int:pk>")
 @app.get("/detalhes/")
 def detalhes(pk: int=-1):
-    # import ipdb;ipdb.set_trace()
+    
     return render_template("detalhes.html", projeto_id=pk)
 
 @app.get("/cliente_info/")
 @app.get("/cliente_info/<int:pk>")
 def cliente(pk: int=-1):
-    # import ipdb;ipdb.set_trace()
+    
     return render_template("cliente.html", cliente_id=pk)
 
 

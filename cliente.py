@@ -14,7 +14,7 @@ def lista_clientes():
     # clientes = Cliente.query.all()
     # result = cliente_schema.dump(clientes, many=True,)
     result = pagination.paginate(Cliente.query.all(),cliente_schema,True)
-    # import ipdb;ipdb.set_trace()
+    
 
     return result
    

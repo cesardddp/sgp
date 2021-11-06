@@ -1,6 +1,5 @@
 import pandas as pd
 from requests import get, post
-from ipdb import set_trace
 from multiprocessing import Process
 
 url = "http://localhost:5050/cliente/novo"
@@ -30,7 +29,7 @@ schema = ClienteSchema()
 
 def popula_db():
     global df
-    # import ipdb;ipdb.set_trace()
+    
     if Usuario.query.filter_by(nome="cesar").first():return
     for index, row in df.iterrows():
         # Process(cria_cliente(row)).start()
@@ -54,4 +53,4 @@ def popula_db():
         )
     )
     db.session.commit()
-    # import ipdb;ipdb.set_trace()
+    

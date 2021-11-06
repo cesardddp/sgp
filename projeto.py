@@ -38,9 +38,7 @@ def novo_projeto() -> str:
     for amb in ambientes:
         data.setdefault("ambientes", []).append(Ambiente(**amb))
 
-    import ipdb
-
-    ipdb.set_trace()
+   
     projeto = Projeto(**data)
 
     db.session.add(projeto)
@@ -57,9 +55,7 @@ def get_projeto(pk=None):
     except NoResultFound:
         return {"message": "Projeto could not be found."}, 400
 
-    # import ipdb
-
-    # ipdb.set_trace()
+    
 
     result = projeto_schema.dump(projeto)
     return {"projeto": result}
@@ -89,7 +85,7 @@ def update_projeto(pk: int):
         files: List[str] = []
         if request.files:
             for chave, valor in request.files.items():
-                # import ipdb;ipdb.set_trace()
+                
                 filename: str = secure_filename(valor.filename)
 
                 files.append(current_app.file.save(valor, name=filename))
@@ -108,9 +104,7 @@ def update_projeto(pk: int):
             )
         )
 
-    # import ipdb
-
-    # ipdb.set_trace()
+    
 
     try:
         # projeto_dict = projeto_schema.dump(projeto)
@@ -122,12 +116,10 @@ def update_projeto(pk: int):
         # projeto:Projeto = projeto_schema.load(projeto_dict)
 
     except ValidationError as err:
-        import ipdb
-
-        ipdb.set_trace()
+        
         return err.messages, 422
 
-    # import ipdb;ipdb.set_trace()
+    
 
     db.session.add(projeto)
     db.session.commit()

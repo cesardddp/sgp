@@ -22,7 +22,7 @@ def login():
     
     nome:Any = request.form.get("nome")
     usuario:Usuario = Usuario.query.filter_by(nome=nome).first()
-    # import ipdb;ipdb.set_trace()
+    
     if usuario.veryfy(request.form.get("senha")):
 
     # if not login_bp.db.User.query.all():
@@ -41,7 +41,7 @@ def cadastrar_user():
     if request.method == "GET":
         return render_template("cadastrar.html")
 
-    # import ipdb;ipdb.set_trace()
+    
 
     user = Usuario(nome=request.form["nome"], senha=request.form["senha"])
     db.session.add(user)

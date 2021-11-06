@@ -26,3 +26,4 @@ tailwind.config.js
 files/*
 migrations
 test.db
+migrations.zip
