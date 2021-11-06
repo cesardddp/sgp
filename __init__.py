@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_uploads.flask_uploads import configure_uploads
 from flask_migrate import Migrate
-from flask_uploads import UploadSet, IMAGES, DOCUMENTS
+from flask_uploads import UploadSet, IMAGES, DOCUMENTS, TEXT
 from flask_cors import CORS
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy

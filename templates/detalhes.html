@@ -150,7 +150,7 @@
                 /*
                     Submits files to the server
                 */
-                submitFiles() {
+                submitFiles(button) {
                     /*
                       Initialize the form data
                     */
@@ -176,6 +176,7 @@
                             }
                         ).then(function () {
                             console.log('SUCCESS!!');
+                            button.classList.remove('loading')
                         })
                         .catch(function (err) {
                             // debugger

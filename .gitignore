@@ -27,3 +27,4 @@ files/*
 migrations
 test.db
 migrations.zip
+templates/components.j2
