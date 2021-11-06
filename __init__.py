@@ -7,7 +7,6 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_rest_paginate import Pagination
-from .
 
 
 ma = Marshmallow()
@@ -22,11 +21,11 @@ __version__ = "0.1.1"
 def create_app():
 
     app = Flask(__name__)
-    app.config.from_pyfile('config.py')
-    
+    app.config.from_pyfile("config.py")
 
     app.file = UploadSet(
-        extensions = DOCUMENTS + IMAGES + TEXT, default_dest="PATH_FILE_STORAGE"
+        extensions=DOCUMENTS + IMAGES + TEXT,
+        default_dest=app.config["PATH_FILE_STORAGE"],
     )
     # app.pdf = UploadSet("pdf", DOCUMENTS)
     # app.jpg = UploadSet("jpg", IMAGES)
@@ -44,11 +43,13 @@ def create_app():
     CORS(app)
 
     from .projeto import projeto_bp
+
     app.register_blueprint(projeto_bp)
     from .cliente import cliente_bp
+
     app.register_blueprint(cliente_bp)
     from .login import login_bp
-    app.register_blueprint(login_bp)
 
+    app.register_blueprint(login_bp)
 
     return app

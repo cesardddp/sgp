@@ -56,9 +56,11 @@
         </ol>
 
         <p><b>Arquivos: </b>
-            <a v-for='arq in projeto.arquivos' :href='arq.url'>@{arq.nome} - </a>
+            <a href="#my-modal" class="btn btn-primary btn-sm" v-for='arq in projeto.arquivos'
+                @click="fileViewUrl(arq.url)">@{arq.nome} - </a>
+
         </p>
-<br>
+        <br>
         <!-- <p><b>Arquivos: </b></p> -->
         <input type="file" id="files" ref="files" hidden multiple v-on:change="handleFilesUpload()">
         <div v-for="(file, key) in files" class="border-base-300">@{ file.name } <span class="remove-file"
@@ -70,9 +72,27 @@
         <button class="btn btn-success btn-sm" @click="addFiles">
             <i class="fas fa-plus"></i>
         </button>
-        <button class="btn btn-accent " @click="submitFiles">
+        <button class="btn btn-accent " @click="submitFiles" ref="uploadButton">
             <i class="fas fa-file-upload text-2xl"></i>
         </button>
+
+
+        <div id="my-modal" class="modal">
+            <div class="modal-box h-screen">
+                <div class="modal-action">
+                    <a href="#" class="btn btn-outline btn-circle">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            class="inline-block w-6 h-6 stroke-current">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </a>
+                </div>
+                <iframe :src="fileView" frameborder="0" class="w-full h-full bg-white"></iframe>
+            </div>
+        </div>
+
 
 
     </div>
@@ -104,7 +124,8 @@
                     editando: false,
                     fotos: [],
                     arquivos: [],
-                    files: []
+                    files: [],
+                    fileView: ""
                 }
             },
             methods: {
@@ -151,6 +172,9 @@
                     Submits files to the server
                 */
                 submitFiles(button) {
+
+                    const upButton = this.$refs.uploadButton
+                    upButton.classList.add("loading") //add loading efect in button
                     /*
                       Initialize the form data
                     */
@@ -175,15 +199,19 @@
                                 }
                             }
                         ).then(function () {
-                            console.log('SUCCESS!!');
-                            button.classList.remove('loading')
+                            alert('Enviado');
+                            upButton.classList.remove("loading") //rm loading efect in button
+                            window.location.reload()
+
                         })
                         .catch(function (err) {
                             // debugger
-                            console.log('FAILURE!!'+err);
+                            console.log('FAILURE!!' + err);
                             alert(
-                                'Erro '+err.status+': '+err.data.message
+                                'Erro ' + err.status + ': ' + err.data.message
                             )
+                            upButton.classList.remove("loading") //rm loading efect in button
+
                         });
                 },
                 /*
@@ -204,6 +232,10 @@
                 */
                 removeFile(key) {
                     this.files.splice(key, 1);
+                },
+                fileViewUrl(url_file) {
+                    this.fileView = url_file
+
                 }
             },
             mounted() {
@@ -212,7 +244,7 @@
                     .get("{{ url_for('projeto_bp.get_projeto',pk=projeto_id) }}", )
                     .then(response => {
                         // debugger
-// 
+                        // 
                         this.projeto = response.data.projeto
                     })
                 )
@@ -286,7 +318,11 @@
                     return this.get_hora("entrada")
                 },
             },
-
+            // watch: {
+            //     fileView() {
+            //         return 
+            //     }
+            // }
 
         }
         const app = Vue.createApp(App)
