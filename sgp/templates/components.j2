@@ -1,0 +1,18 @@
+{% macro date_field(name, value='', type='text', size=20) -%}
+<p><b>{{name}}: </b></p>
+        <input :readonly="!editando" type="date" v-model="data_medicao" class="input input-info input-bordered mr-1">
+        <input :readonly="!editando" type="time" v-model="hora_medicao_locale"
+            class="input input-info input-bordered mr-1">
+        <button-save v-if="editando" :field_name="'data_medicao'"></button-save>
+
+    {# <input type="{{ type }}" name="{{ name }}" value="{{
+        value|e }}" size="{{ size }}"> #}
+{%- endmacro %}
+
+
+<p><b>Data medição: </b></p>
+        <input :readonly="!editando" type="date" v-model="data_medicao" class="input input-info input-bordered mr-1">
+        <input :readonly="!editando" type="time" v-model="hora_medicao_locale"
+            class="input input-info input-bordered mr-1">
+        <button-save v-if="editando" :field_name="'data_medicao'"></button-save>
+        

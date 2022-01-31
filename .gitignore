@@ -29,3 +29,6 @@ test.db
 migrations.zip
 templates/components.j2
 config.py
+sgp/migrations/
+sgp/files
+sgp/static/.webassets-cache

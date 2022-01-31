@@ -64,19 +64,21 @@
 			data() {
 				return {
 					busca: '',
-					clientes: [{
-						endereco: "longe pakas",
-						id: 2,
-						nome: "cesar",
-						numero: null,
-						projetos: [{
-							"data_apresentacao": null,
-							"data_medicao": null,
-							"id": 2,
-							"usuario_id": 1
-						}],
-						telefone: "19 929 919911"
-					},]
+					clientes: [
+					// 	{
+					// 	endereco: "longe pakas",
+					// 	id: 2,
+					// 	nome: "cesar",
+					// 	numero: null,
+					// 	projetos: [{
+					// 		"data_apresentacao": null,
+					// 		"data_medicao": null,
+					// 		"id": 2,
+					// 		"usuario_id": 1
+					// 	}],
+					// 	telefone: "19 929 919911"
+					// },
+				]
 				}
 			},
 			watch: {
@@ -99,10 +101,9 @@
 							alert('Erro! Não foi possível adquirir resultados da API: ' + error)
 						})
 
-				}, 550)
-			},
-			mounted() {
-				axios
+				}, 550),
+				get_clientes(){
+					axios
 					.get(
 						'{{ url_for("cliente_bp.lista_clientes") }}' //substitui pela url de busca
 					)
@@ -113,7 +114,12 @@
 					.catch(error => {
 						alert('Erro! Não foi possível adquirir resultados da API: ' + error)
 					})
+				}
 			},
+			created() {
+				this.get_clientes()
+			},
+			
 		}
 
 		const vm = Vue.createApp(app)
