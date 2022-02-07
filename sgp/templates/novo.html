@@ -1,207 +1,84 @@
-{% extends 'layout.html' %}
-{% block link_rel %}
-<link href="{{ url_for('static', filename='css/floatin-label.css') }}" rel="stylesheet">
-{% endblock link_rel %}
-{% block main %}
-<main class="container mx-auto px-6 mb-auto ">
+<!DOCTYPE html>
+<html lang="pt-br" id="clouds" data-theme="forest">
 
-    <div class="flex justify-center my-5">
-        <img src="{{ url_for('static',filename='icons/file.png')}}" alt="" 
-        class="h-24 w-24 border border-warning p-1 rounded-full shadow-2xl" srcset="">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGP</title>
+
+    <link rel="shortcut icon" href="{{url_for('static',filename='imgs/logo.png')}}">
+
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Supermercado+One&display=swap" rel="stylesheet"> 
+
+
+    <link rel="stylesheet" href="../static/index_tela.css">
+    <style></style>
+    <script src="https://kit.fontawesome.com/3db21c2fa2.js" crossorigin="anonymous"></script>
+</head>
+
+<header>
+    <a href="/" class="">
+        <img src="../static/icons/g_logo.svg" alt="" class="" srcset="">
+    </a>
+</header>
+<main class="">
+
+    <div class="menu-buttons">
+        <img src="../static/icons/file.png" alt="" class="" srcset="">
     </div>
-    <div class="cloud x2"></div>
-    <div id="app"
-        class="p-3 text-black border-primary alert-info border-4 rounded-md bg-success">
+    <div class=""></div>
+    <div id="app" class="">
 
 
-        <form class="flex flex-col justify-items-center space-y-3 " @submit.prevent="novoProjeto">
 
-            <div class="w-full flex">
-                <div class="relative z-0 w-5/6 mb-5">
-                    <input type="text" name="nome" placeholder=" " v-model="cliente.nome" required
-                        :disabled="preenchido"
-                        class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
-                    <label class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500" for="nome">Nome</label>
-                </div>
-                <div class="w-1/6">
-                    <a class="btn btn-square btn-ghost" href="{{ url_for('busca') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            class="inline-block w-6 h-6 stroke-current">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </a>
-                </div>
+        <form action="" method="post" @submit.prevent="novoProjeto">
+            <div class="form-group"><label for="nome" v-model="cliente.nome" required>Nome</label><input type="text">
             </div>
+            <div class="form-group"><label for="endereco" v-model="cliente.endereco" required>Endereco</label><input
+                    type="text"></div>
+            <div class="form-group"><label for="telefone">Telefone</label><input type="tel" v-model="cliente.numero"
+                    required v-maska="{mask:'(##) # ####-####'}">
 
-            <div class="flex justify-center">
-                <div class="relative z-0 w-5/6 mb-5">
-                    <input type="text" name="endereco" placeholder=" " v-model="cliente.endereco" required
-                        :disabled="preenchido"
-                        class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
-                    <label for="endereco"
-                        class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Endereco</label>
+                <div class="form-group datetime">
+                    <label for="">Data entrada:</label>
+                    <input type="date" v-model="data" required>
+                    <input type="time" v-model="hora" required>
                 </div>
-                <div class="relative z-0 w-1/6 mb-5">
-                    <input type="number" name="numero" v-model="cliente.numero" required :disabled="preenchido"
-                        class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
-                    <label for="numero" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Nº</label>
+                <div class="form-group datetime">
+                    <label for="">Data entrada:</label>
+                    <input type="datetime-local">
                 </div>
-            </div>
-
-            <div class="flex justify-center">
-                <div class="relative z-0 w-full">
-                    <input type="tel" name="telefone" placeholder=" " v-model="cliente.telefone" required
-                        :disabled="preenchido" v-maska="{mask:'(##) # ####-####'}"
-                        class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
-                    <label class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
-                        for="telefone">Telefone</label>
-                </div>
-            </div>
-
-
-            <div class="flex justify-center">
-                <div class="relative z-0 w-2/5">
-                    <input type="date" name="data" v-model="data" required
-                        class="w-full text-gray-500 pt-3 pb-2 block px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
-                </div>
-                <div class="relative z-0 w-2/6">
-                    <input type="time" name="hora" v-model="hora" required
-                        class="ml-3 w-3/4 text-gray-500 pt-3 pb-2 block  px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
-                </div>
-            </div>
-
-            <div v-for="amb in ambientes" class="relative z-0 w-5/6" :key="amb.id">
-                <input type="text" v-model="amb.nome" placeholder=" " required
-                    class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200">
-                <label class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
-                    for="ambiente-1">@{amb.label}</label>
-            </div>
-            <button class="self-end btn-info text-white py-2 px-4 rounded-full"
-                @click.prevent="add_amb">+ambs</button>
-            <button class="self-end btn-error text-pink-900 py-2 px-4 rounded-full"
-                @click.prevent="rm_amb">-ambs</button>
-
-            <button class="btn btn-warning  py-2 px-4 rounded-b-3xl">
-                Novo Projeto</button>
         </form>
+
+        <div v-for="amb in ambientes" class="form-group" :key="amb.id">
+            <label class="" for="ambiente-1">@{amb.label}</label>
+            <input type="text" v-model="amb.nome" placeholder=" " required class="">
+        </div>
+        <button class="amb Plus" @click.prevent="add_amb">+ambs</button>
+        <button class="amb Less" @click.prevent="rm_amb">-ambs</button>
+
+        <button class="btn-submit">Novo Projeto</button>
     </div>
 
+    <script src="https://unpkg.com/vue@next"></script>
     <script src="https://cdn.jsdelivr.net/npm/maska@latest/dist/maska.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
-    <script type="application/javascript">
-        default_teste = {
-            nome: "name test",
-            endereco: "av. 13a",
-            telefone: "019 1 0829 9911",
-            numero: 1300,
-            data: "3/12/2021",
-            hora: "11:12",
-            preenchido: false
+    <script>
+        const endPointNovo = "{{ url_for('projeto_bp.novo_projeto') }}";
+        const endPointDetalhes = "{{ url_for('index') }}" + "detalhes/";
+        const Preenchido = {{'true'if cliente else 'false'}}
+        Cliente = {}
+        if ("{{cliente|safe}}" != "None") {
+
+            Cliente.nome = "{{cliente.nome|safe}}",
+                Cliente.endereco = "{{cliente.endereco|safe}}",
+                Cliente.telefone = "{{cliente.telefone|safe}}",
+                Cliente.id = "{{cliente.id|safe}}",
+                Cliente.numero = "{{cliente.numero|safe}}"
         }
-        const App = {
-            compilerOptions: {
-                delimiters: ['@{', '}']
-            },
-            data() {
-                return {
-                    ultimo: 1,
-                    ambientes: [{
-                        nome: "",
-                        id: 1,
-                        label: "Ambiente 1"
-                    }],
-                    cliente: {
-                        nome: "",
-                        endereco: "",
-                        telefone: "",
-                        id: ""
-                    },
-                    data: "",
-                    hora: "",
-                    isButtonDisabled: true
-                }
-            },
-            methods: {
-                add_amb() {
-                    this.ultimo = this.ultimo + 1
-                    console.log(this.ultimo, this.ambientes)
-                    this.ambientes.push({
-                        nome: "",
-                        id: this.ultimo,
-                        label: 'Ambiente ' + this.ultimo
-                    })
-                },
-                rm_amb() {
-                    if (this.ultimo == 1) {
-                        return
-                    }
-                    this.ultimo = this.ultimo - 1
-                    console.log(this.ultimo, this.ambientes)
-                    this.ambientes.pop()
-                },
-                novoProjeto() {
-                    debugger
-
-                    const iso_data = new Date(
-                        this.data + ' ' + this.hora).toISOString();
-
-                    this.ambientes.forEach(element => {
-                        delete(element.id);
-                        delete(element.label)
-                    })
-                    let projeto = {
-                        usuario_id: 1,
-                        ambientes: this.ambientes,
-                        data_entrada: iso_data
-                    }
-                    if (!this.cliente.id) {
-                        let cliente = {
-                            endereco: this.cliente.endereco,
-                            nome: this.cliente.nome,
-                            telefone: this.cliente.telefone,
-                            numero: this.cliente.numero
-                        }
-                        projeto.cliente = cliente
-                    } else {
-                        projeto.cliente_id = this.cliente.id
-                    }
-
-                    axios
-                        .post(
-                            "{{ url_for('projeto_bp.novo_projeto') }}",
-                            projeto
-                        )
-                        .then(response => {
-                            if (response.status === 200) {
-                                location.pathname = "{{ url_for('index') }}" + "detalhes/" + response.data
-                                    .projeto.id
-                            }
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                }
-            },
-            mounted() {
-                if ("{{cliente|safe}}" != "None") {
-                    this.cliente.nome = "{{cliente.nome|safe}}"
-                    this.cliente.endereco = "{{cliente.endereco|safe}}"
-                    this.cliente.telefone = "{{cliente.telefone|safe}}"
-                    this.cliente.id = "{{cliente.id|safe}}"
-                    this.cliente.numero = "{{cliente.numero|safe}}"
-                    this.preenchido = true
-                }
-                this.data = new Date().toISOString().split('T')[0]
-
-                this.hora = new Date().toLocaleTimeString().slice(0, 5)
-            },
-
-        }
-        var app = Vue.createApp(App)
-        app.use(Maska)
-        app.mount("#app")
     </script>
-</main>
+    <script src="../static/js/novo.js"></script>
 
-{% endblock main %}
+</main>

@@ -2,8 +2,8 @@ from . import create_app
 from flask import render_template, current_app, request
 from flask_login import login_required
 from .models import Cliente
-from .populadb import popula_db
 from flask_assets import Bundle, Environment
+from flask import logging
 
 app = create_app()
 
@@ -16,7 +16,14 @@ css.build()
 
 @app.before_first_request
 def first():
-    popula_db()
+
+    try:
+        from .populadb import popula_db
+    except ImportError:
+        breakpoint()
+        app.logger.error("Impossivel import pupula_db")
+    else:
+        popula_db()
 
 @app.route("/")
 @login_required
@@ -30,7 +37,6 @@ def index():
 def novo(pk=-1):
     cliente = Cliente.query.get(pk)
     
-
     return render_template("novo.html", cliente=cliente)
 
 

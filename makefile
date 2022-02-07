@@ -2,10 +2,10 @@ SHELL := /bin/bash
 run:
 	source /home/cesar/sgp/.venv/bin/activate;\
 	export FLASK_ENV=development;\
-	export FLASK_APP=app;\
+	export FLASK_APP=sgp.app:app;\
 	flask run -p 5050
 db:
-	export FLASK_APP=app;\
+	export FLASK_APP=sgp.app:app;\
 	rm -rf migrations/;\
 	rm test.db;\
 	flask db init;\

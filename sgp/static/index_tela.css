@@ -1,0 +1,113 @@
+body {
+    font-family: 'Supermercado One', cursive;
+}
+
+header a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+header a img {
+    margin: auto
+}
+
+header a img:hover {
+    background-color: yellow;
+    border-radius: 100%;
+}
+
+body {
+    width: 50%;
+    margin: auto;
+}
+
+main {
+    position: relative;
+}
+
+.menu-buttons {
+    margin: 10px;
+}
+
+.menu-buttons img {
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 10%;
+    margin: auto;
+    display: block;
+    max-width: 100px;
+    width: 50%;
+    box-shadow: 1px 3px gray;
+}
+
+.menu-buttons img:hover {
+    box-shadow: 3px 5px gray;
+
+}
+
+.logout img {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    max-width: 50px;
+    margin: 10px
+}
+
+.logout img:hover {
+    border-radius: 100%;
+    box-shadow: 2px 2px gray;
+}
+
+form .form-group {
+    padding: 0 0 10px 0;
+}
+
+form .form-group input {
+    padding: 10px 0;
+    display: block;
+    width: 100%;
+}
+
+form .form-group.dateEtime input {
+    display: inline;
+    width: 46%;
+    text-align: center;
+    margin: 2px;
+}
+
+form .form-group.datetime input {
+    display: inline;
+    text-align: center;
+    margin: 2px;
+}
+
+form .form-group label {
+    display: block;
+}
+
+.btn-submit {
+    border: none;
+    color: whitesmoke;
+    background: black;
+    padding: 15px;
+    font-family: 'Supermercado One', cursive;
+}
+
+.amb{
+    border: none;
+    /* background: black; */
+    padding: 15px;
+    font-family: inherit;
+    border-radius: 100%;
+
+}
+
+.amb.Plus {
+    color: blue
+}
+
+.amb.Less {
+    color: red;
+}
