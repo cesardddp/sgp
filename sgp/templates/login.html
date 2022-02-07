@@ -1,43 +1,56 @@
-{% extends 'layout.html' %}
-{% block link_rel %}
-{% endblock link_rel %}
-{% block main %}
-{% block logo_class %}
-{% endblock logo_class %}
-<main>
-	<div class="flex justify-center">
+<!DOCTYPE html>
+<html lang="pt-br" id="clouds" data-theme="forest">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SGP</title>
+
+	<link rel="shortcut icon" href="{{url_for('static',filename='imgs/logo.png')}}">
+
+	<!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+	<link href="https://fonts.googleapis.com/css2?family=Supermercado+One&display=swap" rel="stylesheet">
+
+
+	<link rel="stylesheet" href="../static/index_tela.css">
+	<style></style>
+	<script src="https://kit.fontawesome.com/3db21c2fa2.js" crossorigin="anonymous"></script>
+</head>
+
+<header>
+	<a href="/" class="">
+		<img src="../static/icons/g_logo.svg" alt="" class="" srcset="">
+	</a>
+</header>
+<main class="login">
+	<div class="menu-buttons">
 		<img src="{{ url_for('static',filename='icons/search.png')}}" alt="" class="h-16 w-16" srcset="">
 	</div>
-	<div class="cloud x2"></div>
-	<form class="w-80 mx-auto" action="{{ url_for('login_bp.login') }}" method="post">
+
+	<form class="" action="{{ url_for('login_bp.login') }}" method="post">
 		<div class="p-10 card bg-blue-200 text-light">
-			<div class="form-control">
+			<div class="form-group login">
 				<label class="label ">
-					<span class="w-full text-center">Username</span>
+					<span class="">Username</span>
 				</label>
-				<!-- <input type="text" name="nome" class="input input-ghost" required> -->
-				<input type="text" placeholder="Senha" name="nome" class="input input-accent input-bordered" required>				
-				<!-- class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
-				required/>  -->
-
+				<input type="text" placeholder="Digite usuário..." name="nome" class="input input-accent input-bordered" required>
 			</div>
-			<!-- <div class="form-control">
-				<label class="label text-black">
-					<span class="w-full text-center">Senha</span>
-				</label>
-				<input type="password" name="senha" class="input input-ghost" required>
-			</div> -->
-
-			<div class="form-control">
+			<div class="form-group login ">
 				<label class="label">
-				  <span class="label-text text-center">Senha</span>
-				</label> 
-				<input type="password" name="senha" placeholder="Senha" class="input input-accent input-bordered">
-			  </div>
+					<span class="">Senha</span>
+				</label>
+				<input type="password" name="senha" placeholder="Digite a senha..." class="input input-accent input-bordered" required> 
+			</div>
 		</div>
-		<button type="submit" class="w-full btn btn-accent py-2 px-4 rounded-b-3xl">
+		<button type="submit " class="btn-submit login">
 			Login
 		</button>
 	</form>
 </main>
-{% endblock main %}
+<script>
+	setInterval(() => {
+		// window.location.reload()
+	}, 2000);
+</script>
+</html>

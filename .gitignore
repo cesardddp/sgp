@@ -34,3 +34,4 @@ sgp/files
 sgp/static/.webassets-cache
 sgp/templates/novo_old.html
 sgp/populadb.py
+sgp/templates/login_old.html
