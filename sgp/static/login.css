@@ -1,0 +1,24 @@
+@import url(forms.css);
+main.login {
+    max-width: 300px;
+    margin: auto;
+}
+
+.btn-submit.login {
+    width: 100%
+}
+
+.btn-submit.login:hover {
+    background: rgb(57, 56, 56);
+    padding: 10px;
+    border: 5px solid black;
+}
+
+form .form-group.login input {
+    text-align: center;
+}
+
+form .form-group.login label {
+    text-align: center;
+
+}

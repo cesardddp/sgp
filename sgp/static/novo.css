@@ -1,0 +1,17 @@
+@import url(forms.css);
+.amb {
+    border: none;
+    /* background: black; */
+    padding: 15px;
+    font-family: inherit;
+    border-radius: 100%;
+
+}
+
+.amb.Plus {
+    color: blue
+}
+
+.amb.Less {
+    color: red;
+}
