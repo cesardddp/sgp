@@ -27,4 +27,16 @@ table td {
   border-radius: 5%;
   padding: 4px 2px;
 }
+
+table .bg-white {
+  background-color: white;
+}
+
+table .bg-red {
+  background-color: #ff4375;
+}
+
+table .bg-yellow {
+  background-color: #ffff62;
+}
 /*# sourceMappingURL=entrega.css.map */

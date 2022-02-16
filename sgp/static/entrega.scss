@@ -16,15 +16,30 @@ p {
 }
 
 table {
+
     width: 100%;
+
     th{
         border-radius: $bd-r;
         border: 1px solid black;
         padding: $pad;
     }
+
     td{
         border: 1px solid black;
         border-radius: $bd-r;
         padding: $pad;
+    }
+
+    .bg-white{
+        background-color: white;
+    }
+
+    .bg-red{
+        background-color: rgb(255, 67, 117);
+    }
+    
+    .bg-yellow{
+        background-color: rgb(255, 255, 98);
     }
 }

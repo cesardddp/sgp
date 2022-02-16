@@ -53,7 +53,9 @@ app.component('projeto-row', {
 
             console.log(data_medicao, now)
             if (diffDays >= 7) {
-                return "bg-red-200"
+                return "bg-red"
+            } else if (diffDays>=15) {
+                return "bg-yellow"
             } else {
                 return "bg-white"
             }
