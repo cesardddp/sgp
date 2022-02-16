@@ -1,0 +1,49 @@
+:root{
+    background-color: white;
+}
+body {
+    font-family: 'Supermercado One', cursive;
+    min-width: 300px;
+    width: 50%;
+    margin: auto;
+}
+
+header a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+header a img {
+    margin: auto
+}
+
+header a img:hover {
+    background-color: yellow;
+    border-radius: 100%;
+}
+
+
+main {
+    position: relative;
+}
+
+.menu-buttons {
+    margin: 10px;
+}
+
+.menu-buttons img {
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 10%;
+    margin: auto;
+    display: block;
+    max-width: 100px;
+    width: 50%;
+    box-shadow: 1px 3px gray;
+}
+
+.menu-buttons img:hover {
+    box-shadow: 3px 5px gray;
+
+}

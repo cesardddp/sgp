@@ -1,28 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br" id="clouds" data-theme="forest">
-
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>SGP</title>
-
-	<link rel="shortcut icon" href="{{url_for('static',filename='imgs/logo.png')}}">
-
-	<!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
-	<link href="https://fonts.googleapis.com/css2?family=Supermercado+One&display=swap" rel="stylesheet">
-
-
-	<link rel="stylesheet" href="../static/index_tela.css">
-	<style></style>
-	<script src="https://kit.fontawesome.com/3db21c2fa2.js" crossorigin="anonymous"></script>
-</head>
-
-<header>
-	<a href="/" class="">
-		<img src="../static/icons/g_logo.svg" alt="" class="" srcset="">
-	</a>
-</header>
+{% extends 'layout.html' %}
+{% block link_rel %}
+<link rel="stylesheet" href="{{url_for('static',filename='login.css')}}">
+{% endblock %}
+{% block main %}
 <main class="login">
 	<div class="menu-buttons">
 		<img src="{{ url_for('static',filename='icons/search.png')}}" alt="" class="h-16 w-16" srcset="">
@@ -53,4 +33,5 @@
 		// window.location.reload()
 	}, 2000);
 </script>
-</html>
+
+{% endblock %}

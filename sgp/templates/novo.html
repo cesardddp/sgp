@@ -1,84 +1,73 @@
-<!DOCTYPE html>
-<html lang="pt-br" id="clouds" data-theme="forest">
+{% extends 'layout.html' %}
+{% block link_rel %}
+<link rel="stylesheet" href="{{url_for('static',filename='novo.css')}}">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGP</title>
-
-    <link rel="shortcut icon" href="{{url_for('static',filename='imgs/logo.png')}}">
-
-    <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
-    <link href="https://fonts.googleapis.com/css2?family=Supermercado+One&display=swap" rel="stylesheet"> 
-
-
-    <link rel="stylesheet" href="../static/index_tela.css">
-    <style></style>
-    <script src="https://kit.fontawesome.com/3db21c2fa2.js" crossorigin="anonymous"></script>
-</head>
-
-<header>
-    <a href="/" class="">
-        <img src="../static/icons/g_logo.svg" alt="" class="" srcset="">
-    </a>
-</header>
+{% endblock %}
+{% block main %}
 <main class="">
 
     <div class="menu-buttons">
         <img src="../static/icons/file.png" alt="" class="" srcset="">
     </div>
-    <div class=""></div>
+
     <div id="app" class="">
 
-
-
         <form action="" method="post" @submit.prevent="novoProjeto">
-            <div class="form-group"><label for="nome" v-model="cliente.nome" required>Nome</label><input type="text">
+            <div class="form-group"><label for="nome">Nome</label>
+                <input type="text" v-model="cliente.nome" required>
             </div>
-            <div class="form-group"><label for="endereco" v-model="cliente.endereco" required>Endereco</label><input
-                    type="text"></div>
-            <div class="form-group"><label for="telefone">Telefone</label><input type="tel" v-model="cliente.numero"
-                    required v-maska="{mask:'(##) # ####-####'}">
 
-                <div class="form-group datetime">
-                    <label for="">Data entrada:</label>
-                    <input type="date" v-model="data" required>
-                    <input type="time" v-model="hora" required>
-                </div>
-                <div class="form-group datetime">
-                    <label for="">Data entrada:</label>
-                    <input type="datetime-local">
-                </div>
+            <div class="form-group"><label for="endereco">Endereco</label>
+                <input type="text" v-model="cliente.endereco" required>
+            </div>
+
+            <div class="form-group"><label for="telefone">Telefone</label>
+                <input type="tel" v-model="cliente.telefone" required v-maska="{mask:'(##) # ####-####'}">
+            </div>
+
+            <div class="form-group datetime">
+                <label for="">Data entrada:</label>
+                <input type="date" v-model="data" required>
+                <input type="time" v-model="hora" required>
+            </div>
+
+            <div class="form-group datetime">
+                <label for="">Data entrada:</label>
+                <input type="datetime-local">
+            </div>
+
+            
+            <div v-for="amb in ambientes" class="form-group" :key="amb.id">
+                <label class="" for="ambiente-1">@{amb.label}</label>
+                <input type="text" v-model="amb.nome" placeholder=" " required class="">
+            </div>
+
+            <button class="amb Plus" @click.prevent="add_amb">+ambs</button>
+            <button class="amb Less" @click.prevent="rm_amb">-ambs</button>
+        
+            <button class="btn-submit">Novo Projeto</button>
         </form>
 
-        <div v-for="amb in ambientes" class="form-group" :key="amb.id">
-            <label class="" for="ambiente-1">@{amb.label}</label>
-            <input type="text" v-model="amb.nome" placeholder=" " required class="">
-        </div>
-        <button class="amb Plus" @click.prevent="add_amb">+ambs</button>
-        <button class="amb Less" @click.prevent="rm_amb">-ambs</button>
-
-        <button class="btn-submit">Novo Projeto</button>
     </div>
 
-    <script src="https://unpkg.com/vue@next"></script>
-    <script src="https://cdn.jsdelivr.net/npm/maska@latest/dist/maska.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
-    <script>
-        const endPointNovo = "{{ url_for('projeto_bp.novo_projeto') }}";
-        const endPointDetalhes = "{{ url_for('index') }}" + "detalhes/";
-        const Preenchido = {{'true'if cliente else 'false'}}
-        Cliente = {}
-        if ("{{cliente|safe}}" != "None") {
-
-            Cliente.nome = "{{cliente.nome|safe}}",
-                Cliente.endereco = "{{cliente.endereco|safe}}",
-                Cliente.telefone = "{{cliente.telefone|safe}}",
-                Cliente.id = "{{cliente.id|safe}}",
-                Cliente.numero = "{{cliente.numero|safe}}"
-        }
-    </script>
-    <script src="../static/js/novo.js"></script>
-
 </main>
+<script src="https://unpkg.com/vue@next"></script>
+<script src="https://cdn.jsdelivr.net/npm/maska@latest/dist/maska.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script>
+    const endPointNovo = "{{ url_for('projeto_bp.novo_projeto') }}";
+    const endPointDetalhes = "{{ url_for('index') }}" + "detalhes/";
+    const Preenchido = {{'true' if cliente else 'false'}};
+    const Cliente = {};
+    if ("{{cliente|safe}}" != "None") {
+
+        Cliente.nome = "{{cliente.nome|safe}}";
+        Cliente.endereco = "{{cliente.endereco|safe}}";
+        Cliente.telefone = "{{cliente.telefone|safe}}";
+        Cliente.id = "{{cliente.id|safe}}";
+
+    }
+</script>
+<script src="../static/js/novo.js"></script>
+
+{% endblock main %}

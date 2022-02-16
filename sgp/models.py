@@ -13,7 +13,7 @@ class Cliente(db.Model):
     nome = db.Column("nome", db.String)
     endereco = db.Column("endereco", db.String)
     telefone = db.Column("telefone", db.String)
-    numero = db.Column("numero", db.Integer)
+    numero = db.Column("numero", db.Integer, default=int)
     projetos = db.relationship("Projeto", backref="cliente", lazy=True)
 
 

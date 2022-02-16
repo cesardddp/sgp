@@ -20,7 +20,7 @@ def first():
     try:
         from .populadb import popula_db
     except ImportError:
-        breakpoint()
+        # breakpoint()
         app.logger.error("Impossivel import pupula_db")
     else:
         popula_db()

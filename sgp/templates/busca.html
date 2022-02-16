@@ -1,141 +1,40 @@
 {% extends 'layout.html' %}
 {% block link_rel %}
+<link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.2/dist/full.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="{{ url_for('static' ,filename='busca.css') }}">
 {% endblock link_rel %}
 {% block main %}
 {% block logo_class %}
-
 {% endblock logo_class %}
-<main class="container mx-auto px-6 mb-auto">
+<main class="">
 
-	<div class="flex justify-center my-5">
-		<img src="{{ url_for('static',filename='icons/search.png')}}" alt="" 
-		class="h-20 w-20 border border-warning rounded-full" srcset="">
+	<div class="menu-buttons">
+		<img src="{{ url_for('static',filename='icons/search.png')}}" alt=""
+			class="" srcset="">
 	</div>
-	<div class="cloud x2"></div>
+
 	<div id="app">
 		<div class="form-control">
-			
+
 			<div class="relative">
 				<input name="busca" v-model="busca" type="text" placeholder="Comece a digitar..."
-					class="w-full pr-16 input input-accent input-bordered">
+					class="input input-amarelo input-com-borda">
 			</div>
 		</div>
 		<br>
 		<cliente-item v-for="cliente in clientes" :key="cliente.id" :cliente="cliente"></cliente-item>
 	</div>
 
+	<script src="https://unpkg.com/vue@next"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
 	<script src="https://unpkg.com/lodash@4.17.20/lodash.min.js"></script>
-
-	<script type="text/x-template" id="cliente-item-template">
-		<li class="collapse border rounded-box border-base-content collapse-arrow text-base-content">	
-			<input type="checkbox"> 
-			<div class="collapse-title text-xl font-medium flex">
-				<div class="avatar ">
-					<div class="rounded-full w-10 h-10">
-						<img :src="'https://avatars.dicebear.com/api/gridy/'+cliente.nome+'.svg'">
-					</div>
-					<span class="my-auto px-1">@{cliente.nome}</span>
-				</div>
-				<div class="flex ">
-				</div>
-			</div>
-			<div class="collapse-content">
-				
-				<div class="flex justify-end">
-					
-					<div class="indicator">
-						<div class="indicator-item indicator-middle indicator-start badge badge-accent">@{cliente.projetos.length}</div> 
-						<a :href="'{{ url_for("cliente") }}'+cliente.id" class="btn btn-outline btn-accent btn-sm align-top collapse-open">Projetos</a>
-					</div>
-					
-					<a :href="'{{ url_for('novo') }}/' + cliente.id" class="collapse-open btn btn-outline btn-accent btn-sm align-top">+Novo Projeto</a>
-				</div>
-				<p>@{cliente.endereco} - @{cliente.telefone}</p>
-				<b>Projetos: </b>
-			<div class="inline" v-for="proj in cliente.projetos">
-				<span v-for="amb in proj.ambientes">@{amb.nome}/</span>  
-			</div>
-		</li>
-		
-	</script>
 	<script>
-		const app = {
-			data() {
-				return {
-					busca: '',
-					clientes: [
-					// 	{
-					// 	endereco: "longe pakas",
-					// 	id: 2,
-					// 	nome: "cesar",
-					// 	numero: null,
-					// 	projetos: [{
-					// 		"data_apresentacao": null,
-					// 		"data_medicao": null,
-					// 		"id": 2,
-					// 		"usuario_id": 1
-					// 	}],
-					// 	telefone: "19 929 919911"
-					// },
-				]
-				}
-			},
-			watch: {
-				busca() {
-					this.busca.trim() ? this.faz_busca() : null
-				}
-			},
-			methods: {
-				faz_busca: _.debounce(function () {
-					axios
-						.get(
-							'{{ url_for("cliente_bp.busca_cliente",busca="") }}' //substitui pela url de busca
-							+
-							this.busca.trim())
-						.then(response => {
-							//debugger
-							this.clientes = response.data.clientes
-						})
-						.catch(error => {
-							alert('Erro! Não foi possível adquirir resultados da API: ' + error)
-						})
-
-				}, 550),
-				get_clientes(){
-					axios
-					.get(
-						'{{ url_for("cliente_bp.lista_clientes") }}' //substitui pela url de busca
-					)
-					.then(response => {
-						// debugger
-						this.clientes = response.data.data
-					})
-					.catch(error => {
-						alert('Erro! Não foi possível adquirir resultados da API: ' + error)
-					})
-				}
-			},
-			created() {
-				this.get_clientes()
-			},
-			
-		}
-
-		const vm = Vue.createApp(app)
-		vm.config.compilerOptions.delimiters = ['@{', '}']
-		vm.component('cliente-item', {
-			props: ["cliente"],
-			data() {
-				return {
-					show: false
-				}
-			},
-			template: '#cliente-item-template',
-
-		})
-		vm.mount("#app")
+		const urlBusca = '{{ url_for("cliente_bp.busca_cliente",busca="") }}'; //substitui pela url de busca;
+		const urlLista = '{{ url_for("cliente_bp.lista_clientes") }}'; //substitui pela url de busca;
+		const urlCliente = '{{ url_for("cliente") }}';
+		const urlNovo = '{{ url_for("novo") }}/';
 	</script>
+	<script src="{{ url_for('static', filename='js/busca.js') }}"></script>
 
 
 

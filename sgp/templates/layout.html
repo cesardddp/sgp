@@ -1,47 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-br" id="clouds" data-theme="forest" >
+<html lang="pt-br">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>SGP</title>
-	<link rel="shortcut icon" href="{{ url_for('static',filename='imgs/logo.png') }}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGP</title>
+    <link rel="shortcut icon" href="{{url_for('static',filename='imgs/logo.png')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Supermercado+One&display=swap" rel="stylesheet"> 
 
+    <link rel="stylesheet" href="{{url_for('static',filename='base.css')}}">
+	<!-- <link rel="stylesheet" href="../static/index_tela.css"> -->
 
 	{% block link_rel %}
 	{% endblock link_rel %}
-	<!-- <link href="{{ url_for('static', filename='css/nuvens.css') }}" rel="stylesheet"> -->
 
-	<link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.2/dist/full.css" rel="stylesheet" type="text/css" />
-	<link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.6/dist/themes.css" rel="stylesheet" type="text/css" />
-	{% assets 'css' %}
+    {# {% assets 'css' %}
 		<link href="{{ ASSET_URL }}" rel="stylesheet">
-    {% endassets %}
-	
-	<script src="https://unpkg.com/vue@next"></script>
-	<style>
-		/* body{
-			background-image: linear-gradient(
-				#3d4451 ,white
-			);
-			background-repeat: repeat ;
-		} */
-		{% block style %}
-
-		{% endblock %}
-	</style>
-	<script src="https://kit.fontawesome.com/3db21c2fa2.js" crossorigin="anonymous"></script>
+    {% endassets %} #}
+	<style>{% block style %}{% endblock %}</style>
 </head>
-<body class="flex flex-col h-screen bg-base-100">
-	
-	<header>
-		<a href="/" class="flex justify-center {% block logo_class %}{% endblock logo_class %}">
-			<img src="{{ url_for('static',filename='icons/g_logo.svg') }}" alt="" 
-			class="h-32 shadow-2xl rounded-full p-2 bg-warning" srcset="">
-	</a>
+
+<header>
+    <a href="/" class="">
+        <img src="../static/icons/g_logo.svg" alt="" class="" srcset="">
+    </a>
 </header>
 	{% block main %}
 	{% endblock main %}
-</body>
 </html>

@@ -1,0 +1,81 @@
+@import url(base.css);
+
+
+* {
+    box-sizing: border-box;
+    color:black;
+}
+
+.input-com-borda {
+    --tw-border-opacity: 0.2;
+}
+
+.input-amarelo {
+    border-color: yellow;
+    background-color: white;
+}
+
+main img {
+    width: 50px;
+}
+
+
+.input {
+    width: 100%;
+    text-align: center;
+    transition-duration: .2s;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    height: 3rem;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    line-height: 2;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-width: 1px;
+    border-radius: var(--rounded-btn, .5rem);
+    --tw-bg-opacity: 1;
+    --tw-border-opacity: 1;
+    --tw-border-opacity: 0;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+}
+
+.rounded-box {
+    border-radius: var(--rounded-box, 1rem);
+}
+
+.text-base-content {
+    color: hsl(var(--bc));
+}
+
+.border-base-content {
+    border-color: hsl(var(--bc));
+}
+
+.collapse {
+    display: grid;
+    overflow: hidden;
+    position: relative;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+* {
+    --tw-ring-inset: var(--tw-empty,
+            /*!*/
+            /*!*/
+        );
+    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: rgba(59, 130, 246, 0.5);
+    --tw-ring-offset-shadow: 0 0 transparent;
+    --tw-ring-shadow: 0 0 transparent;
+}
+
+*,
+:after,
+:before {
+    box-sizing: border-box;
+    border: 0 solid;
+}
