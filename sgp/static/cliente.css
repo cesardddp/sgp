@@ -1,0 +1,23 @@
+@import url(base.css);
+@import url(form.css);
+
+figure {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100px;
+    margin: auto;
+}
+
+.logout img {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    max-width: 50px;
+    margin: 10px
+}
+
+.logout img:hover {
+    border-radius: 100%;
+    box-shadow: 2px 2px gray;
+}

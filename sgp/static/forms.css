@@ -1,0 +1,40 @@
+
+form .form-group {
+    padding: 0 0 10px 0;
+}
+
+form .form-group input {
+    padding: 10px 0;
+    display: block;
+    width: 100%;
+}
+
+form .form-group.dateEtime input {
+    display: inline;
+    width: 46%;
+    text-align: center;
+    margin: 2px;
+}
+
+form .form-group.datetime input {
+    display: inline;
+    margin: 2px;
+    text-align: center;
+
+}
+
+form .form-group label {
+    display: block;
+    width: 100%;
+    margin: auto;
+}
+
+.btn-submit {
+    border: none;
+    color: whitesmoke;
+    background: black;
+    padding: 15px;
+    font-family: 'Supermercado One', cursive;
+    cursor: pointer;
+    border-radius: 5px;
+}
