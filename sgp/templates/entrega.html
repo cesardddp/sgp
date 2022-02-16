@@ -1,24 +1,33 @@
 {% extends 'layout.html' %}
 {% block link_rel %}
+<link rel="stylesheet" href="{{url_for('static',filename='entrega.css')}}">
+<link rel="stylesheet" href="../static/entrega.css">
+
 {% endblock link_rel %}
 {% block style %}
-.table tbody td, .table tbody th {
-    --tw-bg-opacity: 1;
-}
+<style>
 
+
+</style>
 {% endblock  %}
 
 {% block main %}
-<main class="container mx-auto px-6">
-	<div class="flex justify-center">
-		<img src="{{ url_for('static',filename='imgs/quadro.png')}}" alt="" class="h-16 w-16" srcset="">
+<main class="">
+	
+	<div class="menu-buttons">
+		<img src="{{ url_for('static',filename='imgs/quadro.png')}}" alt="" class="" srcset="">
 	</div>
-	<div class="cloud x2"></div>
-	<p class="text-xs">AMARELO SÃO PROJETOS QUE ESTÃO FICANDO ATRASADOS</p>
+	
+	<p class="">AMARELO SÃO PROJETOS QUE ESTÃO FICANDO ATRASADOS</p>
 	<div id="app">
-		<table class="table w-full">
+		<table class="">
 			<tbody>
-
+					<th>Nomes</td>
+					<th>Projetos</td>
+					<th>f</td>
+					<th>f</td>
+					<th>f</td>
+				
 				<tr
 					is="vue:projeto-row"
 					v-for="projeto in projetos"
@@ -33,7 +42,8 @@
 
 
 	</div>
-
+	
+	<script src="https://unpkg.com/vue@next"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
 	<script type="text/x-template" id="projeto-row">
 		<tr class="space-y-6" >
@@ -48,75 +58,13 @@
 			</td>
 			<td class="rounded-full bg-white  px-4 py-2 text-sm text-black" :class="colorStatus" >@{projeto.pdf}</td>
 		</tr>
-</script>
-	<script>
-		const App = {
-			compilerOptions: {
-				delimiters: ['@{', '}']
-			},
-			data() {
-				return {
-					projetos: [{
-						ambientes: [{
-							id: -1,
-						}, ],
-						cliente: {
-							nome: "",
-						},
-						data_apresentacao: "",
-						data_entrada: "",
-						data_medicao: "",
-						fotos: null,
-						id: -1,
-					}, ]
-				}
-			},
-			methods:{
-				detalhes(id){
-					location.pathname = "{{ url_for('index') }}" + "detalhes/" + id				
-				}
-			},
-
-			mounted() {
-				return (
-					axios
-					.get("{{ url_for('projeto_bp.get_projetos') }}", )
-					.then(response => {
-						this.projetos = response.data.projetos
-					})
-				)
-			},
-		}
-		const app = Vue.createApp(App)
-		app.component('projeto-row', {
-			compilerOptions: {
-				delimiters: ['@{', '}']
-			},
-			props: ['projeto'],
-			computed: {
-				colorStatus() {
-					if (!this.projeto.data_medicao) {
-						return "bg-white"
-					}
-					const data_medicao = new Date(this.projeto.data_medicao);
-					// debugger
-					const now = new Date();
-					const diffTime = Math.abs(data_medicao - now);
-					const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-					//console.log(diffDays + " days");
-
-					console.log(data_medicao, now)
-					if (diffDays >= 7) {
-						return "bg-red-200"
-					} else {
-						return "bg-white"
-					}
-				}
-			},
-			template: "#projeto-row"
-		})
-		app.mount("#app")
 	</script>
+	<script>
+		const urlIndex="{{ url_for('index') }}";
+		const urlGetProjetos="{{ url_for('projeto_bp.get_projetos') }}";
+	</script>
+	<script src="{{ url_for('static' , filename='js/entrega.js') }}"></script>
+
 </main>
 {% endblock main %}
 <script>

@@ -1,0 +1,30 @@
+@import url(base.css);
+.table tbody td, .table tbody th {
+  --tw-bg-opacity: 1;
+}
+
+p {
+  background-color: yellow;
+  width: 50%;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 10px;
+  padding: 1px 0;
+}
+
+table {
+  width: 100%;
+}
+
+table th {
+  border-radius: 5%;
+  border: 1px solid black;
+  padding: 4px 2px;
+}
+
+table td {
+  border: 1px solid black;
+  border-radius: 5%;
+  padding: 4px 2px;
+}
+/*# sourceMappingURL=entrega.css.map */
