@@ -22,6 +22,8 @@ def create_app():
 
     app = Flask(__name__)
     app.config.from_pyfile("config.py")
+    # app.config["ENV_VUE"] = ".prod"
+    app.config["ENV_VUE"] = ""
 
     app.file = UploadSet(
         extensions=DOCUMENTS + IMAGES + TEXT,
